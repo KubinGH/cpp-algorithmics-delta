@@ -6,21 +6,18 @@ from gamma import TestFramework
 
 class ZadanieTester(TestFramework):
     save_tests = True
-    self_test = True
-    iterable = range(1000)
+    self_test = False
+    iterable = range(5)
     filename_pattern = "tests/atest{i}.{ext}"
     t = 10
-    n = 4
+    n = 10**6
     def generate_test(self, t=t, n=n):
         test = []
         for ti in range(t):
-            '''
             s = random.randint(0, 2**(n-1)-1)
             S = self.bitlist(s, n)
             P = self.create_ps_table(S)
             test.append(P)
-            '''
-            test.append([random.randint(0, 3) for i in range(n)])
         return test
 
     @staticmethod
@@ -30,11 +27,14 @@ class ZadanieTester(TestFramework):
     @staticmethod
     def create_ps_table(S):        
         P = []
-        for i in range(1, len(S)+1):
-            for j in range(i-1, -1, -1):
-                if S[:j] == S[i-j:i]:
-                    P.append(j)
-                    break
+        P.append(0)
+        for i in range(1, len(S)):
+            j = P[i - 1]
+            while j > 0 and S[i] != S[j]:
+                j = P[j - 1]
+            if S[i] == S[j]:
+                j += 1
+            P.append(j)
         return P
 
     def run_self_test(self, test, t=t, n=n):

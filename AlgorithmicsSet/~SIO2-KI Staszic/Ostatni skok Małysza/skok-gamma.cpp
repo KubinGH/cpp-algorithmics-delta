@@ -2,11 +2,6 @@
 
 using namespace std;
 
-typedef pair<uint32_t, uint32_t> pair_u32;
-
-const size_t MAX = 6.7e7+1;
-const uint32_t MAX_SQRT = ceil(sqrt(MAX)) + 1;
-
 uint32_t memo[][2] = {
     {4, 0}, {8, 2}, {24, 4}, {90, 6},
     {114, 12}, {524, 16}, {888, 18},

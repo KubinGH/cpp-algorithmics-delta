@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef unsigned int uint32_t;
+typedef char int8_t;
+typedef int8_t digit_t;
+
+const size_t DIGITS = 210;
+
+template<size_t DIGITS>
+struct integer
+{
+    static size_t digits;
+};
+template<size_t DIGITS>
+integer::digits = DIGITS;
+
+int main()
+{
+    string pattern;
+    cin >> pattern;
+    static integer<DIGITS> N, T;
+    cin >> T;
+
+}

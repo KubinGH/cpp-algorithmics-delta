@@ -2,41 +2,91 @@
 
 using namespace std;
 
-const size_t MAX = 1000001;
+const size_t MAX = 1000000;
+
+template<typename T, size_t SIZE>
+struct fstack
+{
+    array<T, SIZE> A;
+    size_t i = 0;
+    T& top()
+    {
+        return A[i-1];
+    }
+    void push(T o)
+    {
+        A[i] = o; i++;
+    }
+    void pop()
+    {
+        i--;
+    }
+    void clear()
+    {
+        i = 0;
+    }
+    size_t size()
+    {
+        return i;
+    }
+};
 
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     uint32_t n, m, k;
     cin >> n >> m >> k;
-    static array<uint32_t, MAX> K, A, B;
+    static array<uint32_t, MAX> S;
     for(uint32_t i = 0; i < n; i++)
-        cin >> K[i];
-    for(uint32_t i = 1; i <= m; i++)
-        cin >> A[i] >> B[i];
-    static array<pair<uint32_t, uint32_t>, MAX> T;
-    for(uint32_t i = 1; i <= k; i++)
-        T[i].first = i, T[i].second = 0;
-    for(uint32_t i = 1; i <= m; i++)
-        T[A[i]].first = B[i], T[A[i]].second = i;
-    static array<uint32_t, MAX> E;
-    iota(E.begin(), E.end(), 0);
-    for(uint32_t i = 1; i <= k; i++)
+        cin >> S[i], S[i]--;
+    static array<uint32_t, MAX> P, C, T, R;
+    iota(P.begin(), P.begin() + k, 0);
+    iota(C.begin(), C.begin() + k, 0);
+    iota(R.begin(), R.begin() + k, 0);
+    for(uint32_t i = 0; i < m; i++)
     {
-        uint32_t s = i, b = 0;
-        stack<uint32_t> S;
-        S.push(i);
-        while(b < T[S.top()].second)
+        uint32_t a, b;
+        cin >> a >> b; a--; b--;
+        if(R[a] == k or a == b) continue;
+        if(C[b] != b)
         {
-            s = T[S.top()].first;
-            if(T[S.top()].second < T[T[S.top()].first].second)
-                b = T[S.top()].second, S.push(T[S.top()].first);
+            if(R[b] == k)
+            {
+                C[R[a]] = b;
+                R[b] = R[a];
+                R[a] = k;
+            }
             else
-                break;
+            {
+                P[R[a]] = R[b];
+                C[R[a]] = k;
+                R[a] = k;
+            }
         }
-        while(not S.empty())
-            E[S.top()] = s, S.pop();
+        else
+        {
+            P[R[a]] = b;
+            C[R[a]] = k;
+            R[a] = k;
+        }
+    }
+    static array<bool, MAX> V;
+    for(uint32_t i = 0; i < k; i++)
+    {
+        if(V[i]) continue;
+        static fstack<uint32_t, MAX> S;
+        S.clear();
+        S.push(i); V[i] = true;
+        while(P[S.top()] != S.top() and not V[P[S.top()]])
+            S.push(P[S.top()]), V[S.top()] = true;
+        if(P[S.top()] == S.top())
+            T[S.top()] = C[S.top()];
+        else if(V[P[S.top()]])
+            S.push(P[S.top()]);
+        uint32_t c = T[S.top()];
+        for(uint32_t j = 0; j < S.size(); j++)
+            T[S.A[j]] = c;
     }
     for(uint32_t i = 0; i < n; i++)
-        cout << E[K[i]] << " ";
+        cout << T[S[i]]+1 << " ";
 }
