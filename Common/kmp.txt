@@ -1,0 +1,29 @@
+input:
+    character S[K] // pattern
+    
+// Preprocessing
+integer T[K]
+T[0] = 0
+for i in 1..K-1:
+    j = T[i - 1]
+    while j > 0 and S[i] != S[j]:
+        j = T[j - 1]
+    if S[i] == S[j]:
+        j += 1
+    T[i] = j
+
+// Search
+input:
+    character M[N] // text
+
+j = 0 // current character in pattern
+for i in 0..N-1: // current character in text
+    while j > 0 and M[i] != S[j]:
+        j = T[j - 1]
+    if M[i] == S[j]:
+        j += 1
+        if j == K: // match
+            yield i + 2 - K // begin index
+            j = T[j - 1] // next matching with overlap
+            // without overlap: j = 0
+            
