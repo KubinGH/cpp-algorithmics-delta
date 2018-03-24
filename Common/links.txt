@@ -1,0 +1,1 @@
+Segment Tree - 0 based, iterative find, templated functions - /AlgorithmicsSet/~Wroc³awskie Sparingi/Uporz¹dkowane podci¹gi
