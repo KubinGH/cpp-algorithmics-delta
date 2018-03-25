@@ -15,4 +15,5 @@ def hashf(s):
 
 H = hashf("abcdeabcde")
 print(H(0, 2), H(5, 7))
+print(H(0, 3), H(5, 8))
 print(H(0, 4), H(5, 9))
