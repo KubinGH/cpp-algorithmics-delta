@@ -2,8 +2,6 @@
 
 using namespace std;
 
-typedef uint32_t(*interval_func)(uint32_t, uint32_t);
-
 const size_t MAX = 1e6, TMAX = (32 - __builtin_clz(MAX));
 
 uint32_t max(uint32_t a, uint32_t b)
