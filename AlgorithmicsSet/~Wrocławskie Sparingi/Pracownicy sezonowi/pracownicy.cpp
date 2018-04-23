@@ -3,28 +3,29 @@
 using namespace std;
 
 const size_t MAX = 100000;
+const double EPSILON = 1e-7;
 
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    uint32_t n; uint64_t k;
-    cin >> n >> k; k -= n;
-    static array<long double, MAX> A;
+    cout << setprecision(6) << fixed;
+    uint32_t n; double k;
+    cin >> n >> k;
+    static array<double, MAX> A;
     for(uint32_t i = 0; i < n; i++)
         cin >> A[i];
-    priority_queue<pair<long double, uint32_t>> Q;
-    static array<long double, MAX> B;
-    static array<uint32_t, MAX> W;
-    for(uint32_t i = 0; i < n; i++)
-        Q.emplace(A[i], i), W[i] = 1, B[i] = A[i];
-    for(uint32_t ki = 0; ki < k; ki++)
+    double lo = 0, hi = 1e18;
+    while(hi - lo > EPSILON)
     {
-        auto p = Q.top(); Q.pop();
-        uint32_t i = p.second;
-        long double g = A[i]/W[i] - A[i]/(W[i]+1);
-        B[i] -= g;
-        W[i]++;
-        Q.emplace(B[i], i);
+        double x = (lo + hi) / 2;
+        double ck = k;
+        bool ok = true;
+        for(uint32_t i = 0; i < n and ok; i++)
+            ck -= ceil(A[i] / x);
+        if(ck >= 0)
+            hi = x;
+        else
+            lo = x + EPSILON;
     }
-    cout << fixed << *max_element(B.begin(), B.begin() + n);
+    cout << (lo + hi) / 2;
 }
