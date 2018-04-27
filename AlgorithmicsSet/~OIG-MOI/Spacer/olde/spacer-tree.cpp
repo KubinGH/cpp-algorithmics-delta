@@ -19,14 +19,6 @@ struct node_t
         left = right = NULL;
         tbegin = tend = value = 0;
     }
-    node_t* alloc_next_node()
-    {
-        static node_t prealloc[1<<20];
-        static size_t i = 0;
-        node_t* r = prealloc+i;
-        i++;
-        return r;
-    }
     void set(int64_t x, uint64_t new_value)
     {
         //cout << "set " << x << " <- " << new_value << " @ " << tbegin << " " << tend << endl;
@@ -40,7 +32,7 @@ struct node_t
         {
             if(left == NULL)
             {
-                left = alloc_next_node();
+                left = new node_t;
                 left->tbegin = tbegin;
                 left->tend = mid;
             }
@@ -50,7 +42,7 @@ struct node_t
         {
             if(right == NULL)
             {
-                right = alloc_next_node();
+                right = new node_t;
                 mid++;
                 right->tbegin = mid;
                 right->tend = tend;
@@ -70,8 +62,20 @@ struct node_t
             return max(( left != NULL) ?  left->get(sbegin, send) : 0,
                        (right != NULL) ? right->get(sbegin, send) : 0);
     }
+    ~node_t()
+    {
+        if(left  != NULL)
+        {
+            delete left;
+            left = NULL;
+        }
+        if(right != NULL)
+        {
+            delete right;
+            right = NULL;
+        }
+    }
 };
-
 
 struct segment_tree
 {
@@ -99,26 +103,37 @@ int main()
     uint64_t n;
     cin >> n;
     static pair_i64 A[MAX];
-    set<pair_i64> S; //
     for(uint64_t i = 0; i < n; i++)
     {
-        int64_t x, y;
-        cin >> x >> y;
-        if(y < 0 or abs(x) > y or S.find(make_pair(x, y)) != S.end())
-        {
+        cin >> A[i].second >> A[i].first;
+        if(A[i].first < 0 or abs(A[i].second) > A[i].first)
             i--, n--;
-            continue;
-        }
-        S.insert(make_pair(x, y));
-        A[i].first = x - y;
-        A[i].second = -(x + y);
     }
     sort(A, A + n);
-    static segment_tree tree;
-    for(uint64_t i = n; i --> 0;)
+    vector<pair<int64_t, uint64_t> > to_set_l, to_set_r;
+    segment_tree ltree, rtree;
+    for(uint64_t i = 0; i < n; i++)
     {
-        int64_t x = A[i].first, y = -A[i].second;
-        tree.set(y, tree.get(-MAX_COOR+1, y) + 1);
+        int64_t cx = A[i].second, cy = A[i].first;
+        if(cy > 5) break;
+        int64_t lx = cx - cy, rx = cx + cy;
+        uint64_t v = min(ltree.get(lx, MAX_COOR-10), rtree.get(-MAX_COOR+10, rx)) + 1;
+        cout << cx << ", " << cy << ": " << lx << " " << rx << " -> " << v << endl;
+        for(int64_t c = -10; c <= 10; c++)
+            cout << ltree.get(c, c) << " "; cout << endl;
+        for(int64_t c = -10; c <= 10; c++)
+            cout << rtree.get(c, c) << " "; cout << endl;
+        to_set_l.push_back(make_pair(lx, v));
+        to_set_r.push_back(make_pair(rx, v));
+        if(i == n - 1 or A[i].first != A[i+1].first)
+        {
+            for(uint64_t j = 0; j < to_set_l.size(); j++)
+                ltree.set(to_set_l[j].first, to_set_l[j].second);
+            to_set_l.clear();
+            for(uint64_t j = 0; j < to_set_r.size(); j++)
+                rtree.set(to_set_r[j].first, to_set_r[j].second);
+            to_set_r.clear();
+        }
     }
-    cout << tree.root.value;
+    cout << max(ltree.root.value, rtree.root.value);
 }

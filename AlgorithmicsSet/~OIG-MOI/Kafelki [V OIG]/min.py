@@ -1,7 +1,7 @@
 from os import system
 import test
 
-KEEP = ["#include <cstdio>\n", "#define W while\n", "char "]
+KEEP = ["#import<cstdio>\n", "char "]
 
 with open("kafelki.cpp", "r") as file:
     s = file.read()
@@ -36,3 +36,4 @@ if compile_ok and test_ok:
 else:
     print("Failure.")
     print(f"Compilation OK: {compile_ok}\nTests OK: {test_ok}")
+system("pause")
