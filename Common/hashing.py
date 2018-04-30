@@ -3,7 +3,7 @@ mod = int(1e9 + 7)
 def hashf(s):
     n = len(s)
     s_hash = [0 for _ in range(n)]
-    S = [ord(c)-ord('a') for c in s]
+    S = [ord(c)-ord('a')+1 for c in s]
     s_hash[0] = S[0]
     for i in range(1, n):
         s_hash[i] = (((s_hash[i - 1] * prime) % mod) + S[i]) % mod

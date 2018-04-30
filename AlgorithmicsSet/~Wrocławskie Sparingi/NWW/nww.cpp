@@ -8,7 +8,7 @@ const uint64_t LIM = 1e9 + 7, LIMLIM = 1e15;
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    static array<char, PRIMES> R; R.fill(1); R[0] = R[1] = 0;
+    static array<uint32_t, PRIMES> R; R.fill(1); R[0] = R[1] = 0;
     static array<uint32_t, 3401> P; uint32_t pi = 0; P[pi++] = 2;
     for(uint32_t x = 4; x < PRIMES; x += 2)
         R[x] = false;
@@ -23,7 +23,7 @@ int main()
     uint32_t n;
     cin >> n;
     static array<uint32_t, PRIMES> T;
-    unordered_set<uint32_t> O; O.reserve(1e6);
+    vector<uint32_t> O;
     uint64_t r = 1; uint32_t f = 0;
     for(uint32_t i = 0; i < n; i++)
     {
@@ -47,12 +47,17 @@ int main()
                     T[p] = c;
             }
         }
-        if(a > 1 and O.find(a) == O.end())
+        if(a > 1)
+            O.push_back(a);
+    }
+    sort(O.begin(), O.end());
+    for(uint32_t i = 0; i < O.size(); i++)
+    {
+        if(i == O.size() - 1 or O[i] != O[i+1])
         {
             f++;
             if(f == 16)
                 r *= (1llu << 16), r %= LIM, f = 0;
-            O.insert(a);
         }
     }
     r *= (1llu << f); r %= LIM;

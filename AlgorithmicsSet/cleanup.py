@@ -9,9 +9,10 @@ for a in sorted(glob.glob("**/*", recursive=True), key=os.path.getsize):
     minutes, days = round((ctime - date)/60, 2), round((ctime - date)/(60*60*24), 2)
     print(f"{a} | {size} | {minutes}min = {days}d")
     M += size
-    if ".cpp" not in a and days > 30 and size > 0.5*mem["MB"]:
-        prompt = input("Remove? (yes for True): ")
-        if prompt == "yes":
+    if ".cpp" not in a and days > 30 and (size > 0.5*mem["MB"] or a.endswith(".o")):
+        prompt = input("Remove? (y for True): ")
+        if prompt == "y":
             os.remove(a)
+            print("---")
 print(f"M = {M}B = {round(M/mem['kB'], 2)}kB = {round(M/mem['MB'], 2)}MB")
 os.system("pause")
