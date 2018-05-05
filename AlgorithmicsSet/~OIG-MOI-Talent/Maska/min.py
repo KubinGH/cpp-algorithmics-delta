@@ -1,10 +1,12 @@
 from os import system
 import test
 
-KEEP = ["#import<iostream>\n", "#import<cstdio>\n", "#import<bits/stdc++.h>\n", "#import<stdio.h>\n"
-        "int ", "char ", "return "]
+KEEP = ["#import<iostream>\n", "#import<cstdio>\n", 
+        "#import<bits/stdc++.h>\n", "#import<stdio.h>\n",
+        "int ", "char ", "return ",
+        "namespace std"]
 
-with open("liczba.cpp", "r") as file:
+with open("maska.cpp", "r") as file:
     s = file.read()
     r = ""
     i = 0
@@ -19,16 +21,16 @@ with open("liczba.cpp", "r") as file:
                 r += s[i]
             i += 1
     print(r)
-with open("liczba-min.cpp", "w") as file:
+with open("maska-min.cpp", "w") as file:
     file.write(r)
 
 print("= Compiling =")
-compile_ok = 0 == system("g++ -O2 -pedantic -Wextra -Wall -std=c++98 -c liczba-min.cpp -o liczba-min.o")
+compile_ok = 0 == system("g++ -O2 -pedantic -Wextra -Wall -std=c++98 -c maska-min.cpp -o maska-min.o")
 if compile_ok: 
-    compile_ok = 0 == system("g++ -O2 -pedantic -Wextra -Wall -std=c++98 -o liczba-min.exe liczba-min.o")
+    compile_ok = 0 == system("g++ -O2 -pedantic -Wextra -Wall -std=c++98 -o maska-min.exe maska-min.o")
 if compile_ok:
     print("= Testing =")
-    test_ok = test.main("liczba-min.exe", False)
+    test_ok = test.main("maska-min.exe", False)
 else:
     test_ok = None
 if compile_ok and test_ok:

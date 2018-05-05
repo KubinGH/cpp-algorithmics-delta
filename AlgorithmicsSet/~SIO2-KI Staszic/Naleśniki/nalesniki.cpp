@@ -7,17 +7,17 @@ const size_t MAX = 2001;
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    uint16_t n, m;
+    uint32_t n, m;
     cin >> n >> m;
-    static array<int64_t, MAX> A, B, SA, SB;
-    for(uint16_t i = 0; i < n; i++)
+    static array<int32_t, MAX> A, B, SA, SB;
+    for(uint32_t i = 0; i < n; i++)
         cin >> A[i], SA[i+1] += SA[i] + A[i];
-    for(uint16_t i = 0; i < m; i++)
+    for(uint32_t i = 0; i < m; i++)
         cin >> B[i], SB[i+1] += SB[i] + B[i];
-    static array<array<int64_t, MAX+1>, MAX+1> R;
-    for(uint16_t i = 0; i <= n; i++)
+    static array<array<int32_t, MAX+1>, MAX+1> R;
+    for(uint32_t i = 0; i <= n; i++)
     {
-        for(uint16_t j = 0; j <= m; j++)
+        for(uint32_t j = 0; j <= m; j++)
         {
             if(i == 0 and j == 0)
                 R[i][j] = 0;
@@ -29,5 +29,5 @@ int main()
                 R[i][j] = SA[i] + SB[j] - min(R[i-1][j], R[i][j-1]);
         }
     }
-    cout << R[n][m] << endl;
+    cout << R[n][m];
 }

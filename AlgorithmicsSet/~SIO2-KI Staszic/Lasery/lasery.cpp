@@ -6,6 +6,7 @@ const size_t MAX_N = 5e4, MAX_M = 1e6;
 
 int main()
 {
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     uint32_t n, m;
     cin >> n >> m;
     static pair<uint32_t, uint32_t> A[MAX_M];
