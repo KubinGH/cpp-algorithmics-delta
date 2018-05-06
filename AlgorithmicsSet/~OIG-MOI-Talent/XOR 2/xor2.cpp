@@ -28,11 +28,11 @@ uint64_t sxor(uint64_t n)
 int main()
 {
     uint64_t t;
-    scanf(LLU_FMT, &t);
+    cin >> t;
     for(uint64_t ti = 0; ti < t; ti++)
     {
         uint64_t n, m;
-        scanf(LLU_FMT " " LLU_FMT, &n, &m);
-        printf(LLU_FMT "\n", sxor(n - 1) ^ sxor(m));
+        cin >> n >> m;
+        cout << (sxor(n - 1) ^ sxor(m)) << "\n";
     }
 }

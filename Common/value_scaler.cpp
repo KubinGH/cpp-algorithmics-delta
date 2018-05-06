@@ -7,7 +7,7 @@ const size_t MAX = 1 << 20;
 template<typename T, size_t N>
 struct value_scaler
 {
-    pair<T, size_t> _A[N];
+    T _A[N];
     unordered_map<T, size_t> M;
     template<typename Iterator>
     value_scaler(Iterator begin, Iterator end)
@@ -15,16 +15,16 @@ struct value_scaler
         size_t n = 0;
         for(auto it = begin; it != end; it++)
         {
-            _A[n].first = *it; _A[n].second = n;
+            _A[n] = *it;
             n++;
         }
         sort(_A, _A + n);
         M.reserve(N);
         for(size_t i = 0, f = 0; i < n; i++)
         {
-            if(i > 0 and _A[i].first == _A[i-1].first)
+            if(i > 0 and _A[i] == _A[i-1])
                 f++;
-            M[_A[i].first] = i - f;
+            M[_A[i]] = i - f;
         }
     }
     const size_t& operator[] (const T& x)
