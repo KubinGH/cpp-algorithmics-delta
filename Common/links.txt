@@ -1,1 +1,2 @@
 Segment Tree - 0 based, iterative find, templated functions - /AlgorithmicsSet/~Wroc≥awskie Sparingi/Uporzπdkowane podciπgi
+Segment Tree - interval, **linear functions** - /AlgorithmicsSet/~OI/Przekaüniki telekomunikacyjne

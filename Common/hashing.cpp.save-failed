@@ -2,11 +2,13 @@
 
 using namespace std;
 
-template<typename T, T MOD, T BASE, size_t N>
+const size_t MAX = 1024;
+
+template<typename T, T MOD, T BASE>
 struct basehash
 {
-    T H[N];
-    T base_pow[N];
+    T H[MAX];
+    T base_pow[MAX];
     size_t n;
     template<typename Iterator>
     basehash(Iterator begin, Iterator end, T fix = 0)
@@ -27,20 +29,24 @@ struct basehash
             it++;
         }
     }
-    const uint64_t& operator[] (size_t i) const { return H[i]; }
-    uint64_t operator() (size_t i, size_t j) const
+    uint64_t& operator[] (size_t i) { return H[i]; }
+    uint64_t operator() (size_t i, size_t j)
     {
         if(i == 0)
             return H[j];
         else
             return (2*MOD + H[j] - ((H[i-1]*base_pow[j - i + 1]) % MOD)) % MOD;
     }
+    uint64_t interval_equals(size_t a, size_t b, size_t x, size_t y)
+    {
+        return operator() (a, b) == operator() (x, y);
+    }
 };
 
 int main()
 {
     char* s = "abcdeabcde";
-    basehash<uint64_t, uint64_t(1e9+7), 313, 1024> H(s, s + 10, 0);
+    basehash<uint64_t, uint64_t(1e9+7), 313> H(s, s + 10, 1 - 'a');
     cout << H(0, 2) << " " << H(5, 7) << endl;
     cout << H(0, 3) << " " << H(5, 8) << endl;
     cout << H(0, 4) << " " << H(5, 9) << endl;

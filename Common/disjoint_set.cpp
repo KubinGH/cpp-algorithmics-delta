@@ -1,15 +1,12 @@
-#include <iostream>
-
 using namespace std;
 
-template<size_t MAX = 1e5>
+template<size_t N>
 struct disjoint_set
 {
-    array<uint32_t, MAX> parent, nrank;
-    disjoint_set(uint32_t init = MAX)
+    array<uint32_t, N> parent, nrank;
+    disjoint_set(uint32_t init = N)
     {
-        for(uint32_t i = 0; i < init; i++)
-            parent[i] = i;
+        iota(parent.begin(), parent.begin() + init, 0);
     }
     void unite(uint32_t first_node, uint32_t second_node)
     {
@@ -23,7 +20,8 @@ struct disjoint_set
         else
         {
             parent[second] = first;
-            nrank[first]++;
+            if(nrank[first] == nrank[second])
+                nrank[first]++;
         }
     }
     uint32_t find_root(uint32_t node)
