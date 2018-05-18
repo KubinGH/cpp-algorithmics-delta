@@ -1,157 +1,121 @@
 #include <bits/stdc++.h>
-#define BIT_SET(n, i)   (n |= (1u << i))
-#define BIT_UNSET(n, i) (n &= ~(1u << i))
 
 using namespace std;
 
-const size_t MAX = 25;
+const size_t MAX = 32;
 
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     uint32_t n, m;
     cin >> n >> m;
-    static vector<uint32_t> G[MAX];
-    static uint32_t Q[MAX];
+    static bitset<MAX> conn[MAX];
+    vector<uint32_t> graph[MAX];
     for(uint32_t i = 0; i < m; i++)
     {
         uint32_t u, v;
         cin >> u >> v; u--; v--;
-        G[u].push_back(v);
-        G[v].push_back(u);
-        BIT_SET(Q[u], v);
-        BIT_SET(Q[v], u);
-    }
-    static uint32_t O[MAX], M[MAX];
-    fill(O, O+n, -1u);
-    static vector<uint32_t> U[MAX];
-    static bool LS[MAX];
-    fill(LS, LS + n, false);
-    for(uint32_t p = 0; p < m; p++)
-    {
-        if(O[p] != -1u)
-            continue;
-        stack<uint32_t> S;
-        S.push(p); O[p] = p; U[p].push_back(p), M[p] = p;
-        while(not S.empty())
+        if(not conn[u][v])
         {
-            uint32_t u = S.top(); S.pop();
-            for(uint32_t v : G[u])
+            conn[u][v] = conn[v][u] = true;
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+        }
+    }
+    static bool vis[MAX]; fill(vis, vis + MAX, false);
+    static char final_result[MAX];
+    for(uint32_t src = 0; src < n; src++)
+    {
+        if(vis[src])
+            continue;
+        // Find connected component
+        vector<uint32_t> comp;
+        static uint32_t comp_i[MAX];
+        stack<uint32_t> to_vis;
+        vis[src] = true; to_vis.push(src);
+        comp.push_back(src);
+        while(not to_vis.empty())
+        {
+            uint32_t u = to_vis.top(); to_vis.pop();
+            for(uint32_t v : graph[u])
             {
-                if(O[v] == -1u)
+                if(not vis[v])
                 {
-                    S.push(v);
-                    O[v] = p; U[p].push_back(v);
-                    M[p] = max(M[p], v);
+                    vis[v] = true;
+                    to_vis.push(v);
+                    comp.push_back(v);
                 }
             }
         }
-    }
-    static char R[MAX];
-    static char MC[MAX], ML[MAX];
-    char* C = MC, *L = ML;
-    for(uint32_t s = 0; s < (1u << n); s++)
-    {
-        uint32_t a = 0;
-        for(uint32_t i = 0; i < n; i++)
-            if(s & (1u << i))
-                C[i] = 'A', BIT_SET(a, i);
-            else
-                C[i] = 0;
-        bool ok = true;
-        for(uint32_t u = 0; u < n; u++)
+        sort(comp.begin(), comp.end());
+        for(uint32_t i = 0; i < comp.size(); i++)
+            comp_i[comp[i]] = i;
+        static char M_curr_result[MAX], M_conn_result[MAX];
+        char *curr_result = M_curr_result, *conn_result = M_conn_result;
+        bool has_any = false;
+        for(uint32_t mask = 0; mask < (1u << comp.size()); mask++)
         {
-            if(C[u] != 0)
+            for(uint32_t i = 0; i < comp.size(); i++)
             {
-                if((a & Q[u]) != 0)
-                {
-                    ok = false;
-                    break;
-                }
-            }
-        }
-        if(not ok)
-            continue;
-        for(uint32_t p = 0; p < n; p++)
-        {
-            if(C[p] != 0)
-                continue;
-            bool flag = false;
-            for(uint32_t u : U[O[p]])
-            {
-                if(s == 0 or ((s-1) & (1u << u)) != (s & (1u << u)))
-                {
-                    flag = true;
-                    break;
-                }
-            }
-            if(not flag)
-            {
-                if(LS[O[p]])
-                {
-                    for(uint32_t u : U[O[p]])
-                        C[u] = L[u];
-                    continue;
-                }
+                if(mask & (1u << i))
+                    curr_result[i] = 'A';
                 else
+                    curr_result[i] = 0;
+            }
+            for(uint32_t i = 0; i < comp.size(); i++)
+            {
+                if(curr_result[i] == 'A')
+                    for(uint32_t v : graph[comp[i]])
+                        if(curr_result[i] == curr_result[comp_i[v]])
+                            goto fail;
+            }
+            for(uint32_t s = 0; s < comp.size(); s++)
+            {
+                if(curr_result[s] != 0)
+                    continue;
+                stack<uint32_t> to_vis;
+                to_vis.push(s);
+                curr_result[s] = 'B';
+                while(not to_vis.empty())
                 {
-                    ok = false;
-                    break;
+                    uint32_t u = to_vis.top(); to_vis.pop();
+                    for(uint32_t v : graph[comp[u]])
+                    {
+                        v = comp_i[v];
+                        if(curr_result[v] == curr_result[u])
+                            goto fail;
+                        else if(curr_result[v] == 0)
+                        {
+                            curr_result[v] = (curr_result[u] == 'B') ? 'C' : 'B';
+                            to_vis.push(v);
+                        }
+                    }
                 }
             }
-            static uint32_t S[MAX]; uint32_t si = 0;
-            S[si++] = p;
-            C[p] = 'B';
-            while(si)
+            if(not has_any)
             {
-                uint32_t u = S[si-1]; si--;
-                for(uint32_t v : G[u])
+                swap(curr_result, conn_result);
+                has_any = true;
+            }
+            else
+            {
+                if(lexicographical_compare(
+                    curr_result, curr_result + comp.size(),
+                    conn_result, conn_result + comp.size()))
                 {
-                    if(C[v] == C[u])
-                    {
-                        ok = false;
-                        break;
-                    }
-                    else if(C[v] == 0)
-                    {
-                        if(C[u] == 'C')
-                            C[v] = 'B';
-                        else if(C[u] == 'B')
-                            C[v] = 'C';
-                        S[si++] = v;
-                    }
+                    swap(curr_result, conn_result);
                 }
             }
-            if(not ok)
-            {
-                LS[O[p]] = false;
-                break;
-            }
-            else if(p == M[O[p]])
-            {
-                LS[O[p]] = true;
-                for(uint32_t u : U[O[p]])
-                    L[u] = C[u];
-            }
+        fail:;
         }
-        if(not ok)
-            continue;
-        else
-        {
-            if(R[0]==0 or lexicographical_compare(C, C+n, R, R+n))
-                copy(C, C+n, R);
-            for(uint32_t i = 0; i < n; i++)
-                if(C[i] == 'B') C[i] = 'C';
-                else if(C[i] == 'C') C[i] = 'B';
-            if(lexicographical_compare(C, C+n, R, R+n))
-                copy(C, C+n, R);
-        }
+        if(not has_any)
+            goto total_fail;
+        for(uint32_t i = 0; i < comp.size(); i++)
+            final_result[comp[i]] = conn_result[i];
     }
-    if(R[0] != 0)
-    {
-        for(uint32_t i = 0; i < n; i++)
-            cout << R[i];
-    }
-    else
-        cout << "NIE";
+    for(uint32_t i = 0; i < n; i++)
+        cout << final_result[i];
+    return 0;
+total_fail:
+    cout << "NIE";
 }
