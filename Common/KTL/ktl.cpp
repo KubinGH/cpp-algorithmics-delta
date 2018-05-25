@@ -1,8 +1,11 @@
 #include <bits/stdc++.h>
 
+// Kubin's Template Library (tm)
+
 using namespace std;
 
 // Value scaler
+// Map-based instead of overwrite
 template<typename T, size_t N>
 struct value_scaler
 {
@@ -64,6 +67,7 @@ struct disjoint_set
 };
 
 // Segment tree, point set, interval query
+// Note: root in 0
 template<typename T, size_t N, T(*F)(T, T), T NONE>
 struct segment_tree
 {
@@ -191,6 +195,7 @@ struct segment_tree_intervalop
 };
 
 // Hashing
+// Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33
 template<typename T, T MOD, T BASE, size_t N>
 struct basehash
 {
@@ -227,6 +232,7 @@ struct basehash
 };
 
 // Binary search
+// Note: faster than STL's std::lower_bound, std::upper_bound
 uint32_t own_lower_bound(uint32_t A[], size_t n, uint32_t a)
 {
     uint32_t lo = 0, hi = n;
@@ -293,13 +299,17 @@ double function_maximum(double(*F)(double), double lo, double hi,
 
 
 // LCA and jump pointers
+// Construction
+// (assumes current vertex v, and none value -1u):
 /*
+```
 for(uint32_t i = 1; i < JUMP_POINTERS; i++)
 {
     uint32_t x = J[v][i-1];
     if(x == -1u) break;
     J[v][i] = J[x][i-1];
 }
+```
 */
 template<size_t JUMP_POINTERS, size_t MAX>
 uint32_t lca(const array<array<uint32_t, JUMP_POINTERS>, MAX>& J,
@@ -328,11 +338,15 @@ constexpr T log2floor(T n)
     return (numeric_limits<T>::digits-1) - __builtin_clz(n);
 }
 
-template<typename T, T(*F)(T, T), size_t N>
+// Fenwick tree - O(2n) = O(n) construction, O(1) queries.
+// Note: memory usage is not optimized in this implementation
+// (O(n log n) instead of O(n))
+// A.k.a. power tree.
+// Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
+// Examples: min, max, and, or
+template<typename T, size_t N, T(*F)(T, T)>
 struct fenwick_tree
 {
-    // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
-    // Examples: min, max, and, or
     size_t n, t;
     array<array<T, N>, log2floor(N)+1> A;
     template<typename Iterator>
@@ -353,6 +367,16 @@ struct fenwick_tree
         return F(A[p][a], A[p][b + 1 - (1 << p)]);
     }
 };
+
+// Randomization utility
+// random_device{}() - randomizes seed
+// uniform_int_distribution<T>{a, b} - uses the generator.
+//      should probably be constructed once?
+// Works on any range contained in numeric_limits<T>::min(), ~::max()
+mt19937 gen{random_device{}()};
+template<typename T>
+T randint(T a, T b)
+    { return uniform_int_distribution<T>{a, b}(gen); }
 
 int main()
 {
