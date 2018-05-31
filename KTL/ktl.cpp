@@ -348,10 +348,79 @@ struct fenwick_tree
     }
 };
 
+// Matrices
+template<typename T, size_t W, size_t H, T MOD = 0>
+struct matrix
+{
+    T A[W*H];
+    matrix() { fill(A, A+W*H, 0); }
+    matrix(const T(&Q)[W*H])
+    {
+        size_t i = 0;
+        for(size_t y = 0; y < H; y++)
+            for(size_t x = 0; x < W; x++, i++)
+                (*this)(x, y) = Q[i];
+    }
+    T& operator() (size_t x, size_t y) { return A[W*y+x]; }
+    T& operator[] (size_t i) { return A[i]; }
+    template<size_t L>
+    matrix<T, L, H, MOD> operator* (matrix<T, L, W, MOD>& o)
+    {
+        matrix<T, L, H, MOD> r;
+        for(size_t x = 0; x < L; x++)
+          for(size_t y = 0; y < H; y++)
+            for(size_t i = 0; i < W; i++)
+        {
+            r(x, y) += (*this)(i, y) * o(x, i);
+            if(MOD != 0)
+                r(x, y) %= MOD;
+        }
+        return r;
+    }
+    matrix& operator*= (matrix& o)
+        { return (*this = operator*(o)); }
+    template<typename PT>
+    matrix<T, W, H, MOD> operator^ (PT p)
+    {
+        static_assert(W == H, "Matrix power is only defined for square matrices");
+        matrix<T, W, H, MOD> r, a;
+        if(p > 0)
+            r = a = *this;
+        while(p)
+        {
+            if(p % 2 == 1)
+                r *= a;
+            p /= 2;
+            a *= a;
+        }
+        return r;
+    }
+    template<typename PT>
+    matrix& operator^= (PT p)
+        { return (*this = operator^(p)); }
+    void print()
+    {
+        cout << "[" << endl;
+        for(uint32_t y = 0; y < H; y++, cout << endl)
+        {
+            cout << " ";
+            for(uint32_t x = 0; x < W; x++)
+                cout << (*this)(x, y) << " ";
+        }
+        cout << "]" << endl;
+    }
+};
 
-uint32_t max_u32(uint32_t a, uint32_t b) { return a>b ? a : b; }
+
+mt19937 gen{random_device{}()};
+template<typename T>
+T randint(T a, T b) { return uniform_int_distribution<T>{a, b}(gen); }
+
 int main()
 {
     cout << "Transmission interpreted successfully" << endl;
+    matrix<int, 2, 5> A({2, 3, 1, 2, 4, 5, 6, 7, 8, 0});
+    matrix<int, 3, 2> B({-2, 0, 2, 1, -1, 3});
+    (A*B).print();
 }
 /* End transmission */
