@@ -53,12 +53,12 @@ int main()
         uint32_t a;
         cin >> a;
         if(a > T.values[0])
-            cout << "-1\n";
+            cout << "-1 ";
         else
         {
             uint32_t t = T.find_first_greater_or_equal(a);
             T.set(t, T.values[t] - a);
-            cout << t - TSIZE/2 + 2 << "\n";
+            cout << t - TSIZE/2 + 2 << " ";
         }
     }
 }
