@@ -2,7 +2,7 @@ from gamma import TestFramework, call_with_io
 from random import randint
 import io
 
-BRUTE_COMMAND = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Złota skrzynia\zlo.exe"
+BRUTE_COMMAND = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Złota skrzynia\zlo.exe"
 
 class GoldenTester(TestFramework):
     save_tests = True

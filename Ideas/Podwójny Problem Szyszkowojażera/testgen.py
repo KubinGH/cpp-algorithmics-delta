@@ -10,8 +10,8 @@ class PPSTestFramework(gamma.TestFramework):
     filename_pattern = "tests/testg{i}.{ext}"
     iterable = range(10)
 
-    brute_path = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Podwójny problem szyszkowojażera\model\pps-brute.exe"
-    model_path = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Podwójny problem szyszkowojażera\model\pps.exe"
+    brute_path = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Podwójny Problem Szyszkowojażera\model\pps-brute.exe"
+    model_path = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Podwójny Problem Szyszkowojażera\model\pps.exe"
 
     n = 16
     bounds = (-1000, 1000)

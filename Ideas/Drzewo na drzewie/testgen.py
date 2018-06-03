@@ -10,8 +10,8 @@ class DnDTestFramework(gamma.TestFramework):
     filename_pattern = "tests/teste{i}.{ext}"
     iterable = range(4)
 
-    brute_path = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Drzewo na drzewie\model\dnd-brute.exe"
-    model_path = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Drzewo na drzewie\model\dnd.exe"
+    brute_path = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Drzewo na drzewie\model\dnd-brute.exe"
+    model_path = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Drzewo na drzewie\model\dnd.exe"
 
     n = 30000
     def generate_test(self, n=n):

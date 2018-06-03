@@ -10,8 +10,8 @@ class BitsTestFramework(gamma.TestFramework):
     filename_pattern = "tests/teste{i}.{ext}"
     iterable = range(2)
 
-    brute_path = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Bity\model\bity-brute.exe"
-    model_path = r"C:\Users\Admin\Desktop\Pomysły na Zadanka\Bity\model\bity.exe"
+    brute_path = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Bity\model\bity-brute.exe"
+    model_path = r"C:\Users\Admin\Documents\GitHub\cpp-algorithmics-delta\Ideas\Bity\model\bity.exe"
 
     n = 10**5
     q = 5*10**5
