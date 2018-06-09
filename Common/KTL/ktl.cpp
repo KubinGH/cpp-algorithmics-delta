@@ -380,6 +380,7 @@ template<typename T>
 T randint(T a, T b)
     { return uniform_int_distribution<T>{a, b}(gen); }
 
+
 template<typename T, size_t W, size_t H, T MOD = 0>
 struct matrix
 {
