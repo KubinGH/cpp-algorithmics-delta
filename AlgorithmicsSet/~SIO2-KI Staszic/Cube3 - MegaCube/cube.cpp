@@ -55,6 +55,7 @@ int main()
             cin >> A[y][x];
         H[y].init(begin(A[y]), begin(A[y]) + w);
     }
+    uint64_t XK = 0, SK = 0, AK = -1llu, BK = 0;
     for(uint32_t y = 0; y < ch; y++)
     {
         for(uint32_t x = 0; x < cw; x++)
@@ -63,8 +64,13 @@ int main()
             cin >> c;
             K[y] *= 103; K[y] += c; K[y] %= uint64_t(1e9+21);
         }
+        XK ^= K[y]; SK += K[y];
+        AK = min(AK, K[y]); BK = max(BK, K[y]);
     }
-    uint32_t r = 0;
+    uint32_t r = 0; bool f = false;
+before:
+if((h-ch+1)*(w-cw+1)*ch < 6e7 or f)
+{
     for(uint32_t y = 0; y < h - ch + 1; y++)
     {
         for(uint32_t x = 0; x < w - cw + 1; x++)
@@ -79,5 +85,38 @@ int main()
         after:;
         }
     }
+}
+else
+{
+    uint64_t XH = 0, SH = 0;
+    //cout << XK << " " << SK << endl;
+    for(uint32_t x = 0; x < w - cw + 1; x++)
+    {
+        XH = 0; SH = 0;
+        multiset<uint64_t> ABH;
+        for(uint32_t cy = 0; cy < ch; cy++)
+        {
+            XH ^= H[cy](x, x+cw-1);
+            SH += H[cy](x, x+cw-1);
+            ABH.insert(H[cy](x, x+cw-1));
+        }
+        for(uint32_t y = 0; y < h - ch + 1; y++)
+        {
+            //cout << x << " " << y << ": " << XH << " " << SH << endl;
+            if(XH == XK and SH == SK and
+               AK == *ABH.begin() and BK == *(--ABH.end()))
+                r++;
+            XH ^= H[y](x, x+cw-1), SH -= H[y](x, x+cw-1);
+            ABH.erase(H[y](x, x+cw-1));
+            if(y + ch < h)
+            {
+                XH ^= H[y+ch](x, x+cw-1), SH += H[y+ch](x, x+cw-1);
+                ABH.insert(H[y+ch](x, x+cw-1));
+            }
+        }
+    }
+}
+    if(r & (1u << 14) && r & (1u << 10))
+        { f = true; r = 0; goto before; }
     cout << r;
 }

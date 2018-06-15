@@ -122,3 +122,11 @@ Model:
     * bez Fenwicka: O(n + n * C * C/3), czyli 10^5 * 333 * 111 ~=\/ 3e9 
     * Teoretycznie da siê to zrobiæ bez Fenwicka, ale powinno byæ bardzo trudno 
       (kolejka monotoniczna? drzewo przedzia³owe daje mno¿nik ~x10 i spora sta³¹)
+      
+--- === ---
+
+6. Z³oty postêp
+
+~ ~ ~
+
+--- === ---

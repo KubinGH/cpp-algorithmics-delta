@@ -145,7 +145,7 @@ struct segment_tree_i
     size_t parent(size_t i) const { return (i - 1) / 2; }
     size_t left(size_t i) const { return 2 * i + 1; }
     size_t right(size_t i) const { return 2 * i + 2; }
-    segment_tree_intervalop()
+    segment_tree_i()
     {
         fill(values.begin() + offset(), values.end(), NONE);
         for(size_t i = offset(); i --> 0;)

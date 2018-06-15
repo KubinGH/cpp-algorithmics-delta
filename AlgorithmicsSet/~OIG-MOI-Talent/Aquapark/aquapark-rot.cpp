@@ -11,7 +11,6 @@ uint64_t sum(const uint64_t S[MAX+1][MAX+1],
 {
     x1 = clamp(x1); x2 = clamp(x2);
     y1 = clamp(y1); y2 = clamp(y2);
-    //cout << "sum " << x1 << " " << y1 << " " << x2 << " " << y2 << endl;
     return (S[y2+1][x2+1] + S[y1][x1] - S[y2+1][x1] - S[y1][x2+1]);
 }
 
@@ -32,12 +31,6 @@ int main()
             A[y_transform(x, y)][x_transform(x, y)] = v;
         }
     }
-    //for(uint32_t y = 0; y < 2*n-1; y++)
-    //{
-    //    for(uint32_t x = 0; x < 2*n-1; x++)
-    //        cout << A[y][x] << " ";
-    //    cout << endl;
-    //}
     for(uint32_t y = 1; y <= MAX; y++) for(uint32_t x = 1; x <= MAX; x++)
         S[y][x] = S[y-1][x] + S[y][x-1] + A[y-1][x-1] - S[y-1][x-1];
     for(uint32_t i = 0; i < r; i++)
@@ -45,7 +38,6 @@ int main()
         uint32_t cx, cy; int32_t k;
         cin >> cy >> cx >> k; cx--; cy--;
         int32_t x = x_transform(cx, cy), y = y_transform(cx, cy);
-        //cout << x << " " << y << " " << k << endl;
         cout << sum(S, x-k, y-k, x+k, y+k) << "\n";
         //cout << endl;
     }
