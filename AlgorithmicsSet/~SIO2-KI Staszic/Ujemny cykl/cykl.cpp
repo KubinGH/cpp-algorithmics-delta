@@ -2,72 +2,67 @@
 
 using namespace std;
 
-typedef pair<uint32_t, uint32_t> pair_u32;
-
 const size_t MAX = 5000, MAX_E = 10000;
-
-stack<uint32_t> S;
-array<bool, MAX> V;
-static array<vector<pair_u32>, MAX> G;
-
-bool dfs(uint32_t u, uint32_t target)
-{
-    //cout << "dfs(" << u+1 << ", " << target+1 << ")" << endl;
-    if(u == target)
-        return true;
-    for(pair_u32 e : G[u])
-    {
-        uint32_t v = e.first, i = e.second;
-        if(not V[v])
-        {
-            V[v] = true;
-            S.push(i);
-            //cout << u+1 << " -> " << v+1 << endl;
-            if(dfs(v, target))
-                return true;
-            else
-                S.pop();
-        }
-    }
-    return false;
-}
 
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     uint32_t n, m;
     cin >> n >> m;
-    static array<pair_u32, MAX_E> E;
-    queue<uint32_t> Q;
+    static unordered_map<uint32_t, int64_t> W[MAX];
+    static unordered_map<uint32_t, uint32_t> trans[MAX];
+    vector<tuple<uint32_t, uint32_t, int64_t>> edges;
     for(uint32_t i = 0; i < m; i++)
     {
-        uint32_t u, v; int32_t c;
+        uint32_t u, v; int64_t c;
         cin >> u >> v >> c; u--; v--;
-        G[u].emplace_back(v, i);
-        if(c < 0)
-            Q.push(i);
-        E[i].first = u, E[i].second = v;
-    }
-    while(not Q.empty())
-    {
-        uint32_t u = E[Q.front()].first, v = E[Q.front()].second;
-        V.fill(false);
-        while(not S.empty()) S.pop();
-        V[v] = true;
-        if(dfs(v, u))
+        if(W[u].find(v) == W[u].end())
         {
-            cout << "TAK" << '\n';
-            cout << S.size() + 1 << " ";
-            stack<uint32_t> temp;
-            while(not S.empty())
-                temp.push(S.top()), S.pop();
-            cout << Q.front()+1 << " ";
-            while(not temp.empty())
-                cout << temp.top()+1 << " ", temp.pop();
-            //cout << endl;
-            return 0;
+            W[u][v] = c;
+            edges.emplace_back(u, v, c);
+            trans[u][v] = i;
         }
-        Q.pop();
+        else if(c < W[u][v])
+        {
+            W[u][v] = c;
+            get<2>(edges[trans[u][v]]) = c;
+        }
     }
-    cout << "NIE";
+    uint32_t x = -1u;
+    static int64_t D[MAX];
+    static uint32_t P[MAX];
+    fill(P, P + n, -1u);
+    for(uint32_t i = 0; i < n; i++)
+    {
+        x = -1u;
+        for(auto e : edges)
+        {
+            uint32_t u, v; int64_t w;
+            tie(u, v, w) = e;
+            if(D[u] + w < D[v])
+            {
+                D[v] = D[u] + w;
+                P[v] = u;
+                x = v;
+            }
+        }
+    }
+    if(x == -1u)
+        cout << "NIE";
+    else
+    {
+        for(uint32_t i = 0; i < n; i++)
+            x = P[x];
+        vector<uint32_t> cycle;
+        for(uint32_t u = x;; u = P[u])
+        {
+            cycle.push_back(u);
+            if(u == x and cycle.size() > 1)
+                break;
+        }
+        reverse(cycle.begin(), cycle.end());
+        cout << "TAK\n" << cycle.size()-1 << " ";
+        for(uint32_t i = 0; i < cycle.size() - 1; i++)
+            cout << trans[cycle[i]][cycle[i+1]]+1 << " ";
+    }
 }
