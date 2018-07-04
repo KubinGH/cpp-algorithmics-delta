@@ -8,23 +8,26 @@ template<typename T, size_t W, size_t H, T MOD = 0>
 struct matrix
 {
     T A[W*H];
+    size_t w = W, h = H;
     matrix() { fill(A, A+W*H, 0); }
     matrix(const T(&Q)[W*H])
     {
         size_t i = 0;
-        for(size_t y = 0; y < H; y++)
-            for(size_t x = 0; x < W; x++, i++)
+        for(size_t y = 0; y < h; y++)
+            for(size_t x = 0; x < w; x++, i++)
                 (*this)(x, y) = Q[i];
     }
-    T& operator() (size_t x, size_t y) { return A[W*y+x]; }
+    T& operator() (size_t x, size_t y) { return A[w*y+x]; }
     T& operator[] (size_t i) { return A[i]; }
     template<size_t L>
     matrix<T, L, H, MOD> operator* (matrix<T, L, W, MOD>& o)
     {
         matrix<T, L, H, MOD> r;
-        for(size_t x = 0; x < L; x++)
-          for(size_t y = 0; y < H; y++)
-            for(size_t i = 0; i < W; i++)
+        r.w = o.w; r.h = h;
+        uint32_t l = o.w;
+        for(size_t x = 0; x < l; x++)
+          for(size_t y = 0; y < h; y++)
+            for(size_t i = 0; i < w; i++)
         {
             r(x, y) += (*this)(i, y) * o(x, i);
             if(MOD != 0)
@@ -38,6 +41,7 @@ struct matrix
     matrix<T, W, H, MOD> operator^ (PT p)
     {
         matrix<T, W, H, MOD> r, a;
+        r.w = w; r.h = h; a.w = w; a.h = h;
         if(p > 0)
             r = a = *this;
         while(p)
@@ -58,7 +62,7 @@ struct matrix
         for(uint32_t y = 0; y < H; y++, cout << endl)
         {
             cout << " ";
-            for(uint32_t x = 0; x < W; x++)
+            for(uint32_t x = 0; x < w; x++)
                 cout << (*this)(x, y) << " ";
         }
         cout << "]" << endl;
@@ -74,6 +78,7 @@ int main()
     uint32_t n, m, z;
     cin >> n >> m >> z;
     static matrix_t graph;
+    graph.w = n; graph.h = n;
     for(uint32_t i = 0; i < m; i++)
     {
         uint32_t u, v;

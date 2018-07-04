@@ -6,30 +6,13 @@ using namespace std;
 const size_t MAX_AB = 20, MAX_W = 10, MAX_H = 100;
 const uint32_t MOD = 1e9 + 7;
 
-uint64_t fast_pow(uint64_t a, uint64_t b)
-{
-    uint64_t r = 1;
-    while(b)
-    {
-        if(b % 2 == 1)
-            r *= a, r %= MOD;
-        b /= 2;
-        a *= a; a %= MOD;
-    }
-    return r;
-}
-uint64_t inv_mod(uint64_t x) { return fast_pow(x % MOD, MOD - 2); }
 uint32_t bit_get(uint32_t x, uint32_t i) { return x & (1u << i); }
 uint32_t bit_set0(uint32_t x, uint32_t i) { return x & ~(1u << i); }
 uint32_t bit_set1(uint32_t x, uint32_t i) { return x | (1u << i); }
 
 int main()
 {
-  //ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-  static uint64_t F[MAX_W*MAX_H];
-  F[0] = 1;
-  for(uint64_t i = 1; i < MAX_W*MAX_H; i++)
-      F[i] = (F[i-1] * i) % uint64_t(MOD);
+  ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
   uint32_t t;
   cin >> t;
   while(t --> 0)
@@ -37,7 +20,6 @@ int main()
     uint32_t h, w, a, b;
     cin >> h >> w >> a >> b;
     static uint32_t block[MAX_H];
-    uint32_t total_free = 0;
     for(uint32_t y = 0; y < h; y++)
     {
         block[y] = 0;
@@ -47,49 +29,75 @@ int main()
             cin >> c;
             if(c == '0')
                 block[y] = bit_set1(block[y], x);
-            else
-                total_free++;
         }
     }
-    static uint32_t D[MAX_AB+1][MAX_H][1u << MAX_W];
-    for(uint32_t c = 0; c <= b; c++)
-      for(uint32_t y = 0; y < h; y++)
-        for(uint32_t m = 0; m < (1u << w); m++)
+    static vector<uint32_t> T[1u << MAX_W];
+    for(uint32_t m = 0; m < (1u << w); m++)
     {
-        uint32_t& d = D[c][y][m];
-        d = 0;
-        if(m & block[y])
-            continue;
-        if(c == 0 and y == 0 and m == 0)
-            { d = 1; continue; }
-        if(c > 0) for(uint32_t x = 0; x < w; x++)
+        T[m].clear();
+        stack<pair<uint32_t, uint32_t>> rec; // f(n) = f(n-2) + f(n-1)
+        rec.emplace(0, m);
+        while(not rec.empty())
         {
-            if(bit_get(m, x))
-                d += D[c-1][y][bit_set0(m, x)], d %= MOD;
+            auto p = rec.top(); rec.pop();
+            uint32_t x, mx; tie(x, mx) = p;
+            if(x == w)
+            {
+                T[m].push_back(mx);
+                continue;
+            }
+            if(bit_get(mx, x) and bit_get(mx, x+1))
+                rec.emplace(x+2, bit_set0(bit_set0(mx, x), x+1));
+            rec.emplace(x+1, mx);
         }
-        for(uint32_t x = 0; x < w - 1; x++)
+    }
+    // vertical, single, horizontal
+    static uint64_t A[MAX_H][1u << MAX_W][MAX_AB+1], B[MAX_H][1u << MAX_W][MAX_AB+1][MAX_W+1], C[MAX_H][1u << MAX_W][MAX_AB+1];
+    for(uint32_t y = 0; y < h; y++)
+    {
+        if(y == 0)
+            A[0][0][0] = 1;
+        else if(y > 0)
         {
-            if(bit_get(m, x) and bit_get(m, x+1))
-                d += D[c][y][bit_set0(bit_set0(m, x), x+1)], d %= MOD;
+            for(uint32_t m = 0; m < (1u << w); m++)
+            {
+                if((m & (block[y] | block[y-1])) == 0)
+                    for(uint32_t c = 0; c <= b; c++)
+                        A[y][m][c] = C[y-1][m ^ filled_row(y-1)][c] % MOD;
+                else
+                    for(uint32_t c = 0; c <= b; c++)
+                        A[y][m][c] = 0;
+            }
         }
-        if(y > 0 and (filled_row(y-1) & m) == m)
+        for(uint32_t m = 0; m < (1u << w); m++)
         {
-            d += D[c][y-1][filled_row(y-1) ^ m];
-            d %= MOD;
+            for(uint32_t c = 0; c <= b; c++)
+                B[y][m][c][0] = A[y][m][c];
+            for(uint32_t x = 1; x <= w; x++)
+            {
+                for(uint32_t c = 0; c <= b; c++)
+                    B[y][m][c][x] = B[y][m][c][x-1];
+                if(bit_get(m, x-1))
+                {
+                    for(uint32_t c = 1; c <= b; c++)
+                        B[y][m][c][x] += B[y][bit_set0(m, x-1)][c-1][x-1];
+                }
+            }
         }
-        //cout << c << "@" << y << ":" << m << " := " << d << endl;
+        for(uint32_t m = 0; m < (1u << w); m++)
+        {
+            for(uint32_t c = 0; c <= b; c++)
+                C[y][m][c] = 0;
+            if((m & block[y]) != 0)
+                continue;
+            for(uint32_t mx : T[m])
+                for(uint32_t c = 0; c <= b; c++)
+                    C[y][m][c] += B[y][mx][c][w];
+        }
     }
     uint64_t R = 0;
-    for(uint32_t c = a; c <= b and c <= total_free; c++)
-    {
-        //R += (uint64_t(D[c][h-1][filled_row(h-1)])
-        //      * inv_mod(F[c] * F[(total_free - c) / 2]))
-        //      % uint64_t(MOD);
-        R += D[c][h-1][filled_row(h-1)];
-        R %= MOD;
-        cout << c << ": " << D[c][h-1][filled_row(h-1)] << endl;
-
-    }
-    cout << R << endl;
+    for(uint32_t c = a; c <= b; c++)
+        R += C[h-1][filled_row(h-1)][c];
+    cout << R%MOD << "\n";
   }
 }

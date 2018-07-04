@@ -52,8 +52,7 @@ int main()
         {
             uint32_t d = (lo+hi)/2;
             result = max(result, get(i, (i+d)%n));
-            if((d == 0 or get(i, (i+d-1)%n) <= get(i, (i+d)%n)) and
-               (d == n-1 or get(i, (i+d+1)%n) >= get(i, (i+d)%n)))
+            if(d == 0 or get(i, (i+d-1)%n) <= get(i, (i+d)%n))
                 lo = d + 1;
             else
                 hi = d;

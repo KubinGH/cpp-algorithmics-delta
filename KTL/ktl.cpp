@@ -1,9 +1,11 @@
-/* Begin transmission */
 #include <bits/stdc++.h>
+
+// Kubin's Template Library (tm)
 
 using namespace std;
 
 // Value scaler
+// Map-based instead of overwrite
 template<typename T, size_t N>
 struct value_scaler
 {
@@ -65,7 +67,8 @@ struct disjoint_set
 };
 
 // Segment tree, point set, interval query
-template<typename T, T(*F)(T, T), T NONE, size_t N>
+// Note: root in 0
+template<typename T, size_t N, T(*F)(T, T), T NONE>
 struct segment_tree
 {
     array<T, N> values;
@@ -123,10 +126,18 @@ struct segment_tree
 // Segment tree, interval set, interval query
 // (set new max on interval)
 // Designed with customability in mind
+// F: vertex value function for values of children.
 // P: apply changes from to_set. If to_set is SET_NONE, it should do nothing.
-template<typename T, T(*F)(T, T), T NONE, size_t N, T SET_NONE,
-        void(*P)(size_t, size_t, size_t, array<T, N>&, array<T, N>&)>
-struct segment_tree_intervalop
+// S: merge set values, e.g. during add this function is addition,
+//    and during set-max this is maximum.
+//    NOTE: F is used by default, but will not be enough in many cases.
+//          (e.g. in a add-interval/max tree)
+//    Note that the previous set value is the first argument,
+//    and the new is second.
+template<typename T, size_t N, T(*F)(T, T), T NONE,
+        void(*P)(size_t, size_t, size_t, array<T, N>&, array<T, N>&), T SET_NONE,
+        T(*S)(T, T) = F>
+struct segment_tree_i
 {
     array<T, N> values, to_set;
     static_assert(__builtin_popcount(N) == 1 and N > 4, "N != 2**k");
@@ -134,7 +145,7 @@ struct segment_tree_intervalop
     size_t parent(size_t i) const { return (i - 1) / 2; }
     size_t left(size_t i) const { return 2 * i + 1; }
     size_t right(size_t i) const { return 2 * i + 2; }
-    segment_tree_intervalop()
+    segment_tree_i()
     {
         fill(values.begin() + offset(), values.end(), NONE);
         for(size_t i = offset(); i --> 0;)
@@ -143,10 +154,11 @@ struct segment_tree_intervalop
     }
     void pull(size_t i, size_t tbegin, size_t tend)
     {
-        if(to_set[i] == SET_NONE)
-            return;
-        P(i, tbegin, tend, values, to_set);
-        to_set[i] = SET_NONE;
+        if(to_set[i] != SET_NONE)
+        {
+            P(i, tbegin, tend, values, to_set);
+            to_set[i] = SET_NONE;
+        }
     }
     void set(size_t i, size_t tbegin, size_t tend,
                        size_t sbegin, size_t send, T value)
@@ -156,7 +168,7 @@ struct segment_tree_intervalop
             return;
         else if(sbegin <= tbegin and tend <= send)
         {
-            to_set[i] = F(to_set[i], value);
+            to_set[i] = S(to_set[i], value);
             pull(i, tbegin, tend);
         }
         else
@@ -185,6 +197,7 @@ struct segment_tree_intervalop
 };
 
 // Hashing
+// Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33
 template<typename T, T MOD, T BASE, size_t N>
 struct basehash
 {
@@ -221,6 +234,7 @@ struct basehash
 };
 
 // Binary search
+// Note: faster than STL's std::lower_bound, std::upper_bound
 uint32_t own_lower_bound(uint32_t A[], size_t n, uint32_t a)
 {
     uint32_t lo = 0, hi = n;
@@ -287,13 +301,17 @@ double function_maximum(double(*F)(double), double lo, double hi,
 
 
 // LCA and jump pointers
+// Construction
+// (assumes current vertex v, and none value -1u):
 /*
+```
 for(uint32_t i = 1; i < JUMP_POINTERS; i++)
 {
     uint32_t x = J[v][i-1];
     if(x == -1u) break;
     J[v][i] = J[x][i-1];
 }
+```
 */
 template<size_t JUMP_POINTERS, size_t MAX>
 uint32_t lca(const array<array<uint32_t, JUMP_POINTERS>, MAX>& J,
@@ -322,11 +340,15 @@ constexpr T log2floor(T n)
     return (numeric_limits<T>::digits-1) - __builtin_clz(n);
 }
 
-template<typename T, T(*F)(T, T), size_t N>
+// Fenwick tree - O(2n) = O(n) construction, O(1) queries.
+// Note: memory usage is not optimized in this implementation
+// (O(n log n) instead of O(n))
+// A.k.a. power tree.
+// Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
+// Examples: min, max, and, or
+template<typename T, size_t N, T(*F)(T, T)>
 struct fenwick_tree
 {
-    // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
-    // Examples: min, max, and, or
     size_t n, t;
     array<array<T, N>, log2floor(N)+1> A;
     template<typename Iterator>
@@ -348,28 +370,42 @@ struct fenwick_tree
     }
 };
 
-// Matrices
+// Randomization utility
+// random_device{}() - randomizes seed
+// uniform_int_distribution<T>{a, b} - uses the generator.
+//      should probably be constructed once?
+// Works on any range contained in numeric_limits<T>::min(), ~::max()
+mt19937 gen{random_device{}()};
+template<typename T>
+T randint(T a, T b)
+    { return uniform_int_distribution<T>{a, b}(gen); }
+
+
 template<typename T, size_t W, size_t H, T MOD = 0>
 struct matrix
 {
     T A[W*H];
-    matrix() { fill(A, A+W*H, 0); }
-    matrix(const T(&Q)[W*H])
+    size_t w = W, h = H;
+    matrix(size_t w, size_t h) : w(w), h(h) { fill(A, A+w*h, 0); }
+    matrix() : matrix(W, H) {}
+    template<size_t AW, size_t AH>
+    matrix(const T(&Q)[AW][AH])
     {
         size_t i = 0;
-        for(size_t y = 0; y < H; y++)
-            for(size_t x = 0; x < W; x++, i++)
+        w = AW; h = AH;
+        for(size_t y = 0; y < AH; y++)
+            for(size_t x = 0; x < AW; x++, i++)
                 (*this)(x, y) = Q[i];
     }
-    T& operator() (size_t x, size_t y) { return A[W*y+x]; }
+    T& operator() (size_t x, size_t y) { return A[w*y+x]; }
     T& operator[] (size_t i) { return A[i]; }
     template<size_t L>
     matrix<T, L, H, MOD> operator* (matrix<T, L, W, MOD>& o)
     {
-        matrix<T, L, H, MOD> r;
-        for(size_t x = 0; x < L; x++)
-          for(size_t y = 0; y < H; y++)
-            for(size_t i = 0; i < W; i++)
+        matrix<T, L, H, MOD> r(o.w, h);
+        for(size_t x = 0; x < o.w; x++)
+          for(size_t y = 0; y < h; y++)
+            for(size_t i = 0; i < max(w, o.h); i++)
         {
             r(x, y) += (*this)(i, y) * o(x, i);
             if(MOD != 0)
@@ -382,7 +418,6 @@ struct matrix
     template<typename PT>
     matrix<T, W, H, MOD> operator^ (PT p)
     {
-        static_assert(W == H, "Matrix power is only defined for square matrices");
         matrix<T, W, H, MOD> r, a;
         if(p > 0)
             r = a = *this;
@@ -398,29 +433,10 @@ struct matrix
     template<typename PT>
     matrix& operator^= (PT p)
         { return (*this = operator^(p)); }
-    void print()
-    {
-        cout << "[" << endl;
-        for(uint32_t y = 0; y < H; y++, cout << endl)
-        {
-            cout << " ";
-            for(uint32_t x = 0; x < W; x++)
-                cout << (*this)(x, y) << " ";
-        }
-        cout << "]" << endl;
-    }
 };
 
-
-mt19937 gen{random_device{}()};
-template<typename T>
-T randint(T a, T b) { return uniform_int_distribution<T>{a, b}(gen); }
 
 int main()
 {
     cout << "Transmission interpreted successfully" << endl;
-    matrix<int, 2, 5> A({2, 3, 1, 2, 4, 5, 6, 7, 8, 0});
-    matrix<int, 3, 2> B({-2, 0, 2, 1, -1, 3});
-    (A*B).print();
 }
-/* End transmission */
