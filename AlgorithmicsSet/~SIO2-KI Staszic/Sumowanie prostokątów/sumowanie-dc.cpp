@@ -2,111 +2,44 @@
 
 using namespace std;
 
-const size_t PREALLOC_COUNT = 1 << 22;
-const uint32_t RANGE = 1 << 30;
+const size_t MAX = 1e5;
 
-struct treenode_t
+struct rect_t
 {
-    uint32_t value, to_add;
-    size_t tbegin, tend;
-    treenode_t *left, *right;
-    treenode_t() : left(nullptr), right(nullptr) {}
-    treenode_t* alloc_node()
-    {
-        static treenode_t prealloc[PREALLOC_COUNT];
-        static size_t i = 0;
-        if(i < PREALLOC_COUNT)
-            return prealloc + (i++);
-        else
-            return new treenode_t;
-    }
-    void create_left()
-    {
-        left = alloc_node();
-        left->tbegin = tbegin; left->tend = (tbegin+tend)/2;
-        left->value = 0; left->to_add = 0;
-    }
-    void create_right()
-    {
-        right = alloc_node();
-        right->tbegin = (tbegin+tend)/2+1; right->tend = tend;
-        right->value = 0; right->to_add = 0;
-    }
-    void pull()
-    {
-        if(to_add)
-        {
-            value += (tend - tbegin + 1) * to_add;
-            if(tbegin < tend)
-            {
-                if(left == nullptr)
-                    create_left();
-                if(right == nullptr)
-                    create_right();
-                left ->to_add += to_add;
-                right->to_add += to_add;
-            }
-            to_add = 0;
-        }
-    }
-    void add_interval(uint32_t sbegin, uint32_t send, uint32_t addvalue)
-    {
-        pull();
-        if(send < tbegin or tend < sbegin)
-            return;
-        else if(sbegin <= tbegin and tend <= send)
-        {
-            to_add += addvalue;
-            pull();
-        }
-        else
-        {
-            pull();
-            if(left == nullptr)
-                create_left();
-            left->add_interval(sbegin, send, addvalue);
-            if(right == nullptr)
-                create_right();
-            right->add_interval(sbegin, send, addvalue);
-            value = left->value + right->value;
-        }
-    }
-    uint32_t get(uint32_t sbegin, uint32_t send)
-    {
-        pull();
-        if(send < tbegin or tend < sbegin)
-            return 0;
-        else if(sbegin <= tbegin and tend <= send)
-            return value;
-        else
-        {
-            if(left == nullptr)
-                create_left();
-            if(right == nullptr)
-                create_right();
-            return left->get(sbegin, send) + right->get(sbegin, send);
-        }
-    }
+    uint32_t x1, y1, x2, y2;
+    rect_t() {}
+    rect_t(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) :
+        x1(x1), y1(y1), x2(x2), y2(y2) {}
 };
+typedef tuple<bool, rect_t, uint32_t> query_t;
 
-struct segment_tree
+query_t queries[MAX];
+uint32_t answers[MAX];
+
+void solve(uint32_t ibegin, uint32_t iend)
 {
-    treenode_t root;
-    segment_tree(size_t abegin, size_t aend)
-    {
-        root.tbegin = abegin; root.tend = aend;
-        root.value = 0; root.to_add = 0;
-    }
-    segment_tree() : segment_tree(0, RANGE) {}
-    void add_interval(uint32_t sbegin, uint32_t send, uint32_t addvalue)
-        { root.add_interval(sbegin, send, addvalue); }
-    uint32_t get(uint32_t sbegin, uint32_t send)
-        { return root.get(sbegin, send); }
-};
+    if(ibegin >= iend)
+        return;
+    uint32_t mid = (ibegin + iend) / 2;
+
+}
 
 
 int main()
 {
     uint32_t q;
-
+    cin >> q;
+    for(uint32_t i = 0; i < q; i++)
+    {
+        uint32_t t, x1, y1, x2, y2;
+        cin >> t >> x1 >> y1 >> x2 >> y2;
+        get<0>(queries[i]) = t - 1;
+        get<1>(queries[i]) = rect_t(x1, y1, x2, y2);
+        if(t == 2)
+            cin >> get<2>(queries[i]);
+    }
+    solve(0, q);
+    for(uint32_t i = 0; i < q; i++)
+        if(get<0>(queries[i]) == 1)
+            cout << answers[i] << "\n";
 }

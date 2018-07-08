@@ -51,7 +51,7 @@ int main()
     {
         uint64_t d[2] = {uint64_t(S[0] - '0'), uint64_t(S[1] - '0')};
         uint64_t r = -1llu;
-        for(uint32_t p = 1; p < 18; p++)
+        for(uint32_t p = 1; p < 17; p++)
         {
             for(uint32_t m = 0; m < (1u << p); m++)
             {
