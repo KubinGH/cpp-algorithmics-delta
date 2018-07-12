@@ -199,13 +199,13 @@ struct segment_tree_i
 // Hashing
 // Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33
 template<typename T, T MOD, T BASE, size_t N>
-struct basehash
+struct rolling_hash
 {
     T H[N];
     T base_pow[N];
     size_t n;
     template<typename Iterator>
-    basehash(Iterator begin, Iterator end, T fix = 0)
+    rolling_hash(Iterator begin, Iterator end, T fix = 0)
     {
         n = distance(begin, end);
         Iterator it = begin;
