@@ -66,11 +66,10 @@ int main()
         dams[h].emplace_back(y*width + x, (y+1)*width + x);
     }
     static disjoint_set dset(width * height);
-    for(pair<uint32_t, vector<pair_u32> > mpair : dams)
+    for(const auto& mpair : dams)
     {
         uint32_t cheight = mpair.first;
-        vector<pair_u32>& cdams = mpair.second;
-        for(pair_u32 p : cdams)
+        for(const auto& p : mpair.second)
             dset.unite(p.first, p.second, cheight);
     }
     uint32_t root = dset.find_root(0);

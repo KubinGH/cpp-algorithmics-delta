@@ -124,7 +124,7 @@ struct segment_tree
 
 
 // Segment tree, interval set, interval query
-// (set new max on interval)
+// (set new max on interval, query sum on interval)
 // Designed with customability in mind
 // F: vertex value function for values of children.
 // P: apply changes from to_set. If to_set is SET_NONE, it should do nothing.
