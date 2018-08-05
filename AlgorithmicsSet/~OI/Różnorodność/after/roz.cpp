@@ -20,10 +20,7 @@ void load_uint32(uint32_t* ptr)
 {
     char c;
     while('0' <= (c = getchar()) and c <= '9')
-    {
-        *ptr *= 10;
-        *ptr += c - '0';
-    }
+        *ptr *= 10, ptr += c - '0';
 }
 
 int main()

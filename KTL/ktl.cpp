@@ -390,13 +390,12 @@ struct matrix
     matrix(size_t w, size_t h) : w(w), h(h) { fill(A, A+w*h, 0); }
     matrix() : matrix(W, H) {}
     template<size_t AW, size_t AH>
-    matrix(const T(&Q)[AW][AH])
+    matrix(const T(&Q)[AH][AW])
     {
-        size_t i = 0;
         w = AW; h = AH;
         for(size_t y = 0; y < AH; y++)
-            for(size_t x = 0; x < AW; x++, i++)
-                (*this)(x, y) = Q[i];
+            for(size_t x = 0; x < AW; x++)
+                (*this)(x, y) = Q[y][x];
     }
     T& operator() (size_t x, size_t y) { return A[w*y+x]; }
     T& operator[] (size_t i) { return A[i]; }
@@ -470,4 +469,7 @@ vector<uint32_t> manacher(Iterator first, Iterator last, T leaf = '$')
 int main()
 {
     cout << "Transmission interpreted successfully" << endl;
+    matrix<uint64_t, 2, 2> M({{0LLU, 1LLU}, {5LLU, 3LLU}});
+    matrix<uint64_t, 1, 2> V({{1LLU}, {2LLU}});
+    cout << ((M^5) * V)(0, 0);
 }

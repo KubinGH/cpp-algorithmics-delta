@@ -1,17 +1,8 @@
-#include <bits/stdc++.h>
+#include <complex>
 #define X real()
 #define Y imag()
 
 using namespace std;
-
-template<typename T>
-istream& operator>> (istream& in, complex<T>& o)
-{
-    T x, y;
-    cin >> x >> y;
-    o = {x, y};
-    return in;
-}
 
 template<typename T>
 T cross(const complex<T>& a, const complex<T>& b)
@@ -47,20 +38,4 @@ bool intersects(const complex<T>& a, const complex<T>& b,
         return true;
     else
         return false;
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    uint32_t n;
-    cin >> n;
-    while(n --> 0)
-    {
-        complex<int64_t> a, b, c, d;
-        cin >> a >> b >> c >> d;
-        if(intersects(a, b, c, d))
-            cout << "TAK\n";
-        else
-            cout << "NIE\n";
-    }
 }
