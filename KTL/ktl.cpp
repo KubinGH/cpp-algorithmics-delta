@@ -248,19 +248,6 @@ uint32_t own_lower_bound(uint32_t A[], size_t n, uint32_t a)
     }
     return lo;
 }
-uint32_t own_upper_bound(uint32_t A[], size_t n, uint32_t a)
-{
-    uint32_t lo = 0, hi = n;
-    while(lo < hi)
-    {
-        uint32_t mid = (lo + hi) / 2;
-        if(A[mid] > a)
-            hi = mid;
-        else
-            lo = mid + 1;
-    }
-    return lo;
-}
 
 // Constants: pi, phi
 const long double A_PI = acos(-1.0L);

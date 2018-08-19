@@ -16,11 +16,11 @@ int main()
     static bitset<MAX> factors, is_prime, has_square;
     is_prime.set();
     is_prime[0] = is_prime[1] = false;
-    for(uint32_t i = 2; i <= (uint32_t)n; i++)
+    for(uint32_t i = 2; i <= (uint32_t)m; i++)
     {
         if(not is_prime[i])
             continue;
-        for(uint32_t x = 2*i; x <= (uint32_t)n; x += i)
+        for(uint32_t x = 2*i; x <= (uint32_t)m; x += i)
         {
             factors.flip(x);
             is_prime[x] = false;
@@ -29,7 +29,7 @@ int main()
         }
     }
     int64_t r = 2;
-    for(int64_t d = 1; d <= n; d++)
+    for(int64_t d = 1; d <= m; d++)
     {
         r += mobius(d) * (n/d) * (m/d);
     }

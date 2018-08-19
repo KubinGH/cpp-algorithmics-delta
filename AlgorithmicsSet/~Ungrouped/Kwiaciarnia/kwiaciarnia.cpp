@@ -16,7 +16,7 @@ struct colors_t
     {
         r = _r; g = _g; b = _b;
     }
-    bool operator< (colors_t other)
+    bool operator< (const colors_t& other) const
     {
         if(r == other.r)
             if(g == other.g)

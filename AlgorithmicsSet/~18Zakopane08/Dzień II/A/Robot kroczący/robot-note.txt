@@ -1,0 +1,16 @@
+- usuñ zera prefiksowe
+
+- 0 0 0 0 0 --> x * 0
+  <------->
+    x razy
+    
+- ka¿de 1 zamienia oœ X i Y, mo¿na rozpatrywaæ oddzielnie
+
+- problem plecakowy
+
+1. 
+- bitset
+
+
+2. 
+- pierwiastki

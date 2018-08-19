@@ -1,0 +1,30 @@
+multiplicative functions
+
+f(xy) = f(x)f(y) <=> gcd(x, y) = 1
+
+1. x is prime
+f(x) = ...
+
+2. x = p * i, p -| i
+f(x) = f(p)f(i)
+
+3. x = p * i, p | i
+f(x) = ...
+
+p | i => f(p*i) = f(p^k * (i / (p^(k-1))))
+
+EULER TOTIENT
+
+f(p) = p - 1
+f(p^n) = p^(n-1) * (p - 1)
+p /| i => f(p*i) = f(p)f(i)
+p | i => f(p*i) = p * f(i)
+
+
+
+MOBIUS INVERSION
+
+g(n) = sum[d | n] f(d) 
+=>
+f(n) = sum[d | n] g(d) mobius(n / d)
+

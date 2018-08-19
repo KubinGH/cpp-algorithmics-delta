@@ -142,13 +142,13 @@ uint32_t pi_prime_count(uint64_t n)
 int main()
 {
     ios_base::sync_with_stdio(false); cout.tie(0);
-    for(uint32_t i = 1; i < (1 << 0); i++)
+    for(uint32_t i = 1; i < (1 << 10); i++)
     {
         uint64_t j = i + (1llu << 50);
         bool a = miller_rabin_isprime(j, MR_PRIMES[2]),
              b = sqrt_isprime(j);
         assert(a == b);
-        cout << j << ": " << a << "/" << b << endl;
+        if(a) cout << j << ": " << a << "/" << b << endl;
         uint64_t k = 1;
         for(uint64_t x : rho_pollard_factorize(j))
         {

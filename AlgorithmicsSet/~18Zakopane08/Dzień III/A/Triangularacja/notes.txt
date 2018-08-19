@@ -1,0 +1,11 @@
+* wartoœci punktów nie s¹ wa¿ne
+
+* ka¿dy odcinek jest wspólny dla co najwy¿ej 2 trójk¹tów
+
+* __trójk¹ty tworz¹ drzewo__
+  * stopieñ wierzcho³ka to 1, 2, albo 3
+
+* ciêcia musz¹ byæ po bokach trójk¹tów
+
+* O(n^2): sprawdzenie wszystkich ciêæ, bitset
+  * __nie ma znaczenia kolejnoœæ ciêæ ani to czy ju¿ je przeprowadziliœmy__

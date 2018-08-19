@@ -1,0 +1,5 @@
+O(nq): chciwy
+
+- najpierw liczymy od lewej strony dla ca³ego ci¹gu
+
+- max na sumie prefiksowej, drzewo przedzia³-przedzia³
