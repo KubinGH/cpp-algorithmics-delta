@@ -26,6 +26,27 @@ uint64_t solve4(uint32_t i, uint32_t a, uint32_t b, uint32_t c)
         r += solve4(i + 1, b, c, d);
     return (cache[i][a][b][c] = r);
 }
+uint64_t solve4_cl(uint32_t i, uint32_t a, uint32_t b, uint32_t c)
+{
+    if(i == N - 2)
+        return 1;
+    uint64_t r = 0;
+    for(uint32_t d = max(a, b)+1; d <= N; d++)
+        r += solve4(i + 1, b, c, d);
+    return r;
+}
+uint64_t solve3(uint32_t i, uint32_t ab, uint32_t c)
+{
+    if(i == N - 2)
+        return 1;
+    uint64_t r = 0;
+    for(uint32_t d = ab+1; d <= N; d++)
+    {
+        for(uint32_t bc = max(ab, c); bc <= N; bc++)
+            r += solve3(i + 1, bc, d);
+    }
+    return r;
+}
 
 
 // 1, 4, 9, 31, 88, 288
@@ -41,6 +62,11 @@ int main()
             for(uint32_t b = 1; b <= N; b++)
                 for(uint32_t c = a+1; c <= N; c++)
                     r4 += solve4(1, a, b, c);
-        cout << N << ": " << r4 << endl;
+        uint64_t r3 = 0;
+        for(uint32_t a = 1; a <= N; a++)
+            for(uint32_t b = 1; b <= N; b++)
+                for(uint32_t c = a+1; c <= N; c++)
+                    r3 += solve3(1, max(a, b), c);
+        cout << N << ": " << r4 << " / " << r3 << endl;
     }
 }

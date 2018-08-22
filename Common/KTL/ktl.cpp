@@ -373,8 +373,8 @@ struct matrix
     size_t w = W, h = H;
     matrix(size_t w, size_t h) : w(w), h(h) { fill(A, A+w*h, 0); }
     matrix() : matrix(W, H) {}
-    template<size_t AW, size_t AH>
-    matrix(const T(&Q)[AH][AW])
+    template<size_t AW, size_t AH, typename IT>
+    matrix(const IT(&Q)[AH][AW])
     {
         w = AW; h = AH;
         for(size_t y = 0; y < AH; y++)
@@ -404,7 +404,13 @@ struct matrix
     {
         matrix<T, W, H, MOD> r, a;
         if(p > 0)
-            r = a = *this;
+            r = a = *this, p--;
+        else
+        {
+            for(uint32_t i = 0; i < W; i++)
+                r(i, i) = 1;
+            return r;
+        }
         while(p)
         {
             if(p % 2 == 1)
@@ -450,10 +456,39 @@ vector<uint32_t> manacher(Iterator first, Iterator last, T leaf = '$')
     return P;
 }
 
+
+// Fenwick tree. Calculates prefix sums and allows for point changes.
+// Compact, 0-based implementation.
+template<typename T>
+constexpr inline T lsb(T x) { return x & (-x); }
+
+template<typename T>
+struct fenwick_tree
+{
+    size_t n;
+    T* F;
+    fenwick_tree(size_t _n) { n = _n+1; F = new T[n]; fill(F, F + n, 0); }
+    ~fenwick_tree() { delete[] F; }
+    T get_prefix(size_t p) const // Sum in [0, p)
+        { T r = 0; p++; while(p) r += F[p], p -= lsb(p); return r; }
+    T get(size_t a, size_t b) const // Get on interval [a, b]
+        { return get_prefix(b+1) - get_prefix(a); }
+    T get(size_t p) const // Get on point [p]
+        { return get(p, p); }
+    void delta(size_t p, T v)
+        { p += 2; while(p <= n) F[p] += v, p += lsb(p); }
+    void set(size_t p, T v)
+        { return delta(p, v - get(p)); }
+};
+
 int main()
 {
     cout << "Transmission interpreted successfully" << endl;
-    matrix<uint64_t, 2, 2> M({{0LLU, 1LLU}, {5LLU, 3LLU}});
-    matrix<uint64_t, 1, 2> V({{1LLU}, {2LLU}});
-    cout << ((M^5) * V)(0, 0);
+    //matrix<uint64_t, 2, 2> M({{0LLU, 1LLU}, {5LLU, 3LLU}});
+    //matrix<uint64_t, 1, 2> V({{1LLU}, {2LLU}});
+    //cout << ((M^5) * V)(0, 0);
+    matrix<uint64_t, 3, 3> M({{1, 1, 0}, {1, 0, 1}, {0, 1, 1}});
+    matrix<uint64_t, 1, 3> V({{0}, {1}, {0}});
+    auto P = (M^4) * V;
+    cout << P(0, 1) << " " << P(0, 0) + P(0, 1) + P(0, 2) << endl;
 }
