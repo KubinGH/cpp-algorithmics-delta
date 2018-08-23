@@ -20,8 +20,10 @@ int main()
       for(uint32_t c = 0; c < 3; c++)
     {
         if(a < c)
-        //    cout << a << " " << b << " " << c << endl, r++;
+        {
+            cout << a << " " << b << " " << c << endl, r++;
             cout << max(a, b) << " " << max(b, c) << endl, r++;
+        }
     }
     cout << r << endl;
     r = 0;
@@ -31,8 +33,10 @@ int main()
        for(uint32_t d = 0; d < 4; d++)
     {
         if(a < c and a < d and b < d)
-        //    cout << a << " " << b << " " << c << " " << d << endl, r++;
+        {
+            cout << a << " " << b << " " << c << " " << d << endl, r++;
             cout << max(a, b) << " " << max(b, c) << " " << max(c, d) << endl, r++;
+        }
     }
     cout << r << endl;
     r = 0;
@@ -43,8 +47,10 @@ int main()
         for(uint32_t e = 0; e < 5; e++)
     {
         if(a < c and a < d and b < d and b < e and c < e)
-        //    cout << a << " " << b << " " << c << " " << d << " " << e << endl, r++;
-            cout << max(a, b) << " " << max(b, c) << " " << max(c, d) << " " << max(d, e) << endl, r++;
+        {
+            cout << a << " " << b << " " << c << " " << d << " " << e << endl, r++;
+            //cout << max(a, b) << " " << max(b, c) << " " << max(c, d) << " " << max(d, e) << endl, r++;
+        }
     }
     cout << r << endl;
     r = 0;
