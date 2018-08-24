@@ -125,7 +125,7 @@ struct segment_tree
 
 // Segment tree, interval set, interval query
 // (set new max on interval, query sum on interval)
-// Designed with customability in mind
+// Designed with customizability in mind
 // F: vertex value function for values of children.
 // P: apply changes from to_set. If to_set is SET_NONE, it should do nothing.
 // S: merge set values, e.g. during add this function is addition,
@@ -254,7 +254,7 @@ const long double A_PI = acos(-1.0L);
 const long double PHI = (1 + sqrt(5)) / 2;
 
 // Golden section method
-// Work on functions with exactly one extremum
+// Works on functions with exactly one extremum
 double function_minimum(double(*F)(double), double lo, double hi,
                         uint32_t iterations)
 {
@@ -321,15 +321,12 @@ uint32_t lca(const array<array<uint32_t, JUMP_POINTERS>, MAX>& J,
 }
 
 
-// Fenwick tree - O(2n) = O(n) construction, O(1) queries.
+// Power tree - O(n log n) construction, O(1) queries.
 // Note: memory usage is not optimized in this implementation
-// (O(n log n) instead of O(n))
-// A.k.a. power tree.
 // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
 // Examples: min, max, bit and, bit or
-template<typename T>
-constexpr T log2floor(T n)
-    { return (numeric_limits<T>::digits-1) - __builtin_clz(n); }
+constexpr size_t log2floor(size_t n)
+    { return 31 - __builtin_clz(n); }
 template<typename T, size_t N, T(*F)(T, T)>
 struct power_tree
 {
