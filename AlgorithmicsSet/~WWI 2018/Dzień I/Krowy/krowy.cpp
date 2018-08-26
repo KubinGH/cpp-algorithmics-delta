@@ -50,14 +50,25 @@ int main()
             for(uint32_t b = 1; b <= N; b++)
                 for(uint32_t c = a+1; c <= N; c++)
                     r4 += solve4(1, a, b, c);
-        static uint32_t A[128][128];
-        A[1][0] = N;
-        for(uint32_t lo = 1; lo <= N; lo++)
-            A[2][lo] = N;
-        for(uint32_t n = 3; n <= N; n++)
-            for(uint32_t lo = 0; lo <= N; lo++)
-                for(uint32_t a = 0; a < lo; a++)
-                    A[n][lo] += A[n-2][a];
+        static uint32_t A[128][128], V[128][128], W[128][128];
+        A[0][0] = 1;
+        for(uint32_t lo = 0; lo <= N; lo++)
+            V[0][lo] = 1;
+        for(uint32_t n = 1; n <= N; n++)
+        {
+            if(n < 2) for(uint32_t lo = 1; lo <= N; lo++)
+                A[n][lo] = V[n-1][lo-1], V[n][lo] = V[n][lo-1] + A[n][lo];
+            else
+            {
+                uint64_t w = A[n-2][0];
+                for(uint32_t lo = 1; lo <= N; lo++)
+                {
+                    A[n][lo] = V[n-1][lo-1] + w;
+                    w += V[n-2][lo];
+                    V[n][lo] = V[n][lo-1] + A[n][lo];
+                }
+            }
+        }
         uint64_t r = 0;
         for(uint32_t lo = 0; lo <= N; lo++)
             r += A[N][lo];
