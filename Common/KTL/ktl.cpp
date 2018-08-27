@@ -376,7 +376,7 @@ struct matrix
         w = AW; h = AH;
         for(size_t y = 0; y < AH; y++)
             for(size_t x = 0; x < AW; x++)
-                (*this)(x, y) = Q[y][x];
+                (*this)(x, y) = T(Q[y][x]);
     }
     T& operator() (size_t x, size_t y) { return A[w*y+x]; }
     T& operator[] (size_t i) { return A[i]; }
@@ -422,38 +422,6 @@ struct matrix
         { return (*this = operator^(p)); }
 };
 
-template<typename Iterator, class T = typename iterator_traits<Iterator>::value_type >
-vector<uint32_t> manacher(Iterator first, Iterator last, T leaf = '$')
-{
-    vector<T> A(distance(first, last)*2 + 1);
-    for(auto it = A.begin(); first != last; first++)
-    {
-        *it++ = leaf;
-        *it++ = *first;
-    }
-    A.back() = '$';
-    vector<uint32_t> P(A.size(), 0);
-    uint32_t right = 0, center = 0;
-    for(uint32_t i = 1; i < A.size(); i++)
-    {
-        uint32_t mirror = 2*center - i;
-        if(i + P[mirror] <= min(right, A.size() - 1))
-            P[i] = P[mirror];
-        while(i >= P[i]+1 and i+P[i]+1 < A.size()
-              and A[i-P[i]-1] == A[i+P[i]+1])
-            P[i]++;
-        if(i + P[i] > right)
-        {
-            center = i;
-            right = center + P[i];
-        }
-    }
-    for(uint32_t i = 0; i < A.size(); i++)
-        P[i] = P[i]/2 + i%2;
-    return P;
-}
-
-
 // Fenwick tree. Calculates prefix sums and allows for point changes.
 // Compact, 0-based implementation.
 template<typename T>
@@ -481,11 +449,4 @@ struct fenwick_tree
 int main()
 {
     cout << "Transmission interpreted successfully" << endl;
-    //matrix<uint64_t, 2, 2> M({{0LLU, 1LLU}, {5LLU, 3LLU}});
-    //matrix<uint64_t, 1, 2> V({{1LLU}, {2LLU}});
-    //cout << ((M^5) * V)(0, 0);
-    matrix<uint64_t, 3, 3> M({{1, 1, 0}, {1, 0, 1}, {0, 1, 1}});
-    matrix<uint64_t, 1, 3> V({{0}, {1}, {0}});
-    auto P = (M^4) * V;
-    cout << P(0, 1) << " " << P(0, 0) + P(0, 1) + P(0, 2) << endl;
 }

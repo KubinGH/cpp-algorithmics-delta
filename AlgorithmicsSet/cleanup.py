@@ -9,8 +9,8 @@ for a in sorted(glob.glob("**/*", recursive=True), key=os.path.getsize):
     minutes, days = round((ctime - date)/60, 2), round((ctime - date)/(60*60*24), 2)
     print(f"{a} | {size} | {minutes}min = {days}d")
     M += size
-    if ".cpp" not in a and days > 30 and (size > 0.5*mem["MB"] or a.endswith(".o")):
-        prompt = input("Remove? (y for True): ")
+    if days > 30 and (a.endswith(".o") or a.endswith(".exe")):
+        prompt = "y"#input("Remove? (y for True): ")
         if prompt == "y":
             os.remove(a)
             print("---")
