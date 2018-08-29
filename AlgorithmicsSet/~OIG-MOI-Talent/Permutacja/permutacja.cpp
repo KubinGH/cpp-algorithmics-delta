@@ -50,7 +50,7 @@ typedef segment_tree<
 > min_tree;
 
 uint32_t P[MAX];
-min_tree tree[3];
+min_tree tree[2];
 map<pair_u32, vector<pair_u32>> G;
 map<pair_u32, uint32_t> C;
 pair_u32 build_order_graph(uint32_t a, uint32_t b)
@@ -78,7 +78,6 @@ int main()
         cin >> P[i]; P[i]--;
         tree[i%2].set(i, {P[i], i});
         tree[(i+1)%2].set(i, {-1u, i});
-        tree[2].set(i, {P[i], i});
     }
     pair_u32 first = build_order_graph(0, n);
     vector<pair_u32> topo;
