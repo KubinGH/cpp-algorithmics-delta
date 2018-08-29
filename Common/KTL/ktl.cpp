@@ -116,10 +116,6 @@ struct segment_tree
         }
         return result;
     }
-    const T& operator[] (size_t i) const
-    {
-        return values[offset() + i];
-    }
 };
 
 
