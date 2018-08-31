@@ -250,7 +250,7 @@ const long double A_PI = acos(-1.0L);
 const long double PHI = (1 + sqrt(5)) / 2;
 
 // Golden section method
-// Works on functions with exactly one extremum
+// Works on functions with exactly one extremum (bitonic functions)
 double function_minimum(double(*F)(double), double lo, double hi,
                         uint32_t iterations)
 {

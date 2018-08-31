@@ -49,22 +49,22 @@ typedef segment_tree<
     pair_u32, TSIZE, min_2u32, get_none
 > min_tree;
 
-uint32_t P[MAX];
+uint32_t P[MAX], T[MAX], C[MAX];
+vector<uint32_t> G[MAX];
 min_tree tree[2];
-map<pair_u32, vector<pair_u32>> G;
-map<pair_u32, uint32_t> C;
 pair_u32 build_order_graph(uint32_t a, uint32_t b)
 {
-    if(a == b) return get_none();
+    if(a == b) return {MAX-1, MAX-1};
     uint32_t i = tree[a%2].get(a, b-2).second,
              j = tree[(a+1)%2].get(i+1, b-1).second;
     pair_u32 result, x, y, z, t = {P[i], P[j]};
     x = build_order_graph(a, i);
     y = build_order_graph(i+1, j);
     z = build_order_graph(j+1, b);
-    G[t].push_back(x), C[x]++;
-    G[t].push_back(y), C[y]++;
-    G[t].push_back(z), C[z]++;
+    G[t.first].push_back(x.first), C[x.first]++;
+    G[t.first].push_back(y.first), C[y.first]++;
+    G[t.first].push_back(z.first), C[z.first]++;
+    T[t.first] = t.second;
     return t;
 }
 
@@ -79,19 +79,19 @@ int main()
         tree[i%2].set(i, {P[i], i});
         tree[(i+1)%2].set(i, {-1u, i});
     }
-    pair_u32 first = build_order_graph(0, n);
-    vector<pair_u32> topo;
-    priority_queue<pair_u32, vector<pair_u32>, greater<pair_u32>> Q;
+    uint32_t first = build_order_graph(0, n).first;
+    static uint32_t topo[MAX]; uint32_t ti = 0;
+    priority_queue<uint32_t, vector<uint32_t>, greater<uint32_t>> Q;
     Q.push(first);
     while(not Q.empty())
     {
-        pair_u32 u = Q.top(); Q.pop();
-        topo.push_back(u);
-        for(pair_u32 v : G[u])
+        uint32_t u = Q.top(); Q.pop();
+        topo[ti++] = u;
+        for(uint32_t v : G[u])
             if(--C[v] == 0)
                 Q.emplace(v);
     }
-    topo.pop_back();
-    for(auto x : topo)
-        cout << x.first+1 << " " << x.second+1 << " ";
+    ti--;
+    for(uint32_t i = 0; i < ti; i++)
+        cout << topo[i]+1 << " " << T[topo[i]]+1 << " ";
 }
