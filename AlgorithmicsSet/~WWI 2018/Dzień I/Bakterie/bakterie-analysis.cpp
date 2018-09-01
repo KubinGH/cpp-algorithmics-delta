@@ -63,8 +63,16 @@ int main()
     cin >> S;
     for(uint32_t i = 0; i < n; i++)
         A[i] = S[i] == 'o';
+    vector<bool> A2(2*n+2);
+    copy(A.rbegin(), A.rend(), A2.begin()+1);
+    copy(A.begin(), A.end(), A2.begin() + n+2);
     for(uint32_t k = 0; k < n*n; k++)
-        cout << k << ": " << G(A, k) << endl;
+    {
+        cout << k << ": " << endl << G(A, k) << endl;
+        auto t = Ft(A2, k);
+        for(uint32_t i = n+2; i < 2*n+2; i++)
+            cout << t[i]; cout << endl;
+    }
     /*
     for(uint32_t m = 0; m < (1u << n); m++)
     {
