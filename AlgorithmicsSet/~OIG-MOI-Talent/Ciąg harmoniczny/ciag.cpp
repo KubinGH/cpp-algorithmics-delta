@@ -3,7 +3,11 @@
 #include <cstdint>
 #include <iostream>
 #include <stack>
+#include <tuple>
 #include <cmath>
+#include <algorithm>
+#include <bitset>
+#define gcd __gcd
 
 
 using namespace std;
@@ -72,10 +76,17 @@ struct number_t
     void increment(size_t i = 0) { A[i]++; carry(); }
     number_t& operator+= (const number_t& B)
     {
-        if(A.size() < B.size()) A.resize(B.size());
+        A.resize(max(A.size(), B.size())+2);
         for(size_t i = 0; i < B.size(); i++)
+        {
             A[i] += B[i];
-        carry();
+            if(A[i] >= M)
+                A[i+1] += A[i] / M, A[i] %= M;
+        }
+        for(size_t i = B.size(); i < A.size() and A[i] >= M; i++)
+            A[i+1] += A[i] / M, A[i] %= M;
+        while(not A.empty() and A.back() == 0)
+            A.pop_back();
         return *this;
     }
     number_t operator+ (const number_t& B) const { number_t R = *this; return R += B; }
@@ -256,6 +267,50 @@ ostream& operator<< (ostream& out, number_t<K, T> n)
         out << char('0' + o.top()), o.pop();
     return out;
 }
+
+typedef number_t<30, uint64_t, vector<uint64_t>> unumber_t;
+
 int main()
 {
+    uint32_t n;
+    cin >> n;
+    bitset<MAX> is_composite;
+    vector<uint32_t> primes;
+    for(uint32_t i = 2; i <= n; i++)
+    {
+        if(not is_composite[i])
+        {
+            primes.push_back(i);
+            for(uint32_t x = i*i; x <= n; x += i)
+                is_composite[x] = true;
+        }
+    }
+    //cout << "sieve done" << endl;
+    number_t<30, uint64_t> F = 1; F.A.reserve(1 << 22);
+    for(uint32_t i = 2; i <= n; i++)
+        F *= i;
+    //cout << "factorial done" << endl;
+    number_t<30, uint64_t> A; A.A.reserve(1 << 22);
+    for(uint32_t i = 1; i <= n; i++)
+        A += (F / (uint64_t)i);
+    //cout << "sum done" << endl;
+    for(uint64_t p : primes)
+    {
+        uint32_t k = 0; uint64_t p2 = p*p, p4 = p2*p2;
+        while(true)
+        {
+            if(not (A % p4) and not (F % p4))
+                k += 4;
+            else if(not (A % p) and not (F % p))
+                k += 2;
+            else if(not (A % p) and not (F % p))
+                k += 1;
+            else
+                break;
+            A.A = A.__last_dividend, F.A = F.__last_dividend;
+        }
+        //cout << p << ": " << k << ", ";
+    } //cout << endl;
+    //cout << "gcd done" << endl;
+    cout << A << "\n" << F;
 }

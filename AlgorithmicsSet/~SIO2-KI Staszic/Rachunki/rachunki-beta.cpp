@@ -1,23 +1,23 @@
 #include <deque>
-#include <vector>
 #include <cstdint>
 #include <iostream>
 #include <stack>
+#include <tuple>
 #include <cmath>
+#include <algorithm>
+#define gcd __gcd
 
 
 using namespace std;
 
-const size_t MAX = 1 << 16;
-
-template<size_t K = 30, typename T = uint64_t, typename Container = vector<T>>
+template<size_t K = 30, typename T = uint64_t>
 struct number_t
 {
     const T M = (1 << K);
-    Container A;
+    deque<T> A;
     number_t() {}
     number_t(T x) { A.push_back(x); carry(); }
-    number_t(const Container& a) { A = a; }
+    number_t(const deque<T>& a) { A = a; }
     void dprint() const { for(T d : A) cout << d << " "; cout << endl; }
     template<bool Normalize = true>
     void carry()
@@ -69,6 +69,13 @@ struct number_t
         return *this;
     }
     number_t operator<< (size_t b) const { number_t R = *this; return R <<= b; }
+    number_t& operator>>= (size_t n)
+    {
+        for(size_t i = 0; i < n; i++)
+            A.pop_front();
+        return *this;
+    }
+    number_t operator>> (size_t b) const { number_t R = *this; return R >>= b; }
     void increment(size_t i = 0) { A[i]++; carry(); }
     number_t& operator+= (const number_t& B)
     {
@@ -155,13 +162,10 @@ struct number_t
     }
     number_t& operator*= (number_t& B) { number_t R = *this * B; return *this = R; }
     number_t& operator*= (T b) { number_t R = *this * b; return *this = R; }
-
-    T __T_last_divisor, __T_last_modulo;
-
-    Container __last_divisor, __last_dividend, __last_modulo;
+    deque<T> __last_divisor, __last_dividend, __last_modulo;
     void __divmod (T b)
     {
-        __T_last_divisor = b;
+        __last_divisor = {b};
         number_t result;
         T buffer = 0;
         result.resize(A.size());
@@ -174,15 +178,16 @@ struct number_t
         }
         result.carry();
         __last_dividend = result.A;
-        __T_last_modulo = buffer;
+        if(buffer) __last_modulo = {buffer};
+        else __last_modulo = {};
     }
     number_t operator/ (T b) { __divmod(b); return number_t(__last_dividend); }
-    number_t operator% (T b) { __divmod(b); return number_t(__T_last_modulo); }
+    number_t operator% (T b) { __divmod(b); return number_t(__last_modulo); }
     number_t& operator/= (T b) { number_t R = *this / b; return *this = R; }
     number_t& operator%= (T b) { number_t R = *this % b; return *this = R; }
     void __divmod (number_t& B)
     {
-        if(K > 10)
+        if(K > 8)
         {
             __last_divisor = B.A;
             number_t lo, hi = *this + number_t(1); hi += 1;
@@ -227,12 +232,12 @@ template<size_t K, typename T>
 istream& operator>> (istream& in, number_t<K, T>& n)
 {
     string s; in >> s;
-    number_t<K> p = 1;
+    number_t<K, T> p = 1;
     n.A.clear();
     for(size_t i = s.size(); i --> 0; )
     {
-        number_t<K> d = T(s[i] - '0');
-        number_t<K> m = p * d;
+        number_t<K, T> d = T(s[i] - '0');
+        number_t<K, T> m = p * d;
         n += m;
         p *= T(10);
     }
@@ -256,6 +261,31 @@ ostream& operator<< (ostream& out, number_t<K, T> n)
         out << char('0' + o.top()), o.pop();
     return out;
 }
+
+
 int main()
 {
+    ios_base::sync_with_stdio(false); //cin.tie(0); cout.tie(0);
+    number_t<8, uint32_t> A, B;
+    char op;
+    while(cin >> A >> op >> B)
+    {
+        if(not A and op == '+' and not B)
+            break;
+        if(op == '+')
+            cout << (A + B) << "\n";
+        else if(op == '-')
+        {
+            if(A >= B)
+                cout << (A - B) << "\n";
+            else
+                cout << "-" << (B - A) << "\n";
+        }
+        else if(op == '*')
+            cout << (A * B) << "\n";
+        else if(op == '/')
+            cout << (A / B) << "\n";
+        else if(op == '%')
+            cout << (A % B) << "\n";
+    }
 }
