@@ -44,7 +44,7 @@ def FFT(x, y, f0, f1, mod=0):
 
 # In short:
 """
-FFT(x, y, f0, f1): # f(n+1) = x f(n) + y(n-1)
+FFT(x, y, f0, f1): # f(n+1) = x f(n) + y f(n-1)
 let (A, B) * (C, D) = (AD + BC + xAC, BD + yAC)
 # (f1, y f0) * (1, 0)^n  = (f(n+1), y f(n))
 """
