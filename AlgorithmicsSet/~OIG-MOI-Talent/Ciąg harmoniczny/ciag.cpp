@@ -286,11 +286,11 @@ int main()
         }
     }
     //cout << "sieve done" << endl;
-    number_t<30, uint64_t> F = 1; F.A.reserve(1 << 22);
+    number_t<30, uint64_t> F = 1; F.A.reserve(1 << 20);
     for(uint32_t i = 2; i <= n; i++)
         F *= i;
     //cout << "factorial done" << endl;
-    number_t<30, uint64_t> A; A.A.reserve(1 << 22);
+    number_t<30, uint64_t> A; A.A.reserve(1 << 20);
     for(uint32_t i = 1; i <= n; i++)
         A += (F / (uint64_t)i);
     //cout << "sum done" << endl;
