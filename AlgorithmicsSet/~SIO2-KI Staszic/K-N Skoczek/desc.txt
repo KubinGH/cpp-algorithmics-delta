@@ -1,0 +1,54 @@
+/*
+Oznaczenia:
+(a, b, c, d) to stan w ktorym x = ak + bn, a y = ck + dn
+x = x2 - x1
+y = y2 - y1
+
+Rozwiazanie [0] - brut
+BFS na obszarze [minX - g * max(n, k), maxX + g * max(n, k)]
+(analogicznie Y), aby mozna bylo zawracac (g najlepiej calkiem duze)
+Po kratce i po stanach. (O((XY+max(n, k)^2) log XY), 10pkt).
+
+1) Obserwacja: -> brutem
+    Dla danego stanu (a, b, c, d) mamy:
+        c = b + 2i (i € Z)
+        d = a + 2j (j € Z)
+
+--
+
+Przeksztalcenia:
+Mamy
+x = ak + bn
+(Stosujemy rozszerzony algorytm Euklidesa by otrzymaæ jedno z (a, b))
+(Notatka: a, b mnozymy przez x / gcd(x, y))
+y = ck + dn =
+  = (b + 2i)k + (a + 2j)n =
+  = bk + i 2k + an + j 2n
+y - bk - an = i 2k + j 2n
+
+Rozwiazanie istnieje gdy gcd(2k, 2n) = 2 gcd(k, n) | (y - bk - an)
+Dodatkowo musimy sprawdzac wiecej par (a, b)
+(nie ma gwarancji ze dowolna da poprawne rozwiazanie)
+Z cech Tozsamosci Bezouta (ax + by = gcd(a, b))
+a' = a + b/gcd(a, b) * p
+b' = b - a/gcd(a, b) * p (p € Z)
+Poniewaz a'(p) oraz b'(p) sa liniowe, wystarczy sprawdzic wartosci
+p € [0, 2d)
+Co daje Rozwiazanie [1] O(log xy * gcd(x, y)) (50 pkt)
+
+--
+
+Zauwazamy ze poszukujemy czy istnieje rozwiazanie kongruencji
+dy - bk - an |= 0 (mod 2d) [Oznaczenie: |= oznacza przystawanie]
+Po dlugich przeksztalceniach mamy..
+(dla dowolnej pary (a, b)
+p(k^2/d - n^2/d) |= bk + an - dy (mod 2d)
+
+Rozwiazanie kongruencji ax |= b (mod m) dla x istnieje o ile:
+gcd(a, m) | b
+
+Sprawdzamy to, uwazajac na overflow (nawet dla 64-bit dostajemy 50 pkt
+                                     bez dodatkowych modulo przy liczeniu)
+
+Rozwiazanie [2] -
+
