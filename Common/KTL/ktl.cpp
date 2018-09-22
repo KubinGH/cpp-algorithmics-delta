@@ -317,19 +317,19 @@ uint32_t lca(const array<array<uint32_t, JUMP_POINTERS>, MAX>& J,
 }
 
 
-// Power tree - O(n log n) construction, O(1) queries.
+// Sparse table - O(n log n) construction, O(1) queries.
 // Note: memory usage is not optimized in this implementation
 // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
 // Examples: min, max, bit and, bit or
 constexpr size_t log2floor(size_t n)
     { return 31 - __builtin_clz(n); }
 template<typename T, size_t N, T(*F)(T, T)>
-struct power_tree
+struct sparse_table
 {
     size_t n, t;
     array<array<T, N>, log2floor(N)+1> A;
     template<typename Iterator>
-    power_tree(Iterator tbegin, Iterator tend)
+    sparse_table(Iterator tbegin, Iterator tend)
     {
         size_t i = 0;
         for(auto it = tbegin; it != tend; it++, i++)

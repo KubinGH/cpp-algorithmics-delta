@@ -39,21 +39,6 @@ kosaraju(uint32_t n, graph_t<MAX>& graph, graph_t<MAX>& rev_graph)
     return result;
 }
 
-/*
-7 10
-
-1 2
-2 1
-2 5
-5 4
-1 4
-3 2
-3 7
-7 6
-6 3
-6 5
-*/
-
 int main()
 {
     uint32_t n, m;
@@ -75,3 +60,18 @@ int main()
         cout << ")\n";
     }
 }
+
+/*
+7 10
+
+1 2
+2 1
+2 5
+5 4
+1 4
+3 2
+3 7
+7 6
+6 3
+6 5
+*/
