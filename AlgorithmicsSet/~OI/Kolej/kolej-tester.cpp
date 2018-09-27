@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define main __main
-#include "kolej.cpp"
+#include "kolej-key.cpp"
 #undef main
 
 using namespace std;
@@ -55,7 +55,7 @@ int main()
             cout << p.first << " / " << q.first << endl;
         }
         assert(p.first == q.first);
-        if(p.first and not check_solution(A, p.second))
+        if(p.first and not check_solutionbr(A, p.second))
         {
             for(uint32_t x : A) cout << x << " "; cout << endl;
             for(uint32_t x : p.second) cout << x << " "; cout << endl;
@@ -63,6 +63,6 @@ int main()
             for(uint32_t x : q.second) cout << x << " ";
             cout << ")" << endl;
         }
-        assert(not p.first or check_solution(A, p.second));
+        assert(not p.first or check_solutionbr(A, p.second));
     } while(next_permutation(A.begin(), A.end()));
 }

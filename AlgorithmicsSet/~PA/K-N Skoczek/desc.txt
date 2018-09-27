@@ -50,5 +50,5 @@ gcd(a, m) | b
 Sprawdzamy to, uwazajac na overflow (nawet dla 64-bit dostajemy 50 pkt
                                      bez dodatkowych modulo przy liczeniu)
 
-Rozwiazanie [2] -
+Rozwiazanie [2] - O(log xy) (100 pkt, wzor)
 

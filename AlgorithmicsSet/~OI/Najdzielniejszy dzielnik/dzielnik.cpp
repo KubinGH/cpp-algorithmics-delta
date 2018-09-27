@@ -102,7 +102,7 @@ int main()
     cin >> n;
     unordered_map<uint64_t, uint32_t> M;
     vector<uint64_t> P;
-    static bitset<1 << 21> S; S.set(); S[0] = S[1] = false;
+    static bitset<1 << 23> S; S.set(); S[0] = S[1] = false;
     for(uint64_t i = 2; i < (1 << 21); i++)
     {
         if(not S[i])
@@ -115,8 +115,6 @@ int main()
     {
         uint64_t a;
         cin >> a;
-        //a = (rand()&0xFFFF) + ((rand()&0xFFFF) << 16)
-        //  + ((rand()&0xFFFF) << 32) + ((rand()&0xFFFF) << 48);
         for(uint64_t p : P)
             while(a % p == 0)
                 M[p]++, a /= p;

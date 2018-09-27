@@ -1,63 +1,74 @@
 #include <bits/stdc++.h>
+#ifdef XHOVA
+#define cdbg cerr
+#else
+#define cdbg if(0) cerr
+#endif
 
 using namespace std;
 
-const size_t MAX = 1 << 20;
-const uint32_t COOR_BITS = 10;
+const size_t K = 10;
 
-uint32_t coor(uint32_t x, uint32_t y)
-{
-    return (x << COOR_BITS) + y;
-}
-uint32_t xvalue(uint32_t c)
-{
-    return c >> COOR_BITS;
-}
-uint32_t yvalue(uint32_t c)
-{
-    return c & ((1 << COOR_BITS) - 1);
-}
+inline uint32_t coor_to_index(uint32_t x, uint32_t y) { return x + (y<<K); }
+inline pair<uint32_t, uint32_t> index_to_coor(uint32_t c) { return {c&0x3FF, (c>>K)&0x3FF}; }
 
 struct disjoint_set
 {
-    array<uint32_t, MAX> parent, ncount;
-    unordered_set<uint32_t> root_set;
+    vector<uint32_t> parent, left, top, right, bottom, ncount;
     disjoint_set(uint32_t n)
     {
-        for(uint32_t y = 0; y < n; y++)
+        parent.resize(n); iota(parent.begin(), parent.end(), 0);
+        top.resize(n); left.resize(n); right.resize(n); bottom.resize(n);
+        ncount.resize(n, 1);
+        for(uint32_t i = 0; i < n; i++)
         {
-            for(uint32_t x = 0; x < n; x++)
-            {
-                uint32_t c = coor(x, y);
-                parent[c] = c;
-                ncount[c] = 1;
-                root_set.insert(c);
-            }
+            left[i] = right[i] = index_to_coor(i).first;
+            top[i] = bottom[i] = index_to_coor(i).second;
         }
-        ncount[MAX-1] = 0;
     }
-    uint32_t find_root(uint32_t node)
+    uint32_t root(uint32_t v) { return (v == parent[v]) ? v : (parent[v] = root(parent[v])); }
+    void unite(uint32_t u, uint32_t v)
     {
-        if(parent[node] == node)
-            return node;
-        parent[node] = find_root(parent[node]);
-        return parent[node];
+        cdbg << "unite " << u << " " << v << endl;
+        if((u = root(u)) == (v = root(v)))
+            return;
+        parent[v] = u;
+        ncount[u] += ncount[v];
+        left[u] = min(left[u], left[v]); right[u] = max(right[u], right[v]);
+        top[u] = min(top[u], top[v]); bottom[u] = max(bottom[u], bottom[v]);
     }
-    void unite(uint32_t first_node, uint32_t second_node)
+};
+
+template<typename Callback>
+void for_each_neighbour(uint32_t x, uint32_t y, uint32_t w, uint32_t h, Callback func)
+{
+    if(x > 0) func(x - 1, y);
+    if(x < w - 1) func(x + 1, y);
+    if(y > 0) func(x, y - 1);
+    if(y < h - 1) func(x, y + 1);
+}
+
+struct bittyset
+{
+    vector<bool> mark;
+    vector<uint32_t> marks;
+    bittyset(uint32_t n) { mark.resize(n); marks.reserve(n); }
+    void insert(uint32_t i)
     {
-        uint32_t first = find_root(first_node), second = find_root(second_node);
-        if(second > first)
-        {
-            parent[first] = second;
-            ncount[second] += ncount[first];
-            root_set.erase(first);
-        }
-        else
-        {
-            parent[second] = first;
-            ncount[first] += ncount[second];
-            root_set.erase(second);
-        }
+        if(mark[i]) return;
+        mark[i] = true;
+        marks.push_back(i);
+    }
+    void clear()
+    {
+        for(uint32_t i : marks)
+            mark[i] = false;
+        marks.clear();
+    }
+    void pop_back()
+    {
+        mark[marks.back()] = false;
+        marks.pop_back();
     }
 };
 
@@ -66,78 +77,92 @@ int main()
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     uint32_t n;
     cin >> n;
-    static disjoint_set dset(n);
-    static array<bool, MAX> A;
+    static bool A[1024][1024];
+    uint32_t free = 0;
     for(uint32_t y = 0; y < n; y++)
     {
+        string row;
+        cin >> row;
         for(uint32_t x = 0; x < n; x++)
         {
-            char c;
-            cin >> c;
-            A[coor(x, y)] = c == 'B';
+            A[x][y] = row[x] - 'A';
+            if(not A[x][y]) free++;
         }
     }
-    static array<uint32_t, MAX> R;
-    if(A[0])
-        R[0] = coor(1, 1);
-    for(uint32_t x = 1; x < n; x++)
+    cdbg << "input done " << endl;
+    disjoint_set dset(1<<(K<<1));
+    for(uint32_t y = 0; y < n; y++)
+      for(uint32_t x = 0; x < n; x++)
     {
-        if(A[coor(x, 0)])
-        {
-            uint32_t p = R[coor(x-1, 0)];
-            R[coor(x, 0)] = coor(xvalue(p) + 1, 1);
-            if(A[coor(x-1, 0)])
-                dset.unite(coor(x-1, 0), coor(x, 0));
-        }
+        cdbg << x << " " << y << endl;
+        if(A[x][y]) for_each_neighbour(x, y, n, n, [&](uint32_t cx, uint32_t cy) {
+            if(A[cx][cy])
+                dset.unite(coor_to_index(x, y), coor_to_index(cx, cy));
+        });
     }
-    for(uint32_t y = 1; y < n; y++)
+    cdbg << "dset done " << endl;
+    bitset<1<<(K<<1)> rect_added;
+    vector<tuple<uint32_t, uint32_t, uint32_t, uint32_t>> rects;
+    rects.reserve(n*n);
+    for(uint32_t y = 0; y < n; y++)
+      for(uint32_t x = 0; x < n; x++)
     {
-        if(A[coor(0, y)])
-        {
-            uint32_t p = R[coor(0, y-1)];
-            R[coor(0, y)] = coor(1, yvalue(p) + 1);
-            if(A[coor(0, y-1)])
-                dset.unite(coor(0, y-1), coor(0, y));
-        }
+        uint32_t c = dset.root(coor_to_index(x, y));
+        if(A[x][y] and not rect_added[c])
+            rect_added[c] = true, rects.emplace_back(dset.left[c], dset.top[c], dset.right[c], dset.bottom[c]);
     }
-    for(uint32_t y = 1; y < n; y++)
+    cdbg << "rects done " << endl;
+    uint32_t r = min(free, 2u);
+    bittyset used(1<<(K<<1)), possible(1<<(K<<1));
+    for(auto t : rects)
     {
-        for(uint32_t x = 1; x < n; x++)
+        uint32_t x1, y1, x2, y2; tie(x1, y1, x2, y2) = t;
+        uint32_t a = coor_to_index(x1, y1);
+        r = max(r, dset.ncount[dset.root(a)]);
+        cdbg << x1 << " " << y1 << " . " << x2 << " " << y2 << endl;
+        possible.clear();
+        if(y1 > 0) for(uint32_t x = x1; x <= x2; x++)
+            possible.insert(coor_to_index(x, y1-1));
+        if(y2 < n - 1) for(uint32_t x = x1; x <= x2; x++)
+            possible.insert(coor_to_index(x, y2+1));
+        if(x1 > 0) for(uint32_t y = y1; y <= y2; y++)
+            possible.insert(coor_to_index(x1-1, y));
+        if(x2 < n - 1) for(uint32_t y = y1; y <= y2; y++)
+            possible.insert(coor_to_index(x2+1, y));
+        for(uint32_t i = 0; i < possible.marks.size(); i++)
         {
-            if(A[coor(x, y)])
+            uint32_t px, py; tie(px, py) = index_to_coor(possible.marks[i]);
+            uint32_t z = possible.marks.size();
+            for_each_neighbour(px, py, n, n, [&](uint32_t cx, uint32_t cy){
+                if(not A[cx][cy])
+                    possible.insert(coor_to_index(cx, cy));
+            });
+            uint32_t d = possible.marks.size() - z;
+            for(uint32_t j = i; j < possible.marks.size(); j++)
             {
-                uint32_t px = xvalue(R[coor(x-1, y)]),
-                         py = yvalue(R[coor(x, y-1)]);
-                R[coor(x, y)] = coor(px ? px+1 : 1, py ? py+1 : 1);
-                if(px)
-                    dset.unite(coor(x-1, y), coor(x, y));
-                else if(py)
-                    dset.unite(coor(x, y-1), coor(x, y));
+                tie(px, py) = index_to_coor(possible.marks[i]);
+                used.insert(dset.root(a));
+                for(uint32_t s = 0; s < 2; s++)
+                {
+                    if(not A[px][py])
+                    {
+                        for_each_neighbour(px, py, n, n, [&](uint32_t cx, uint32_t cy) {
+                            if(A[cx][cy])
+                                used.insert(dset.root(coor_to_index(cx, cy)));
+                        });
+                        used.insert(dset.root(coor_to_index(px, py)));
+                    }
+                    tie(px, py) = index_to_coor(possible.marks[j]);
+                }
+                uint32_t q = 0;
+                for(uint32_t c : used.marks)
+                    q += dset.ncount[dset.root(c)];
+                r = max(r, q);
+                used.clear();
             }
+            for(uint32_t j = 0; j < d; j++)
+                possible.pop_back();
         }
     }
-    vector<pair<uint32_t, uint32_t>> rects;
-    for(uint32_t y = 0; y < n; y++)
-    {
-        for(uint32_t x = 0; x < n; x++)
-        {
-            if((x < n-1 and A[coor(x+1, y)]) or (y < n-1 and A[coor(x, y+1)]))
-                R[coor(x, y)] = 0;
-            uint32_t r = R[coor(x, y)];
-            if(r)
-                rects.emplace_back(coor(x-xvalue(r)+1, y-yvalue(r)+1), coor(x, y));
-        }
-    }
-    static array<vector<uint32_t>, MAX> G;
-    for(uint32_t y = 0; y < n; y++)
-    {
-        for(uint32_t x = 0; x < n; x++)
-        {
-            uint32_t c = coor(x, y);
-            if(x > 0)   G[c].push_back(coor(x-1, y))
-            if(x > n-1) G[c].push_back(coor(x+1, y))
-            if(y > 0)   G[c].push_back(coor(x, y-1))
-            if(y < n-1) G[c].push_back(coor(x, y+1))
-        }
-    }
+    cout << r;
 }

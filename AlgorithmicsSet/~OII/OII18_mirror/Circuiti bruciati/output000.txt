@@ -1,0 +1,6 @@
+semi[0] = in[0] + in[1]
+semi[1] = in[2] + in[3]
+semi[2] = semi[0] + semi[1]
+semi[3] = in[4] + in[5]
+semi[4] = semi[3] + in[6]
+out[0] = semi[2] + semi[4]
