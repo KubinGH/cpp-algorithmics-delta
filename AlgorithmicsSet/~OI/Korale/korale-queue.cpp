@@ -23,8 +23,8 @@ struct coralcomp
                     return get<3>(lhs) > get<3>(rhs);
                 return get<1>(lhs) > get<1>(rhs);
             }
-            return lexicographical_compare(get<2>(rhs).begin(), get<2>(rhs).end(),
-                                           get<2>(lhs).begin(), get<2>(lhs).end());
+            return lexicographical_compare(get<2>(lhs).begin(), get<2>(lhs).end(),
+                                           get<2>(rhs).begin(), get<2>(rhs).end());
         }
         return get<0>(lhs) > get<0>(rhs);
     }
@@ -56,15 +56,11 @@ int main()
         if(get<1>(c) == n) continue;
         Q.emplace(get<0>(c), get<1>(c)+1, get<2>(c), 0);
         set<uint32_t> d = get<2>(c);
-        d.insert(get<1>(c));
+        d.insert(T[get<1>(c)]);
         Q.emplace(get<0>(c) + A[get<1>(c)], get<1>(c)+1, d, 1);
     }
     auto c = Q.top();
     cout << get<0>(c) << "\n";
-    vector<uint32_t> R;
     for(uint32_t a : get<2>(c))
-        R.push_back(T[a]);
-    sort(R.begin(), R.end());
-    for(uint32_t a : R)
         cout << a+1 << " ";
 }

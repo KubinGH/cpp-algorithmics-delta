@@ -33,11 +33,12 @@ Z cech Tozsamosci Bezouta (ax + by = gcd(a, b))
 a' = a + b/gcd(a, b) * p
 b' = b - a/gcd(a, b) * p (p € Z)
 Poniewaz a'(p) oraz b'(p) sa liniowe, wystarczy sprawdzic wartosci
-p € [0, 2d)
+p € [0, 2 gcd(n, k))
 Co daje Rozwiazanie [1] O(log xy * gcd(x, y)) (50 pkt)
 
 --
 
+[od teraz d = gcd(n, k)]
 Zauwazamy ze poszukujemy czy istnieje rozwiazanie kongruencji
 dy - bk - an |= 0 (mod 2d) [Oznaczenie: |= oznacza przystawanie]
 Po dlugich przeksztalceniach mamy..
