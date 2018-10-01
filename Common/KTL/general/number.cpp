@@ -1,10 +1,11 @@
+#pragma once
+
 #include <deque>
 #include <vector>
 #include <cstdint>
 #include <iostream>
 #include <stack>
 #include <cmath>
-
 
 using namespace std;
 
@@ -255,7 +256,4 @@ ostream& operator<< (ostream& out, number_t<K, T> n)
     else while(not o.empty())
         out << char('0' + o.top()), o.pop();
     return out;
-}
-int main()
-{
 }

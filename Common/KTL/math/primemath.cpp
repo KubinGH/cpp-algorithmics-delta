@@ -3,11 +3,9 @@
 #include <ext/numeric>
 #include <cassert>
 #include <list>
+#define gcd __gcd
 
 using namespace std;
-
-template<typename T>
-inline T gcd(T a, T b) { return __gcd(a, b); }
 
 template<typename T>
 struct mod_multiplies : multiplies<T>
@@ -139,6 +137,7 @@ uint32_t pi_prime_count(uint64_t n)
     return r;
 }
 
+/*
 int main()
 {
     ios_base::sync_with_stdio(false); cout.tie(0);
@@ -157,7 +156,6 @@ int main()
         }
         assert(j == k);
     }
-    /*
     for(uint64_t i = 1 << 26; i < (1 << 27); i++)
     {
         uint64_t j = 1;
@@ -170,5 +168,8 @@ int main()
         if(i % (1 << 20) == 0)
             cout << i << endl;
     }
-    */
 }
+*/
+
+
+#undef gcd

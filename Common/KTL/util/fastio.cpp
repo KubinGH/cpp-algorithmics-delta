@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include <cstdio>
 #include <type_traits>
@@ -41,12 +43,3 @@ struct unlocked_cin
         return *this;
     }
 } ucin;
-
-using namespace std;
-
-int main()
-{
-    uint32_t a = 0; uint64_t b = 0; int64_t c = 0; char d;
-    ucin >> a >> b >> c >> d;
-    cout << a << " " << b << " " << c << " " << d;
-}

@@ -1,5 +1,8 @@
-// https://stackoverflow.com/questions/21856025/getting-an-accurate-execution-time-in-c-micro-seconds
+#pragma once
+
 #include <chrono>
+
+// https://stackoverflow.com/questions/21856025/getting-an-accurate-execution-time-in-c-micro-seconds
 
 // Get time stamp in milliseconds.
 uint64_t millis()

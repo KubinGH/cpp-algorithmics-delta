@@ -5,6 +5,8 @@ using std::size_t;
 
 // Fenwick tree. Calculates prefix sums and allows for point changes.
 // Compact, 0-based implementation.
+// lower_bound based on https://codeforces.com/blog/entry/61364
+
 template<typename T>
 constexpr inline T lsb(T x) { return x & (-x); }
 
@@ -26,4 +28,16 @@ struct fenwick_tree
         { return get(p, p); }
     void set(size_t p, T v)
         { return delta(p, v - get(p)); }
+
+    size_t lower_bound(T v)
+    {
+        T s = 0; size_t p = 0;
+        for(size_t i = (32 - __builtin_clz(n)); i --> 0; )
+        {
+            if(p + (1u << i) < n and s + F[p + (1u << i)] < v)
+                s += F[p + (1u << i)], p += 1u << i;
+        }
+        return p;
+    }
+    size_t find_by_order(size_t i) { return lower_bound(i+1) - 1; }
 };

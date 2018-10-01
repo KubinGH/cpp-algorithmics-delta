@@ -1,6 +1,11 @@
-#include <bits/stdc++.h>
+#pragma once
 
-using namespace std;
+#include <cstdint>
+#include <string>
+#include <vector>
+
+using std::vector; using std::string;
+using std::uint32_t; using std::iterator_traits;
 
 template<typename Iterator, class T = typename iterator_traits<Iterator>::value_type >
 vector<uint32_t> manacher(Iterator first, Iterator last, T leaf = '$')
@@ -31,12 +36,4 @@ vector<uint32_t> manacher(Iterator first, Iterator last, T leaf = '$')
     for(uint32_t i = 0; i < A.size(); i++)
         P[i] = P[i]/2 + i%2;
     return P;
-}
-
-int main()
-{
-    string S;
-    cin >> S;
-    for(uint32_t v : manacher(S.begin(), S.end()))
-        cout << v << " ";
 }

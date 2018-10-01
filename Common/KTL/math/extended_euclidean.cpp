@@ -1,7 +1,7 @@
-#include <bits/stdc++.h>
+#pragma once
 
-template<typename T>
-inline T gcd(T a, T b) { return __gcd(a, b); }
+#include <algorithm>
+#define gcd __gcd
 
 template<typename T>
 struct gcdext_result { T d, x, y; };
@@ -14,3 +14,5 @@ gcdext_result<T> gcdext(T a, T b)
     gcdext_result<T> next = gcdext(b % a, a);
     return {next.d, next.y - (b/a)*next.x, next.x};
 }
+
+#undef gcd

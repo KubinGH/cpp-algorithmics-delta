@@ -1,15 +1,21 @@
-#include <bits/stdc++.h>
+#pragma once
 
-using namespace std;
+#include <cstdint>
+#include <cstddef>
+#include <map>
+#include <utility>
 
-constexpr uint32_t log2floor(uint32_t n) { return 31 - __builtin_clz(n); }
+using std::size_t; using std::uint32_t;
+using std::map; using std::pair;
+
 
 template<size_t N>
-struct subcomp
+struct KMR
 {
+    constexpr uint32_t log2floor(uint32_t n) { return 31 - __builtin_clz(n); }
     uint32_t A[log2floor(N) + 1][N];
     template<typename Iterator>
-    subcomp(Iterator begin, Iterator end)
+    KMR(Iterator begin, Iterator end)
     {
         uint32_t n;
         for(n = 0; begin != end; n++, ++begin)
@@ -38,15 +44,3 @@ struct subcomp
                 A[k][a + (n - (1u << k))] == A[k][b + (n - (1u << k))];
     }
 };
-
-int main()
-{
-    string in;
-    cin >> in;
-    static subcomp<1u << 10> comp(in.begin(), in.end());
-    uint32_t a, b, n;
-    while(cin >> a >> b >> n)
-    {
-        cout << comp(a, b, n) << endl;
-    }
-}

@@ -15,13 +15,13 @@ using std::uint32_t; using std::uint64_t;
 
 // WARNING: Untested after refactoring.
 
-constexpr uint32_t log2floor(uint32_t n)
-    { return 31 - __builtin_clz(n); }
-constexpr uint32_t log2floor(uint64_t n)
-    { return 63 - __builtin_clzll(n); }
 template<typename T, T(*F)(T, T)>
 struct sparse_table
 {
+    constexpr uint32_t log2floor(uint32_t n)
+        { return 31 - __builtin_clz(n); }
+    constexpr uint32_t log2floor(uint64_t n)
+        { return 63 - __builtin_clzll(n); }
     size_t n;
     vector<vector<T>> A;
     template<typename Iterator>
