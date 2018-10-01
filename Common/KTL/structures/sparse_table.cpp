@@ -13,8 +13,6 @@ using std::uint32_t; using std::uint64_t;
 // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
 // Examples: min, max, bit and, bit or
 
-// WARNING: Untested after refactoring.
-
 template<typename T, T(*F)(T, T)>
 struct sparse_table
 {
