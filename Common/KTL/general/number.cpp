@@ -1,3 +1,7 @@
+// Simple biginteger.
+// Based with powers of 2.
+// Last revision: September 2018
+
 #pragma once
 
 #include <deque>

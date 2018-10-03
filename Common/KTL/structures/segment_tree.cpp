@@ -1,10 +1,14 @@
+// Segment trees: point/interval set, interval query
+// TODO: These are pretty old and probably need a re-write.
+
+// Last revision: 2017/2018
+
 #pragma once
 
 #include <cstddef>
 #include <array>
 using std::size_t; using std::array;
 
-// TODO: These are pretty old and probably need a re-write.
 
 // Segment tree, point set, interval query
 // Note: root in 0

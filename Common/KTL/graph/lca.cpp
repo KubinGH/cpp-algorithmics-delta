@@ -1,3 +1,7 @@
+// LCA and jump pointers
+
+// Last revision: 2017/2018
+
 #pragma once
 
 #include <cstdint>
@@ -8,8 +12,6 @@
 using std::uint32_t; using std::size_t;
 using std::array;
 using std::swap;
-
-// LCA and jump pointers
 
 template<size_t JUMP_POINTERS, size_t MAX>
 void do_jump_pointers_for(array<array<uint32_t, JUMP_POINTERS>, MAX>& J, uint32_t v)

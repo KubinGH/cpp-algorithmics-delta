@@ -1,3 +1,8 @@
+// Kosaraju's algorithm.
+// Call by kosaraju<N>{}(n, graph, rev_graph)
+
+// Last revision: Around July
+
 #pragma once
 
 #include <cstdint>
@@ -7,22 +12,15 @@
 #include <bitset>
 #include <algorithm>
 
-// Kosaraju's algorithm.
-// adhere to or change graph_t
-// Call by kosaraju<N>{}(n, graph, rev_graph)
-
 using std::size_t; using std::uint32_t;
 using std::array; using std::vector; using std::bitset;
 using std::reverse;
 
-template<size_t N>
-using graph_t = array<vector<uint32_t>, N>;
-
-template<size_t N>
+template<size_t N, typename graph_t>
 struct kosaraju
 {
     bitset<N> vis;
-    void marker_dfs(uint32_t u, graph_t<N>& graph, vector<uint32_t>& out)
+    void marker_dfs(uint32_t u, const graph_t& graph, vector<uint32_t>& out)
     {
         for(uint32_t v : graph[u])
             if(not vis[v])
@@ -31,7 +29,7 @@ struct kosaraju
     }
     kosaraju() {}
     vector<vector<uint32_t>>
-    operator() (uint32_t n, graph_t<N>& graph, graph_t<N>& rev_graph)
+    operator() (uint32_t n, const graph_t& graph, const graph_t& rev_graph)
     {
         vector<uint32_t> order; order.reserve(n);
         vis.reset();

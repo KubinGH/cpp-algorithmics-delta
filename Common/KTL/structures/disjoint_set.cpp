@@ -1,10 +1,13 @@
+// Disjoint-set data structure (Find and Union)
+
+// Last revision: 2017
+
 #pragma once
 
 #include <cstddef>
 #include <array>
 using std::size_t; using std::array;
 
-// Disjoint-set data structure (Find and Union)
 template<size_t N>
 struct disjoint_set
 {

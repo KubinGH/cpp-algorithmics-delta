@@ -1,3 +1,7 @@
+// Rolling hashes.
+
+// Last revision: Middle of 2018
+
 #pragma once
 
 #include <cstddef>
@@ -5,7 +9,6 @@
 using std::size_t;
 using std::uint64_t;
 
-// Hashing
 // Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33, 2^31 - 1
 template<typename T, T MOD, T BASE, size_t N>
 struct rolling_hash
@@ -42,7 +45,7 @@ struct rolling_hash
     }
 };
 
-// Mod 2^31 - 1 (P = 2^K - 1, P is prime)
+// Mod 2^31 - 1 (should work for any P = 2^K - 1, P is prime)
 // the conditional can be deleted for additional speed
 template<uint64_t K = 31>
 uint64_t mersenne_mod(uint64_t x)

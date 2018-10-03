@@ -1,3 +1,8 @@
+// Something KMR-like I came up with.
+// Not very tested, construction is O(n log^2 n) instead of O(n log n).
+
+// Last revision: Middle of 2018
+
 #pragma once
 
 #include <cstdint>

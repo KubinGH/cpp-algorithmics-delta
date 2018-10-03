@@ -1,3 +1,8 @@
+// Value scaler
+// Map-based instead of overwrite
+
+// Last revision: 2017/2018
+
 #pragma once
 
 #include <cstddef>
@@ -5,8 +10,6 @@
 using std::size_t;
 using std::unordered_map;
 
-// Value scaler
-// Map-based instead of overwrite
 template<typename T, size_t N>
 struct value_scaler
 {

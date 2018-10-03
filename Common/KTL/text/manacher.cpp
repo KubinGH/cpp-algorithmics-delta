@@ -1,3 +1,9 @@
+// Manacher's palindrome-finding algorithm.
+// Returns a vector of both odd and even palindromes
+// (in a spliced manner: odd/even/odd/even...)
+
+// Last revision: Middle of 2018
+
 #pragma once
 
 #include <cstdint>

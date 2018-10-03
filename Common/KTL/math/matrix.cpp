@@ -1,12 +1,14 @@
-#pragma once
-
-#include <cstddef>
-using std::size_t;
-
 // Matrix implementation.
 // Any-size O(n^3) multiplication.
 // TODO: Remove the templates. Useful, but probably all of this can be
 //       dynamic and with some macro-controlled asserts.
+
+// Last revision: Middle of 2018.
+
+#pragma once
+
+#include <cstddef>
+using std::size_t;
 
 template<typename T, size_t W, size_t H, T MOD = 0>
 struct matrix

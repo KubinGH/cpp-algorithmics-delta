@@ -1,3 +1,7 @@
+// Miller-Rabin prime test and Rho-Pollard factorization.
+
+// Last revision: Middle of 2018.
+
 #include <algorithm>
 #include <iostream>
 #include <ext/numeric>

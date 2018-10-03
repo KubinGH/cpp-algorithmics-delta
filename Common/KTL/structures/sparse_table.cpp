@@ -1,3 +1,12 @@
+// Sparse table - O(n log n) construction, O(1) queries.
+// Note: memory usage is not optimized in this implementation
+// Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
+// Examples: min, max, bit and, bit or
+
+// WARNING: Not very tested after refactoring.
+
+// Last revision: October 2018
+
 #pragma once
 
 #include <cstddef>
@@ -8,12 +17,13 @@ using std::size_t;
 using std::vector;
 using std::uint32_t; using std::uint64_t;
 
+<<<<<<< HEAD
+=======
 // Sparse table - O(n log n) construction, O(1) queries.
 // Note: memory usage is not optimized in this implementation
 // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
 // Examples: min, max, bit and, bit or
-
-// WARNING: Untested after refactoring.
+>>>>>>> 02eac0eb1a244f5cc21d520d48abcdfa3ff1c7da
 
 template<typename T, T(*F)(T, T)>
 struct sparse_table
