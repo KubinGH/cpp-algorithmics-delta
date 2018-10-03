@@ -23,6 +23,9 @@ using std::uint32_t; using std::uint64_t;
 // Note: memory usage is not optimized in this implementation
 // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
 // Examples: min, max, bit and, bit or
+<<<<<<< HEAD
+>>>>>>> 02eac0eb1a244f5cc21d520d48abcdfa3ff1c7da
+=======
 >>>>>>> 02eac0eb1a244f5cc21d520d48abcdfa3ff1c7da
 
 template<typename T, T(*F)(T, T)>
