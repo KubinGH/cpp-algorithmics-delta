@@ -6,9 +6,8 @@ const size_t MAX = 1 << 17;
 
 int32_t count_unique3(uint32_t a, uint32_t b, uint32_t c)
 {
-    bitset<3> v;
-    v[a] = 1; v[b] = 1; v[c] = 1;
-    return int32_t(v[0]) + int32_t(v[1]) + int32_t(v[2]);
+    uint32_t x = (1<<a)|(1<<b)|(1<<c);
+    return (x&1) + ((x&2)>>1) + ((x&4)>>2);
 }
 
 int main()

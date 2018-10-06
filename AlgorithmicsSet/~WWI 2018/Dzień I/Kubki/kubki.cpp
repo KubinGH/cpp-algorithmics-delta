@@ -8,7 +8,7 @@ const uint64_t MOD = 1e9 + 7;
 
 template<typename T, T MOD>
 struct mod_multiplies : multiplies<T>
-    { operator() (const T& a, const T& b) { return (a * b) % MOD; } };
+    { T operator() (const T& a, const T& b) { return ((a%MOD) * (b%MOD)) % MOD; } };
 template<typename T, T MOD>
 T modpower(T a, T b)
     { return power(a, b, mod_multiplies<uint64_t, MOD>()); }
@@ -23,11 +23,11 @@ int main()
     {
         uint64_t x;
         cin >> x;
-        modM *= x; mod2 *= x;
-        modM %= MOD; mod2 %= 2;
+        modM *= x%(MOD-1); mod2 *= x%2;
+        modM %= MOD-1; mod2 %= 2;
     }
-    uint64_t a = modpower<uint64_t, MOD>(2, (MOD + modM - 1) % MOD);
+    uint64_t a = modpower<uint64_t, MOD>(2, (MOD + modM - 2) % (MOD-1));
     mod2 ? a = (a + MOD - 1) % MOD : a++;
     a *= modpower<uint64_t, MOD>(3, MOD - 2); a %= MOD;
-    cout << a << "/" << modpower<uint64_t, MOD>(2, (MOD + modM - 1) % MOD);
+    cout << a << "/" << modpower<uint64_t, MOD>(2, (MOD + modM - 2) % (MOD-1));
 }
