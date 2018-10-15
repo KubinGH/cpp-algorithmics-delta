@@ -17,33 +17,31 @@ using std::size_t;
 using std::vector;
 using std::uint32_t; using std::uint64_t;
 
-<<<<<<< HEAD
-=======
 // Sparse table - O(n log n) construction, O(1) queries.
 // Note: memory usage is not optimized in this implementation
 // Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
 // Examples: min, max, bit and, bit or
-<<<<<<< HEAD
->>>>>>> 02eac0eb1a244f5cc21d520d48abcdfa3ff1c7da
-=======
->>>>>>> 02eac0eb1a244f5cc21d520d48abcdfa3ff1c7da
 
-template<typename T, T(*F)(T, T)>
+template<typename T, typename BinaryOperation>
 struct sparse_table
 {
     constexpr uint32_t log2floor(uint32_t n)
         { return 31 - __builtin_clz(n); }
     constexpr uint32_t log2floor(uint64_t n)
         { return 63 - __builtin_clzll(n); }
+    struct _identity { T operator() (const T& x) const { return x; } };
+    BinaryOperation F;
     size_t n;
     vector<vector<T>> A;
-    template<typename Iterator>
-    sparse_table(Iterator first, Iterator last)
+    template<typename Iterator, typename TransformOperation = _identity>
+    sparse_table(Iterator first, Iterator last, BinaryOperation f = {},
+                 TransformOperation t = {})
     {
+        F = move(f);
         n = distance(first, last);
         A.emplace_back(distance(first, last));
         for(size_t i = 0; first != last; first++, i++)
-            A[0][i] = *first;
+            A[0][i] = t(*first);
         for(size_t i = 1; (1u << i) <= n; i++)
         {
             A.emplace_back(n - (1u << i) + 1);

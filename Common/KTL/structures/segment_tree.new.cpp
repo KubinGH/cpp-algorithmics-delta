@@ -31,7 +31,7 @@ struct segment_tree
         values[i] = value; i /= 2;
         while(i) values[i] = F(values[2*i], values[2*i+1]), i /= 2;
     }
-    void get(size_t i, size_t getL, size_t getR)
+    void get(size_t getL, size_t getR)
     {
         T result = identity_element(F);
         for(getL += w, getR += w+1; getL < getR; getL /= 2, getR /= 2)
@@ -51,9 +51,8 @@ T - value type
 ChildrenOp - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
              used for calculating parent value from children
 MT - mutate type
-MutateOp - functor type,
-           operator()(size_t, size_t, size_t, vector<T>, vector<MT>) and identity_element(MutateOp) defined,
-           used for pulling down mutations
+MutateOp - functor type, operator()(size_t, size_t, size_t, vector<T>, vector<MT>) and identity_element(MutateOp) defined,
+           used for pulling down mutations from parent to children
 MergeOp - functor type, operator()(MT, MT) defined,
           used for merging two mutations
 */
