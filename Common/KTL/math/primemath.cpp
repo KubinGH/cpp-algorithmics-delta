@@ -141,39 +141,11 @@ uint32_t pi_prime_count(uint64_t n)
     return r;
 }
 
-/*
+#undef gcd
+
 int main()
 {
-    ios_base::sync_with_stdio(false); cout.tie(0);
-    for(uint32_t i = 1; i < (1 << 10); i++)
-    {
-        uint64_t j = i + (1llu << 50);
-        bool a = miller_rabin_isprime(j, MR_PRIMES[2]),
-             b = sqrt_isprime(j);
-        assert(a == b);
-        if(a) cout << j << ": " << a << "/" << b << endl;
-        uint64_t k = 1;
-        for(uint64_t x : rho_pollard_factorize(j))
-        {
-            assert(miller_rabin_isprime(x));
-            k *= x;
-        }
-        assert(j == k);
-    }
-    for(uint64_t i = 1 << 26; i < (1 << 27); i++)
-    {
-        uint64_t j = 1;
-        for(uint64_t x : rho_pollard_factorize(i))
-        {
-            assert(miller_rabin_isprime(x));
-            j *= x;
-        }
-        assert(i == j);
-        if(i % (1 << 20) == 0)
-            cout << i << endl;
-    }
+    uint64_t N = 764873014698865169;
+    for(uint64_t p : rho_pollard_factorize(N))
+        cout << p << " ";
 }
-*/
-
-
-#undef gcd

@@ -36,7 +36,7 @@ Iterator q_upper_bound(Iterator lo, Iterator hi, T value)
 }
 
 
-template<typename Arg, typename Result, typename MonoOperation>
+template<typename Arg, typename MonoOperation>
 Arg first_true(Arg lo, Arg hi, MonoOperation f)
 {
     while(lo < hi)

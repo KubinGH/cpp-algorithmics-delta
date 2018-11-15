@@ -37,7 +37,7 @@ Iterator q_upper_bound(Iterator lo, Iterator hi, T value)
 }
 
 // generalized operation
-template<typename Arg, typename Result, typename MonoOperation>
+template<typename Arg, typename MonoOperation>
 Arg first_true(Arg lo, Arg hi, MonoOperation f)
 {
     BINARY_SEARCH_BODY(Arg, f(mid))
