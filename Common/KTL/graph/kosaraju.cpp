@@ -7,13 +7,12 @@
 
 #include <cstdint>
 #include <cstddef>
-#include <array>
 #include <vector>
 #include <bitset>
 #include <algorithm>
 
 using std::size_t; using std::uint32_t;
-using std::array; using std::vector; using std::bitset;
+using std::vector; using std::bitset;
 using std::reverse;
 
 template<size_t N, typename graph_t>
