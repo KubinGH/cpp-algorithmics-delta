@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const size_t MAX = 1000000;
+const size_t MAX = 1 << 20;
 
 int main()
 {
@@ -13,8 +13,9 @@ int main()
     {
         uint32_t n;
         cin >> n;
-        static array<uint32_t, MAX> P, T;
+        static uint32_t P[MAX], T[MAX];
         static bitset<MAX> S;
+        S.reset(); fill(T, T + n, 0);
         for(uint32_t i = 0; i < n; i++)
             cin >> P[i];
         S[0] = 0; bool ok = true;
