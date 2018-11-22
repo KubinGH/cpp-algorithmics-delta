@@ -9,10 +9,8 @@ using std::less; using std::swap;
 template<typename T, typename Compare = less<T>>
 struct heap
 {
-private:
     Compare C;
     vector<T> H;
-public:
     heap() {}
     template<typename Iterator>
     heap(Iterator first, Iterator last, Compare c = {})
@@ -22,6 +20,7 @@ public:
         while(first != last)
             insert(*first++);
     }
+    heap(Compare c = {}) : heap((T*)0, (T*)0, c) {}
 private:
     void sift_up(size_t i)
     {
@@ -47,13 +46,13 @@ public:
         H.push_back(x);
         sift_up(H.size()-1);
     }
-    void pop_min()
+    void pop()
     {
         swap(H.front(), H.back());
         H.pop_back();
         sift_down(0);
     }
     void reserve(size_t n) { H.reserve(n); }
-    const T& min() const { return H[0]; }
-    bool empty() { return H.empty(); }
+    const T& top() const { return H[0]; }
+    bool empty() const { return H.empty(); }
 };
