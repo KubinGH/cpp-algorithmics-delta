@@ -23,9 +23,10 @@ int main()
     {
         for(uint32_t w = 0; w <= target; w++)
         {
-            if(w+W[i] <= target and T[i][w] != -1u) for(uint32_t v = 1; w+v*W[i] <= target and v <= Q[i]; v++)
-                if(T[i][w] + v < T[i+1][w+v*W[i]])
-                    T[i+1][w+v*W[i]] = T[i][w] + v, L[i+1][w+v*W[i]] = (w<<16)|v;
+            if(w+W[i] <= target and T[i][w] != -1u)
+                for(uint32_t v = 1; w+v*W[i] <= target and v <= Q[i]; v++)
+                    if(T[i][w] + v < T[i+1][w+v*W[i]])
+                        T[i+1][w+v*W[i]] = T[i][w] + v, L[i+1][w+v*W[i]] = (w<<16)|v;
             if(T[i][w] < T[i+1][w])
                 T[i+1][w] = T[i][w], L[i+1][w] = w<<16;
         }

@@ -14,8 +14,6 @@ int main()
     string pattern, match;
     pattern.reserve(MAX+1);
     match.reserve(MAX+1);
-    // TOFIX:
-    // faff fafaff
     for(uint32_t ti = 0; ti < t; ti++)
     {
         cin >> pattern >> match;

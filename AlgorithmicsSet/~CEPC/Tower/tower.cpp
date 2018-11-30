@@ -73,6 +73,15 @@ struct matrix
     }
 };
 
+int64_t a(uint32_t n, int64_t x)
+{
+    if(n == 1)
+        return 1;
+    else if(n == 2)
+        return x;
+    else
+        return 2*x*a(n-1, x) - a(n-2, x);
+}
 
 int main()
 {
@@ -86,4 +95,19 @@ int main()
     });
     matrix<int64_t, 1, 4> V({{1ll}, {x*x}, {x}, {0ll}});
     cout << ((M^n) * V)(0, 3);
+{
+    cout << endl;
+    matrix<int64_t, 4, 4, MOD> m({
+        {4*x*x, 1ll, 1ll, 0ll},
+        {-8*x, -1ll, 0ll, 0ll},
+        {1ll, 0ll, 0ll, 0ll},
+        {1ll, 0ll, 0ll, 1ll}
+    });
+    matrix<int64_t, 1, 4> v({{x*x}, {-4*x*x}, {1ll}, {0ll}});
+    cout << ((m^(n-1)) * v)(0, 3);
+    int64_t r = 0;
+    for(uint32_t i = 1; i <= n; i++)
+        r += a(i, x)*a(i, x);
+    cout << endl << r;
+}
 }

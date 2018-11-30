@@ -2,8 +2,8 @@
 
 using namespace std;
 
-vector<vector<uint32_t>> graph, children;
-vector<uint32_t> preorder, order, low;
+vector<vector<uint32_t>> graph;
+vector<uint32_t> parent, preorder, order, low;
 uint32_t dfs_time = 0;
 vector<bool> vis;
 
@@ -17,7 +17,7 @@ void dfs_root(uint32_t u)
             low[u] = min(low[u], preorder[v]);
         if(not vis[v])
         {
-            children[u].push_back(v);
+            parent[v] = u;
             vis[v] = true;
             dfs_root(v);
             low[u] = min(low[u], low[v]);
@@ -39,9 +39,9 @@ int main()
         graph[u].push_back(v);
         graph[v].push_back(u);
     }
-    children.resize(n);
+    parent.resize(n);
     preorder.resize(n); vis.resize(n); low.resize(n);
-    vis[root] = true;
+    vis[root] = true; parent[root] = -1u;
     dfs_root(root);
     vector<uint32_t> art(n), arttree(n);
     reverse(order.begin(), order.end());
@@ -49,8 +49,9 @@ int main()
     {
         if(u == root) continue;
         art[u] += arttree[u];
-        for(uint32_t v : children[u])
+        for(uint32_t v : graph[u])
         {
+            if(parent[v] != u) continue;
             arttree[v] += arttree[u];
             if(low[v] >= preorder[u])
                 arttree[v]++;

@@ -8,6 +8,7 @@ int main()
     uint32_t n, m;
     cin >> n >> m;
     using weighted = pair<uint32_t, int64_t>;
+    using weighted2 = pair<int64_t, uint32_t>;
     vector<vector<weighted>> graph(n);
     vector<vector<uint32_t>> of_index(n), from(n);
     vector<pair<uint32_t, uint32_t>> edge_index(m);
@@ -22,18 +23,18 @@ int main()
     auto dijkstra = [&](const vector<vector<weighted>>& G) {
         vector<int64_t> D(n, INT64_MAX);
         vector<pair<uint32_t, uint32_t>> L(n, {-1u, -1u});
-        priority_queue<weighted, vector<weighted>, greater<weighted>> Q;
+        priority_queue<weighted2, vector<weighted2>, greater<weighted2>> Q;
         Q.emplace(0, 0); D[0] = 0;
         while(not Q.empty())
         {
             auto c = Q.top(); Q.pop();
-            if(D[c.first] > c.second) continue;
-            uint32_t u = c.first;
+            if(D[c.second] > c.first) continue;
+            uint32_t u = c.second;
             for(uint32_t i = 0; i < G[u].size(); i++)
             {
                 uint32_t v = G[u][i].first; int64_t w = G[u][i].second;
                 if(D[u] + w < D[v])
-                    Q.emplace(v, D[v] = D[u] + w), L[v] = {u, i};
+                    Q.emplace(D[v] = D[u] + w, v), L[v] = {u, i};
             }
         }
         return make_pair(D, L);
