@@ -42,6 +42,24 @@ namespace geometry
     }
 }
 
+uint64_t log2floor(uint64_t x) { return 63 - __builtin_clzll(x); }
+
+double safe_sqrt(uint64_t x)
+{
+    if(x == 0) return 0;
+    constexpr double epsilon = 1e-8;
+    double lo = (1llu << (log2floor(x)/2)), hi = (1llu << ((log2floor(2*x+1)+1)/2));
+    double dx = x;
+    while(hi - lo > epsilon)
+    {
+        double mid = (lo + hi) / 2;
+        if(mid*mid >= dx)
+            hi = mid;
+        else
+            lo = mid + epsilon;
+    }
+    return lo;
+}
 
 int main()
 {
@@ -55,6 +73,6 @@ int main()
     hull.push_back(hull.front());
     long double result = 0;
     for(uint32_t i = 0; i+1 < hull.size(); i++)
-        result += sqrt((long double)(+(hull[i+1] - hull[i])));
+        result += safe_sqrt((double)(+(hull[i+1] - hull[i])));
     cout << fixed << setprecision(9) << result;
 }

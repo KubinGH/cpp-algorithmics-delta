@@ -37,10 +37,8 @@ struct fenwick_tree
         // min p: get_prefix(p) >= v
         T s = 0; size_t p = 0;
         for(size_t i = (32 - __builtin_clz(n)); i --> 0; ) // \log2(n)/+1
-        {
             if(p + (1u << i) < n and s + F[p + (1u << i)] < v)
                 s += F[p + (1u << i)], p += 1u << i;
-        }
         return p;
     }
     size_t find_by_order(size_t i) { return lower_bound(i+1) - 1; }
