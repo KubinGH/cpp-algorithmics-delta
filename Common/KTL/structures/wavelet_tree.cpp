@@ -1,3 +1,11 @@
+// Wavelet tree with a few operations implemented.
+// Based on "Wavelet trees for all" and
+// "Wavelet trees in competitive programming"
+// TODO: add median and value scaling optimizations.
+//       (requires external constructor)
+
+// Last revision: October 2018
+
 #include <cstddef>
 #include <vector>
 #include <algorithm>

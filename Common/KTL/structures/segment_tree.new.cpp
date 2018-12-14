@@ -1,3 +1,8 @@
+// Segment trees with pretty flexible templates.
+// Operations are provided as functors.
+
+// Last revision: December 2018
+
 #include <vector>
 #include <cstddef>
 #include <ext/functional>

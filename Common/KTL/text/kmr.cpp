@@ -1,51 +1,66 @@
-// Something KMR-like I came up with.
-// Not very tested, construction is O(n log^2 n) instead of O(n log n).
+// Knuth Miller Rabin - base substrings dictonary
 
-// Last revision: Middle of 2018
+// Last revision: October 2018
 
 #pragma once
 
-#include <cstdint>
 #include <cstddef>
-#include <map>
+#include <vector>
+#include <cstdint>
 #include <utility>
+#include <map>
+#include <unordered_map>
+#include <iterator>
 
-using std::size_t; using std::uint32_t;
-using std::map; using std::pair;
+using std::size_t;
+using std::vector; using std::pair;
+using std::uint32_t; using std::uint64_t;
+using std::unordered_map; using std::map;
+using std::iterator_traits;
 
-
-template<size_t N>
-struct KMR
+struct knuth_miller_rosenberg
 {
-    constexpr uint32_t log2floor(uint32_t n) { return 31 - __builtin_clz(n); }
-    uint32_t A[log2floor(N) + 1][N];
-    template<typename Iterator>
-    KMR(Iterator begin, Iterator end)
+    static constexpr uint32_t log2floor(uint32_t x)
+        { return 31 - __builtin_clz(x); }
+    static constexpr uint32_t log2floor(uint64_t x)
+        { return 63 - __builtin_clzll(x); }
+    struct hash_2size
     {
-        uint32_t n;
-        for(n = 0; begin != end; n++, ++begin)
-            A[0][n] = *begin;
-        for(uint32_t p = 1; (1u << p) <= n; p++)
+        size_t operator() (const pair<size_t, size_t>& p) const
         {
-            map<pair<uint32_t, uint32_t>, uint32_t> dict;
-            uint32_t curr = 0;
-            for(uint32_t i = 0; i <= n - (1u << p); i++)
+            return 313*31*17*13*11*
+                   ((uint64_t(p.first<<16) * uint64_t(p.second)) % ((1llu<<31)-1));
+        }
+    };
+    size_t n;
+    vector<vector<size_t>> A;
+    template<typename Iterator, typename T = typename iterator_traits<Iterator>::value_type>
+    knuth_miller_rosenberg(Iterator first, Iterator last)
+    {
+        n = distance(first, last);
+        A.emplace_back(n);
+        map<T, size_t> elems; size_t g = 0;
+        for(size_t i = 0; first != last; first++, i++)
+            A[0][i] = (elems.find(*first) == elems.end() ? elems[*first] = g++ : elems[*first]);
+        unordered_map<pair<size_t, size_t>, size_t, hash_2size> dict;
+        dict.reserve(4*n);
+        for(size_t i = 1; (1u << i) <= n; i++)
+        {
+            dict.clear();
+            size_t h = 0;
+            A.emplace_back(n - (1u << i) + 1);
+            for(size_t j = 0; j + (1 << i) <= n; j++)
             {
-                pair<uint32_t, uint32_t>
-                    key = {A[p-1][i], A[p-1][i + (1u << (p-1))]};
-                auto it = dict.find(key);
-                if(it == dict.end())
-                    dict[key] = A[p][i] = curr++;
-                else
-                    A[p][i] = it->second;
+                pair<size_t, size_t> p = {A[i-1][j], A[i-1][j + (1u << (i-1))]};
+                if(dict.find(p) == dict.end())
+                    dict[p] = h++;
+                A[i][j] = dict[p];
             }
         }
     }
-    // check if [a, a+n) is equal to [b, b+n)
-    bool operator() (uint32_t a, uint32_t b, uint32_t n) const
+    pair<size_t, size_t> operator() (size_t a, size_t b)
     {
-        uint32_t k = log2floor(n);
-        return A[k][a] == A[k][b] and
-                A[k][a + (n - (1u << k))] == A[k][b + (n - (1u << k))];
+        size_t p = log2floor(b - a + 1);
+        return {A[p][a], A[p][b + 1 - (1 << p)]};
     }
 };

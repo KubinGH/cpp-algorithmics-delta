@@ -18,14 +18,14 @@ namespace geometry
         auto s = points.front();
         sort(points.begin()+1, points.end(), [s](vec2d a, vec2d b) {
             auto v = (a - s) ^ (b - s);
-            return v == 0 ? +(a - s) < +(b - s) : v > 0;
+            return v == 0 ? +(a - s) > +(b - s) : v > 0;
         });
         points.push_back(points[0]);
         vector<vec2d> hull = {points[0], points[1]};
         for(uint32_t i = 2; i < points.size(); i++)
         {
             auto p = points[i];
-            while(hull.size() > 2 and ori(hull.end()[-2]-s, hull.end()[-1]-s, p-s) < 0)
+            while(hull.size() > 2 and ori(hull.end()[-2]-s, hull.end()[-1]-s, p-s) <= 0)
                 hull.pop_back();
             hull.push_back(p);
         }

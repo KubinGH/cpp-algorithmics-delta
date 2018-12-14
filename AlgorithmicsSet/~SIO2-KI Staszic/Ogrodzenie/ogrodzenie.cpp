@@ -26,14 +26,14 @@ namespace geometry
         auto s = points.front();
         sort(points.begin()+1, points.end(), [s](vec2d a, vec2d b) {
             auto v = (a - s) ^ (b - s);
-            return v == 0 ? +(a - s) < +(b - s) : v > 0;
+            return v == 0 ? +(a - s) > +(b - s) : v > 0;
         });
         points.push_back(points[0]);
         vector<vec2d> hull = {points[0], points[1]};
         for(uint32_t i = 2; i < points.size(); i++)
         {
             auto p = points[i];
-            while(hull.size() > 2 and ori(hull.end()[-2]-s, hull.end()[-1]-s, p-s) < 0)
+            while(hull.size() > 2 and ori(hull.end()[-2]-s, hull.end()[-1]-s, p-s) <= 0)
                 hull.pop_back();
             hull.push_back(p);
         }
@@ -47,7 +47,7 @@ uint64_t log2floor(uint64_t x) { return 63 - __builtin_clzll(x); }
 double safe_sqrt(uint64_t x)
 {
     if(x == 0) return 0;
-    constexpr double epsilon = 1e-8;
+    constexpr double epsilon = 1e-9;
     double lo = (1llu << (log2floor(x)/2)), hi = (1llu << ((log2floor(2*x+1)+1)/2));
     double dx = x;
     while(hi - lo > epsilon)
@@ -71,8 +71,8 @@ int main()
         cin >> vertices[i].x >> vertices[i].y;
     auto hull = geometry::find_convex_hull(vertices);
     hull.push_back(hull.front());
-    long double result = 0;
+    double result = 0;
     for(uint32_t i = 0; i+1 < hull.size(); i++)
-        result += safe_sqrt((double)(+(hull[i+1] - hull[i])));
+        result += safe_sqrt(+(hull[i+1] - hull[i]));
     cout << fixed << setprecision(9) << result;
 }

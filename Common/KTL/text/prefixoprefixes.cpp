@@ -1,3 +1,7 @@
+// Prefixoprefixes / Z Algorithm
+
+// Last revision: December 2018
+
 #include <cstddef>
 #include <cstdint>
 #include <vector>

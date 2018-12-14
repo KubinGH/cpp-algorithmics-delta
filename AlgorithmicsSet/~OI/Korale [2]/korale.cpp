@@ -1,20 +1,6 @@
-// Rolling hashes, modulo is functor-based for tricks usage.
-// (e.g. Mersenne prime modulo, overflow modulo)
-// Also template-based double hashes.
+#include <bits/stdc++.h>
 
-// Last revision: December 2018
-
-#pragma once
-
-#include <cstddef>
-#include <cstdint>
-#include <vector>
-#include <functional>
-#include <utility>
-using std::size_t; using std::uint32_t; using std::pair;
-using std::vector; using std::result_of;
-
-// Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33, 2^31 - 1
+using namespace std;
 
 template<typename T, T Base, typename ModuloOperation>
 struct rolling_hash
@@ -46,12 +32,6 @@ struct identity
     static constexpr T divisor = 0;
     T operator() (T x) const { return x; }
 };
-template<typename T, T Divisor>
-struct const_modulus
-{
-    static constexpr T divisor = Divisor;
-    T operator() (T x) const { return x % Divisor; }
-};
 template<typename T, uint32_t K>
 struct mersenne_modulus
 {
@@ -77,16 +57,49 @@ struct rolling_hash_pair
         { return H.equals(a, b, c, d) and G.equals(a, b, c, d); }
 };
 
+typedef rolling_hash_pair<
+    rolling_hash<uint64_t, 200003, mersenne_modulus<uint64_t, 31>>,
+    rolling_hash<uint64_t, 200009, identity<uint64_t>>
+> this_hash;
 
-/*
-Examples:
-rolling_hash<uint64_t, 31, const_modulus<uint64_t, uint64_t(1e9+33)>
-    H(S.begin(), S.end(), -('a' - 1));
-rolling_hash<uint64_t, 1e9+7, mersenne_modulus<uint64_t, 31>
-    G(A.begin(), A.end());
+struct hash_2size
+{
+    size_t operator() (const pair<size_t, size_t>& p) const
+    {
+        return 313*31*17*13*11*
+               ((uint64_t(p.first<<16) * uint64_t(p.second)) % ((1llu<<31)-1));
+    }
+};
 
-rolling_hash_pair<
-    rolling_hash<uint64_t, uint64_t(1e6+11), identity>,
-    rolling_hash<uint64_t, uint64_t(1e6+13), mersenne_modulus<uint64_t, 31>>
->
-*/
+int main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+    uint32_t n;
+    cin >> n;
+    vector<uint32_t> A(2*n);
+    for(uint32_t i = 0; i < n; i++)
+        cin >> A[i];
+    for(uint32_t i = n; i --> 0; )
+        A[2*n-i-1] = A[i];
+    this_hash H({A.begin(), A.end(), 1}, {A.begin(), A.end(), 1});
+    auto rev = [&](size_t i) {
+        return 2*n - i - 1;
+    };
+    vector<uint32_t> R; uint32_t r = 0;
+    for(uint32_t k = 1; k <= n; k++)
+    {
+        unordered_set<pair<size_t, size_t>, hash_2size> S;
+        for(uint32_t i = 0; i+k <= n; i += k)
+        {
+            auto h = H(i, i+k-1); auto g = H(rev(i+k-1), rev(i));
+            S.insert(min(h, g));
+        }
+        if(S.size() > r)
+            r = S.size(), R.clear();
+        if(S.size() == r)
+            R.push_back(k);
+    }
+    cout << r << " " << R.size() << "\n";
+    for(uint32_t k : R)
+        cout << k << " ";
+}
