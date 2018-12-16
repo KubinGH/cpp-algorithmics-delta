@@ -1,6 +1,7 @@
 // Sparse table - O(n log n) construction, O(1) queries.
 // Note: memory usage is not optimized in this implementation
-// Requires F(a, b) == F(F(a, b), b), and F(a, b) == F(b, a)
+// Requires idempotency, commutativity and associativity
+// (a @ b) @ b = a @ b, a @ b = b @ a, (a @ b) @ c = a @ (b @ c)
 // Examples: min, max, bit and, bit or
 
 // Last revision: October 2018
@@ -18,10 +19,10 @@ using std::uint32_t; using std::uint64_t;
 template<typename T, typename BinaryOperation>
 struct sparse_table
 {
-    constexpr uint32_t log2floor(uint32_t n)
-        { return 31 - __builtin_clz(n); }
-    constexpr uint32_t log2floor(uint64_t n)
-        { return 63 - __builtin_clzll(n); }
+    static constexpr uint32_t log2floor(uint32_t x)
+        { return 31 - __builtin_clz(x); }
+    static constexpr uint32_t log2floor(uint64_t x)
+        { return 63 - __builtin_clzll(x); }
     struct _identity { T operator() (const T& x) const { return x; } };
     BinaryOperation F;
     size_t n;

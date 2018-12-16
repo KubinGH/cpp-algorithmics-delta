@@ -1,3 +1,10 @@
+// Standard array-based heap with customizable comparator.
+// Should perform similarly to std::priority_queue
+
+// Last revision: November 2018
+
+#pragma once
+
 #include <vector>
 #include <cstddef>
 #include <functional>

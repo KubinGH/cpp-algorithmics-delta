@@ -1,137 +1,120 @@
-// Segment trees: point/interval set, interval query
-// TODO: These are pretty old and probably need a re-write.
+// Segment trees with pretty flexible templates.
+// Operations are provided as functors.
 
-// Last revision: 2017/2018
+// Last revision: December 2018
 
 #pragma once
 
+#include <vector>
 #include <cstddef>
-#include <array>
-using std::size_t; using std::array;
+#include <ext/functional>
 
+using std::vector;
+using std::size_t;
+using __gnu_cxx::identity_element;
 
-// Segment tree, point set, interval query
-// Note: root in 0
-template<typename T, size_t N, T(*F)(T, T), T NONE>
+// Segment tree
+// Interval get, point set
+/*
+T - value type
+ChildrenOp - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
+             used for calculating parent value from children.
+*/
+template<typename T, typename ChildrenOp>
 struct segment_tree
 {
-    array<T, N> values;
-    static_assert(__builtin_popcount(N) == 1 and N > 4, "N != 2**k");
-    size_t offset() const { return N/2 - 1; }
-    size_t parent(size_t i) const { return (i - 1) / 2; }
-    size_t left(size_t i) const { return 2 * i + 1; }
-    size_t right(size_t i) const { return 2 * i + 2; }
-    segment_tree()
+    vector<T> values;
+    size_t w;
+    ChildrenOp F;
+    segment_tree(size_t n, ChildrenOp f = {})
     {
-        fill(values.begin() + offset(), values.end(), NONE);
-        for(size_t i = offset(); i --> 0;)
-            values[i] = F(values[left(i)], values[right(i)]);
+        F = move(f);
+        w = (31 - __builtin_clz(2*n-1));
+        values.resize(2*w, identity_element(F));
     }
     void set(size_t i, T value)
     {
-        i += offset();
-        values[i] = value;
-        while(i > 0)
-            i = parent(i), values[i] = F(values[left(i)], values[right(i)]);
+        i += w;
+        values[i] = value; i /= 2;
+        while(i) values[i] = F(values[2*i], values[2*i+1]), i /= 2;
     }
-    // recursion
-    T get(size_t i, size_t tbegin, size_t tend,
-                    size_t sbegin, size_t send)
+    void get(size_t getL, size_t getR)
     {
-        if(tend < sbegin or send < tbegin)
-            return NONE;
-        else if(sbegin <= tbegin and tend <= send)
-            return values[i];
-        else
-            return F(get(left(i),  tbegin, (tbegin+tend)/2, sbegin, send),
-                     get(right(i), (tbegin+tend)/2+1, tend, sbegin, send));
-    }
-    // iterative
-    T get(size_t sbegin, size_t send)
-    {
-        //return get(0, 0, N/2 - 1, sbegin, send);
-        send++;
-        T result = NONE;
-        for(sbegin += offset(), send += offset(); sbegin < send;
-            sbegin = parent(sbegin), send = parent(send))
+        T result = identity_element(F);
+        for(getL += w, getR += w+1; getL < getR; getL /= 2, getR /= 2)
         {
-            if(sbegin % 2 == 0) result = F(result, values[sbegin++]);
-            if(send % 2 == 0)   result = F(result, values[--send]);
+            if(getL % 2) result = F(result, values[getL++]);
+            if(getR % 2) result = F(result, values[--getR]);
         }
         return result;
     }
 };
 
 
-// Segment tree, interval set, interval query
-// (set new max on interval, query sum on interval)
-// Designed with customizability in mind
-// F: vertex value function for values of children.
-// P: apply changes from to_set. If to_set is SET_NONE, it should do nothing.
-// S: merge set values, e.g. during add this function is addition,
-//    and during set-max this is maximum.
-//    NOTE: F is used by default, but will not be enough in many cases.
-//          (e.g. in a add-interval/max tree)
-//    Note that the previous set value is the first argument,
-//    and the new is second.
-template<typename T, size_t N, T(*F)(T, T), T NONE,
-        void(*P)(size_t, size_t, size_t, array<T, N>&, array<T, N>&), T SET_NONE,
-        T(*S)(T, T) = F>
+// Segment tree
+// Interval get, interval mutate
+/*
+T - value type
+ChildrenOp - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
+             used for calculating parent value from children
+MT - mutate type
+MutateOp - functor type, operator()(size_t, size_t, size_t, vector<T>, vector<MT>) and identity_element(MutateOp) defined,
+           used for pulling down mutations from parent to children
+MergeOp - functor type, operator()(MT, MT) defined,
+          used for merging two mutations
+*/
+
+template<typename T, typename ChildrenOp,
+         typename MT, typename MutateOp, typename MergeOp>
 struct segment_tree_i
 {
-    array<T, N> values, to_set;
-    static_assert(__builtin_popcount(N) == 1 and N > 4, "N != 2**k");
-    size_t offset() const { return N/2 - 1; }
-    size_t parent(size_t i) const { return (i - 1) / 2; }
-    size_t left(size_t i) const { return 2 * i + 1; }
-    size_t right(size_t i) const { return 2 * i + 2; }
-    segment_tree_i()
+    ChildrenOp F;
+    MutateOp M;
+    MergeOp S;
+    size_t w;
+    vector<T> values;
+    vector<MT> mutate;
+    segment_tree_i(size_t n, ChildrenOp f = {}, MutateOp m = {}, MergeOp s = {})
     {
-        fill(values.begin() + offset(), values.end(), NONE);
-        for(size_t i = offset(); i --> 0;)
-            values[i] = F(values[left(i)], values[right(i)]);
-        fill(to_set.begin(), to_set.end(), SET_NONE);
+        F = move(f); M = move(m); S = move(s);
+        w = 1 << (31 - __builtin_clz(2*n-1));
+        values.resize(2*w, identity_element(F));
+        mutate.resize(2*w, identity_element(M));
     }
-    void pull(size_t i, size_t tbegin, size_t tend)
+    void pull(size_t i, size_t nodeL, size_t nodeR)
     {
-        if(to_set[i] != SET_NONE)
-        {
-            P(i, tbegin, tend, values, to_set);
-            to_set[i] = SET_NONE;
-        }
+        M(i, nodeL, nodeR, values, mutate);
     }
-    void set(size_t i, size_t tbegin, size_t tend,
-                       size_t sbegin, size_t send, T value)
+    T get(size_t i, size_t nodeL, size_t nodeR, size_t getL, size_t getR)
     {
-        pull(i, tbegin, tend);
-        if(tend < sbegin or send < tbegin)
-            return;
-        else if(sbegin <= tbegin and tend <= send)
-        {
-            to_set[i] = S(to_set[i], value);
-            pull(i, tbegin, tend);
-        }
-        else
-        {
-            set(left(i),  tbegin, (tbegin+tend)/2, sbegin, send, value);
-            set(right(i), (tbegin+tend)/2+1, tend, sbegin, send, value);
-            values[i] = F(values[left(i)], values[right(i)]);
-        }
-    }
-    void set(size_t sbegin, size_t send, T value)
-        { return set(0, 0, N/2 - 1, sbegin, send, value); }
-    T get(size_t i, size_t tbegin, size_t tend,
-                    size_t sbegin, size_t send)
-    {
-        pull(i, tbegin, tend);
-        if(tend < sbegin or send < tbegin)
-            return NONE;
-        else if(sbegin <= tbegin and tend <= send)
+        pull(i, nodeL, nodeR);
+        if(nodeR < getL or nodeL > getR)
+            return identity_element(F);
+        else if(getL <= nodeL and nodeR <= getR)
             return values[i];
         else
-            return F(get(left(i),  tbegin, (tbegin+tend)/2, sbegin, send),
-                     get(right(i), (tbegin+tend)/2+1, tend, sbegin, send));
+        {
+            return F(get(2*i, nodeL, (nodeL+nodeR)/2, getL, getR),
+                     get(2*i+1, (nodeL+nodeR)/2+1, nodeR, getL, getR));
+        }
     }
-    T get(size_t sbegin, size_t send)
-        { return get(0, 0, N/2 - 1, sbegin, send); }
+    T get(size_t getL, size_t getR) { return get(1, 0, w-1, getL, getR); }
+    void mut(size_t i, size_t nodeL, size_t nodeR, size_t getL, size_t getR, MT value)
+    {
+        pull(i, nodeL, nodeR);
+        if(nodeR < getL or nodeL > getR)
+            {}
+        else if(getL <= nodeL and nodeR <= getR)
+        {
+            mutate[i] = S(mutate[i], value);
+            pull(i, nodeL, nodeR);
+        }
+        else
+        {
+            mut(2*i, nodeL, (nodeL+nodeR)/2, getL, getR, value);
+            mut(2*i+1, (nodeL+nodeR)/2+1, nodeR, getL, getR, value);
+            values[i] = F(values[2*i], values[2*i+1]);
+        }
+    }
+    void mut(size_t getL, size_t getR, MT value) { return mut(1, 0, w-1, getL, getR, value); }
 };

@@ -15,7 +15,7 @@ struct matrix
 {
     T A[W*H];
     size_t w = W, h = H;
-    matrix(size_t w, size_t h) : w(w), h(h) { fill(A, A+w*h, 0); }
+    matrix(size_t _w, size_t _h) : w(_w), h(_h) { fill(A, A+w*h, 0); }
     matrix() : matrix(W, H) {}
     template<size_t AW, size_t AH, typename IT>
     matrix(const IT(&Q)[AH][AW])

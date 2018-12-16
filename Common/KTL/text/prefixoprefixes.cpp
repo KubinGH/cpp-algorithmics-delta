@@ -2,6 +2,8 @@
 
 // Last revision: December 2018
 
+#pragma once
+
 #include <cstddef>
 #include <cstdint>
 #include <vector>

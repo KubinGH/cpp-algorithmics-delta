@@ -1,4 +1,5 @@
 // Knuth Miller Rabin - base substrings dictonary
+// Works, but is unbearably slow
 
 // Last revision: October 2018
 

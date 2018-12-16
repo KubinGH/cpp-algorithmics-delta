@@ -1,3 +1,11 @@
+// Pointer-based randomized heap implementation
+// Allows for merging heaps
+// Gives the same interface as ktl::heap
+
+// Last revision: November 2018
+
+#pragma once
+
 #include <cstddef>
 #include <functional>
 #include <algorithm>
@@ -25,6 +33,7 @@ struct randomized_heap
     }
     randomized_heap(uint64_t seed = 42, Compare c = {})
         : randomized_heap((T*)0, (T*)0, seed, c) {}
+    // Return a random bit (0 or 1) with uniform probability
     bool next_bit()
     {
         if(not bits_ready)
@@ -36,10 +45,10 @@ struct randomized_heap
     {
         if(not first or not second)
             return first ? first : second;
-        if(C(second->value, first->value))
+        if(C(second->value, first->value)) // `first` must be the new root
             swap(first, second);
         if(next_bit())
-            swap(first->left, first->right);
+            swap(first->left, first->right); // `right` is kept, `left` is merged with `second`
         first->left = merge(first->left, second);
         return first;
     }

@@ -2,9 +2,10 @@
 // Based on "Wavelet trees for all" and
 // "Wavelet trees in competitive programming"
 // TODO: add median and value scaling optimizations.
-//       (requires external constructor)
 
 // Last revision: October 2018
+
+#pragma once
 
 #include <cstddef>
 #include <vector>
@@ -14,18 +15,21 @@ using std::size_t; using std::vector;
 using std::stable_partition;
 using std::min_element; using std::max_element;
 
-template<typename Arg, typename MonoOperation>
-Arg first_true(Arg lo, Arg hi, MonoOperation f)
+namespace wavelets
 {
-    while(lo < hi)
+    template<typename Arg, typename MonoOperation>
+    Arg first_true(Arg lo, Arg hi, MonoOperation f)
     {
-        Arg mid = (lo + hi) / 2;
-        if(f(mid))
-            hi = mid;
-        else
-            lo = mid + 1;
+        while(lo < hi)
+        {
+            Arg mid = (lo + hi) / 2;
+            if(f(mid))
+                hi = mid;
+            else
+                lo = mid + 1;
+        }
+        return lo;
     }
-    return lo;
 }
 
 template<typename T>
@@ -62,9 +66,9 @@ struct wavelet_tree
         size_t rank1(size_t i) const { return i - rank0(i); }
         // Return the index of the x-th 0
         size_t select0(size_t x) const
-            { return first_true(0, n, [x](size_t i) { return rank0(i+1) >= x; }); }
+            { return wavelets::first_true(0, n, [x](size_t i) { return rank0(i+1) >= x; }); }
         size_t select1(size_t x) const
-            { return first_true(0, n, [x](size_t i) { return rank1(i+1) >= x; }); }
+            { return wavelets::first_true(0, n, [x](size_t i) { return rank1(i+1) >= x; }); }
         // Return the count of elements that are >= k in the range [0, i)
         size_t count_greater_or_equal(size_t i, T k) const
         {

@@ -2,6 +2,8 @@
 
 // Last revision: Middle of 2018.
 
+#pragma once
+
 #include <algorithm>
 #include <iostream>
 #include <ext/numeric>
@@ -14,7 +16,7 @@ using namespace std;
 template<typename T>
 struct mod_multiplies : multiplies<T>
 {
-    T m; mod_multiplies(T m) : m(m) {}
+    T m; mod_multiplies(T _m) : m(_m) {}
     T operator()(T a, T b) const
     {
         T r = 0;
@@ -143,9 +145,3 @@ uint32_t pi_prime_count(uint64_t n)
 
 #undef gcd
 
-int main()
-{
-    uint64_t N = 764873014698865169;
-    for(uint64_t p : rho_pollard_factorize(N))
-        cout << p << " ";
-}
