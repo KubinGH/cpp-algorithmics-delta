@@ -1,42 +1,34 @@
 // Disjoint-set data structure (Find and Union)
 
-// Last revision: 2017
+// Last revision: December 2018
 
 #pragma once
 
 #include <cstddef>
-#include <array>
-using std::size_t; using std::array;
+#include <vector>
+#include <algorithm>
+using std::size_t; using std::vector;
+using std::iota; using std::swap;
 
-template<size_t N>
 struct disjoint_set
 {
-    array<size_t, N> parent, nrank;
-    disjoint_set(size_t init = N)
+    size_t n;
+    vector<size_t> parent, nrank;
+    disjoint_set(size_t _n) : n(_n)
     {
-        iota(parent.begin(), parent.begin() + init, 0);
+        parent.resize(n); nrank.resize(n);
+        iota(parent.begin(), parent.end(), 0);
     }
-    void unite(size_t first_node, size_t second_node)
+    void unite(size_t u, size_t v)
     {
-        size_t first = find_root(first_node),
-               second = find_root(second_node);
-        if(nrank[second] > nrank[first])
-        {
-            parent[first] = second;
-            nrank[second]++;
-        }
-        else
-        {
-            parent[second] = first;
-            if(nrank[first] == nrank[second])
-                nrank[first]++;
-        }
+        if(nrank[v = find(v)] > nrank[u = find(u)])
+            swap(u, v);
+        parent[v] = u;
+        if(nrank[u] == nrank[v])
+            nrank[u]++;
     }
-    size_t find_root(size_t node)
+    size_t find(size_t u)
     {
-        if(parent[node] == node)
-            return node;
-        parent[node] = find_root(parent[node]);
-        return parent[node];
+        return parent[u] == u ? u : parent[u] = find(parent[u]);
     }
 };
