@@ -26,10 +26,8 @@ int main()
     step[0] = 1;
     for(uint32_t i = 1; i <= n; i++)
     {
-        uint64_t d; cin >> d;
-        uint64_t s = lomul(d, (uint64_t)step[i-1]);
-        if(s > (1LLU<<32))
-            { n = i-1; break; }
+        uint32_t d; cin >> d;
+        uint32_t s = lomul(d, step[i-1]);
         step[i] = s;
         if(step[i] == step[i-1])
         {
