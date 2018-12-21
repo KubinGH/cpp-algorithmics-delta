@@ -1,6 +1,12 @@
 // Fenwick set. Kind of a self-made idea.
 // Operations in O(log n), but the max element (n) must be provided and the memory usage is O(n).
-// Also has neat pseudo-iterators
+// Also has neat pseudo-iterators.
+// It has around the same speed as std::set, but exploiting
+// the internal structure is easier
+// (e.g. rebinding the left/right pointers helps
+//  to get rid of an extra binary search)
+
+// Last revision: December 2018
 
 #include "fenwick.cpp"
 
@@ -31,14 +37,21 @@ struct fenwick_set
         reinitialize();
     }
     size_t size() const { return c; }
+    bool empty() const { return size() == 0; }
+
     size_t basic_lower_bound(size_t v) { return F.lower_bound(F.get_prefix(v) + 1); }
     size_t basic_upper_bound(size_t v) { return basic_lower_bound(v+1); }
+
+    void basic_insert(size_t v)
+    {
+        E[v] = true; c++;
+        F.delta(v, 1);
+    }
 
     void insert(size_t v)
     {
         if(E[v]) return;
-        E[v] = true; c++;
-        F.delta(v, 1);
+        basic_insert(v);
         R[v] = basic_upper_bound(v);
         L[v] = L[R[v]];
         L[R[v]] = v;
@@ -51,7 +64,6 @@ struct fenwick_set
         F.delta(v, -1u);
         L[R[v]] = L[v];
         R[L[v]] = R[v];
-        L[v] = R[v] = -1u;
     }
 
     struct proxy

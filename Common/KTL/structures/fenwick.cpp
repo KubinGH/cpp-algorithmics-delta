@@ -1,6 +1,9 @@
 // Fenwick tree. Calculates prefix sums and allows for point changes.
-// Compact, 0-based implementation.
+// Compact, 0-based implementation (albeit internals are 1-based)
 // lower_bound based on https://codeforces.com/blog/entry/61364
+// p -= fenwicks::lsb(p)  <=>  p &= p - 1
+// p += fenwicks::lsb(p)  <=>  p |= p - 1, p++
+// (both have been proven to be slightly faster)
 
 // Last revision: December 2018
 
@@ -23,11 +26,12 @@ struct fenwick_tree
 {
     size_t n;
     vector<T> F;
-    fenwick_tree(size_t _n) : n(_n), F(n+1, 0) {}
+    size_t lg, q_lg;
+    fenwick_tree(size_t _n) : n(_n), F(n+1, 0), lg(32 - __builtin_clz(n)), q_lg(1 << (lg-1)) {}
     T get_prefix(size_t p) const // Sum in [0, p)
-        { T r = 0; while(p) r += F[p], p -= fenwicks::lsb(p); return r; }
+        { T r = 0; while(p) r += F[p], p &= p - 1; return r; }
     void delta(size_t p, T v)
-        { p++; while(p <= n) F[p] += v, p += fenwicks::lsb(p); }
+        { p++; while(p <= n) F[p] += v, p |= p - 1, p++; }
 
     T get(size_t a, size_t b) const // Get on interval [a, b]
         { return get_prefix(b+1) - get_prefix(a); }
@@ -39,32 +43,12 @@ struct fenwick_tree
     size_t lower_bound(T v)
     {
         // min p: get_prefix(p) >= v
+        // (since it is max p: get(0, p) < v)
         T s = 0; size_t p = 0;
-        for(size_t i = (32 - __builtin_clz(n)); i --> 0; ) // \log2(n)/+1
-            if(p + (1u << i) < n and s + F[p + (1u << i)] < v)
-                s += F[p + (1u << i)], p += 1u << i;
+        for(size_t i = lg, q = q_lg; i --> 0; q /= 2)
+            if(p + q < n and s + F[p + q] < v)
+                s += F[p + q], p += q;
         return p;
     }
     size_t find_by_order(size_t i) { return lower_bound(i+1) - 1; }
-};
-
-template<typename T>
-struct fenwick_tree_2d
-{
-    size_t w, h;
-    vector<fenwick_tree<T>> G;
-    fenwick_tree_2d(size_t _w, size_t _h) : w(_w), h(_h), G(h+1, _w) {}
-
-    T get_prefix(size_t x, size_t y) const // Sum in [0, x) . [0, y)
-        { T r = 0; while(y) r += G[y].get_prefix(x), y -= fenwicks::lsb(y); return r; }
-    void delta(size_t x, size_t y, T v)
-        { y++; while(y <= h) G[y].delta(x, v), y += fenwicks::lsb(y); }
-
-    T get(size_t x1, size_t y1, size_t x2, size_t y2) const
-    {
-        return get_prefix(x2+1, y2+1) + get_prefix(x1, y1)
-             - get_prefix(x2+1, y1) - get_prefix(x1, y2+1);
-    }
-    T get(size_t x, size_t y)
-        { return get(x, y, x, y); }
 };

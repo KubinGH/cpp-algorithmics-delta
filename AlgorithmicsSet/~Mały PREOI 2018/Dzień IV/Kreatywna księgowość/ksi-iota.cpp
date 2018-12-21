@@ -4,23 +4,19 @@ using namespace std;
 
 const size_t MAX = 1 << 18;
 
-
-namespace fenwicks
-{
-    template<typename Tp>
-    static constexpr inline Tp lsb(Tp x) { return x & (-x); }
-}
-
 template<typename T>
 struct fenwick_tree
 {
     size_t n;
     vector<T> F;
-    fenwick_tree(size_t _n) : n(_n), F(n+1, 0) {}
+    size_t lg, qlg;
+    fenwick_tree(size_t _n) :
+        n(_n), F(n+1, 0),
+        lg(32 - __builtin_clz(n)), qlg(1 << (lg-1)) {}
     T get_prefix(size_t p) const // Sum in [0, p)
-        { T r = 0; while(p) r += F[p], p -= fenwicks::lsb(p); return r; }
+        { T r = 0; while(p) r += F[p], p &= p - 1; return r; }
     void delta(size_t p, T v)
-        { p++; while(p <= n) F[p] += v, p += fenwicks::lsb(p); }
+        { p++; while(p <= n) F[p] += v, p |= p - 1, p++; }
 
     T get(size_t a, size_t b) const // Get on interval [a, b]
         { return get_prefix(b+1) - get_prefix(a); }
@@ -33,12 +29,11 @@ struct fenwick_tree
     {
         // min p: get_prefix(p) >= v
         T s = 0; size_t p = 0;
-        for(size_t i = (32 - __builtin_clz(n)); i --> 0; ) // \log2(n)/+1
-            if(p + (1u << i) < n and s + F[p + (1u << i)] < v)
-                s += F[p + (1u << i)], p += 1u << i;
+        for(size_t i = lg, q = qlg; i --> 0; q /= 2) // \log2(n)/+1
+            if(p + q < n and s + F[p + q] < v)
+                s += F[p + q], p += q;
         return p;
     }
-    size_t find_by_order(size_t i) { return lower_bound(i+1) - 1; }
 };
 
 struct fenwick_set
@@ -68,14 +63,20 @@ struct fenwick_set
         reinitialize();
     }
     size_t size() const { return c; }
+    bool empty() const { return size() == 0; }
     size_t basic_lower_bound(size_t v) { return F.lower_bound(F.get_prefix(v) + 1); }
     size_t basic_upper_bound(size_t v) { return basic_lower_bound(v+1); }
+
+    void basic_insert(size_t v)
+    {
+        E[v] = true; c++;
+        F.delta(v, 1);
+    }
 
     void insert(size_t v)
     {
         if(E[v]) return;
-        E[v] = true; c++;
-        F.delta(v, 1);
+        basic_insert(v);
         R[v] = basic_upper_bound(v);
         L[v] = L[R[v]];
         L[R[v]] = v;
@@ -88,7 +89,6 @@ struct fenwick_set
         F.delta(v, -1u);
         L[R[v]] = L[v];
         R[L[v]] = R[v];
-        L[v] = R[v] = -1u;
     }
 
     struct proxy
@@ -116,64 +116,91 @@ int main()
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     uint32_t n, q;
     cin >> n >> q;
+
+    if(n * q <= uint64_t(1e7))
+    {
+        vector<int32_t> A(n);
+        for(uint32_t i = 0; i < n; i++)
+            cin >> A[i];
+        while(q --> 0)
+        {
+            uint32_t L, R; bool t;
+            cin >> L >> R >> t; L--;
+            if(t == 0)
+                sort(A.begin() + L, A.begin() + R);
+            else if(t == 1)
+                sort(A.begin() + L, A.begin() + R, greater<int32_t>());
+        }
+        cout << A[n/2];
+        return 0;
+    }
+
     static int32_t A[MAX];
     for(uint32_t i = 0; i < n; i++)
-    {
-        int32_t a;
-        cin >> a;
-        A[i] = a;
-    }
+        cin >> A[i];
     static query_t queries[MAX];
     for(uint32_t i = 0; i < q; i++)
         cin >> queries[i].L >> queries[i].R >> queries[i].t;
+
     static int32_t E[MAX];
     copy(A, A + n, E);
     sort(E, E + n);
     uint32_t m = unique(E, E + n) - E;
-    uint32_t lo = 0, hi = m;
+
     fenwick_set Q(n+1);
+    uint32_t lo = 0, hi = m;
     while(lo < hi)
     {
         uint32_t mid = (lo + hi) / 2;
-        //cout << "== " << mid << " ==" << endl;
         Q.clear();
         vector<bool> P(n+2);
-        using Qit = fenwick_set::proxy;
-        auto Qprint = [&]() {
-            for(auto p : Q)
-                cout << "<" << p << ": " << P[p] << "> ";
-            cout << endl;
-        }; (void)Qprint;
         Q.insert(1); P[1] = A[0] > E[mid];
         for(uint32_t i = 1; i < n; i++)
             if((A[i-1] > E[mid]) != (A[i] > E[mid]))
                 Q.insert(i+1), P[i+1] = A[i] > E[mid];
-        //Qprint();
         for(uint32_t i = 0; i < q; i++)
         {
             uint32_t L = queries[i].L, R = queries[i].R;
-            Qit itL = Q.upper_bound(L), itR = Q.upper_bound(R+1); --itL; --itR;
-            Q.insert(L); Qit itL1 = Q.find(L); P[L] = P[*itL];
-            Q.insert(R+1); Qit itR1 = Q.find(R+1); P[R+1] = P[*itR];
+            bool eR = Q.E[R+1];
+            Q.insert(R+1);
+            if(not eR)
+                P[R+1] = P[Q.L[R+1]];
             uint32_t c = 0;
-            vector<Qit> to_erase;
-            Qit it0, it1;
-            for(it0 = it1 = itL1, ++it1; it0 != itR1; ++it0, ++it1)
+            vector<uint32_t> to_erase;
+            uint32_t it0, it1;
+            for(it1 = R+1, it0 = Q.L[R+1]; it0 >= L; it1 = it0, it0 = Q.L[it0])
             {
                 to_erase.push_back(it0);
-                if(P[*it0])
-                    c += *it1 - *it0;
+                if(P[it0])
+                    c += it1 - it0;
             }
-            for(Qit it : to_erase)
-                Q.erase(*it);
+            if(P[it0])
+                c += it1 - L;
+            for(uint32_t it : to_erase)
+                Q.erase(it);
             bool b = 1;
             if(queries[i].t == 0)
                 c = (R - L + 1) - c, b = !b;
             if(c > 0)
-                Q.insert(L), P[L] = b;
+            {
+                P[L] = b;
+                if(not Q.E[L])
+                {
+                    Q.basic_insert(L);
+                    Q.L[L] = Q.L[R+1]; Q.R[L] = Q.R[Q.L[R+1]];
+                    Q.R[Q.L[R+1]] = L; Q.L[Q.R[L]] = L;
+                }
+            }
             if(L+c <= R)
-                Q.insert(L+c), P[L+c] = !b;
-            //Qprint();
+            {
+                P[L+c] = !b;
+                if(not Q.E[L+c])
+                {
+                    Q.basic_insert(L+c);
+                    Q.R[L+c] = R+1; Q.L[L+c] = Q.L[R+1];
+                    Q.R[Q.L[L+c]] = L+c; Q.L[R+1] = L+c;
+                }
+            }
         }
         auto itr = Q.upper_bound(n/2+1); --itr;
         if(P[*itr] == 0)

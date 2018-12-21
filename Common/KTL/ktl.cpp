@@ -22,6 +22,8 @@ namespace ktl
 
     #include "structures/disjoint_set.cpp"
     #include "structures/fenwick.cpp"
+    #include "structures/fenwick_2d.cpp"
+    #include "structures/fenwick_set.cpp"
     #include "structures/heap.cpp"
     #include "structures/randomized_heap.cpp"
     #include "structures/segment_tree.cpp"
@@ -40,14 +42,4 @@ namespace ktl
     #include "util/randutil.cpp"
 
     #include "util/zeus/socket.cpp"
-}
-
-int main()
-{
-    ktl::fenwick_tree<int> F(10);
-    for(uint32_t i = 0; i < 10; i++)
-        F.delta(i, i+1);
-    for(uint32_t i = 0; i < 10; i++)
-        cout << F.get(0, i) << " ";
-    cout << endl;
 }
