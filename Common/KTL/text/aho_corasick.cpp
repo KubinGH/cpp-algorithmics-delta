@@ -1,6 +1,13 @@
-#include <bits/stdc++.h>
+#include <array>
+#include <map>
+#include <queue>
+#include <tuple>
+#include <utility>
+#include <vector>
 
-using namespace std;
+using std::array; using std::vector; using std::map;
+using std::queue; using std::pair; using std::tie;
+
 namespace aho_corasicks
 {
     template<size_t N>
@@ -26,6 +33,11 @@ namespace aho_corasicks
             auto it = edges.find(value);
             return it == edges.end() ? nullptr : it->second;
         }
+    };
+    template<typename T, T minuend>
+    struct partial_minus
+    {
+        T operator() (T x) const { return x - minuend; }
     };
 }
 
@@ -71,13 +83,12 @@ struct aho_corasick
                 if(curr->get_edge(next_value) != nullptr)
                     Q.emplace(curr->get_edge(next_value), next_value);
             if(curr == root) continue;
-            //Node* extend = backtrack == nullnode ? root : backtrack->get_edge(value);
+
             curr->suflink = curr->parent->suflink;
             while(curr->suflink != nullnode and curr->suflink->get_edge(value) == nullptr)
                 curr->suflink = curr->suflink->suflink;
-            auto extend = curr->suflink == nullnode ? root : curr->suflink->get_edge(value);
-            if(extend != nullptr)
-                curr->suflink = extend;
+            curr->suflink = curr->suflink == nullnode ? root : curr->suflink->get_edge(value);
+
             if(curr->suflink->match != -1u)
                 curr->dictlink = curr->suflink;
             else
@@ -95,16 +106,14 @@ struct aho_corasick
     {
         aho_corasick* owner;
         Node* node;
-        state advance(T value)
+        state advance(T value) const
         {
             value = fix(value);
-            Node* backtrack = node;
-            while(backtrack != owner->nullnode)
+            for(Node* backtrack = node; backtrack != owner->nullnode; backtrack = backtrack->suflink)
             {
                 Node* extend = backtrack->get_edge(value);
                 if(extend != nullptr)
                     return {owner, extend};
-                backtrack = backtrack->suflink;
             }
             return {owner, owner->root};
         }
@@ -117,48 +126,3 @@ struct aho_corasick
 
     state begin() { return {this, root}; }
 };
-
-template<typename T, T minuend>
-struct partial_minus
-{
-    T operator() (T x) const { return x - minuend; }
-};
-/*
-abccab
-7
-a
-ab
-bab
-bc
-bca
-c
-caa
-*/
-
-int main()
-{
-    string M;
-    cin >> M;
-    uint32_t n;
-    cin >> n;
-    vector<string> D(n); vector<pair<string::iterator, string::iterator>> DI(n);
-    for(uint32_t i = 0; i < n; i++)
-    {
-        cin >> D[i];
-        DI[i] = {D[i].begin(), D[i].end()};
-    }
-    aho_corasick<char, aho_corasicks::static_node<26>, partial_minus<char, 'a'>>
-        T(DI.begin(), DI.end());
-    auto curr = T.begin();
-    for(uint32_t i = 0; i < M.size(); i++)
-    {
-        curr = curr.advance(M[i]);
-        cout << "curr @ " << curr.node << endl;
-        auto temp = curr.matches() ? curr : curr.next_match();
-        while(temp.valid_match())
-        {
-            cout << temp.match() << " @ " << i << endl;
-            temp = temp.next_match();
-        }
-    }
-}
