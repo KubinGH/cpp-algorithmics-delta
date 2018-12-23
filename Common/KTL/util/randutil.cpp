@@ -10,7 +10,7 @@
 
 #include <random>
 
-std::mt19937 gen{std::random_device{}()};
+std::mt19937 ktl_gen{std::random_device{}()};
 template<typename T>
 T randint(T a, T b)
-    { return std::uniform_int_distribution<T>{a, b}(gen); }
+{ return std::uniform_int_distribution<T>{a, b}(ktl_gen); }

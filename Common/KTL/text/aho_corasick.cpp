@@ -1,25 +1,42 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
-template<typename T, size_t N, typename ElementFix>
-struct advmemo_aho_corasick
+namespace aho_corasicks
 {
-    struct Node
+    template<size_t N>
+    struct static_node
     {
-        array<Node*, N> edges, advmemo;
+        array<static_node*, N> edges;
         vector<size_t> edgelist;
-        Node *parent, *suflink, *dictlink; size_t match;
-        Node() : parent(nullptr), suflink(nullptr), dictlink(nullptr), match(-1u)
-            { edges.fill(nullptr); advmemo.fill(nullptr); }
-        Node* get_edge(size_t index) { return edges[index]; }
+        static_node *parent, *suflink, *dictlink; size_t match;
+        static_node() : parent(nullptr), suflink(nullptr), dictlink(nullptr), match(-1u)
+            { edges.fill(nullptr); }
+        static_node* get_edge(size_t index) { return edges[index]; }
 
     };
+    template<typename T>
+    struct dynamic_node
+    {
+        map<T, dynamic_node*> edges;
+        vector<T> edgelist;
+        dynamic_node *parent, *suflink, *dictlink; size_t match;
+        dynamic_node() : parent(nullptr), suflink(nullptr), dictlink(nullptr), match(-1u) {}
+        dynamic_node* get_edge(T value)
+        {
+            auto it = edges.find(value);
+            return it == edges.end() ? nullptr : it->second;
+        }
+    };
+}
+
+template<typename T, typename Node, typename ElementFix>
+struct aho_corasick
+{
     static ElementFix fix;
     Node *nullnode, *root;
     vector<Node*> nodes;
     template<typename Iterator>
-    advmemo_aho_corasick(Iterator first, Iterator last)
+    aho_corasick(Iterator first, Iterator last)
     {
         nodes.push_back(new Node); nodes.push_back(new Node);
         nullnode = nodes[0]; root = nodes[1];
@@ -67,7 +84,7 @@ struct advmemo_aho_corasick
                 curr->dictlink = curr->suflink->dictlink;
         }
     }
-    ~advmemo_aho_corasick()
+    ~aho_corasick()
     {
         for(Node* node : nodes)
             delete node;
@@ -76,24 +93,20 @@ struct advmemo_aho_corasick
 
     struct state
     {
-        advmemo_aho_corasick* owner;
+        aho_corasick* owner;
         Node* node;
         state advance(T value)
         {
-            if(node == owner->nullnode)
-                return {owner, owner->root};
-            T fvalue = fix(value);
-            if(node->advmemo[fvalue] != nullptr)
-                return {owner, node->advmemo[fvalue]};
-            Node* extend = node->get_edge(fvalue);
-            if(extend != nullptr)
-                return {owner, node->advmemo[fvalue] = extend};
-            else
+            value = fix(value);
+            Node* backtrack = node;
+            while(backtrack != owner->nullnode)
             {
-                state result = state{owner, node->suflink}.advance(value);
-                node->advmemo[fvalue] = result.node;
-                return result;
+                Node* extend = backtrack->get_edge(value);
+                if(extend != nullptr)
+                    return {owner, extend};
+                backtrack = backtrack->suflink;
             }
+            return {owner, owner->root};
         }
         bool valid() const { return node != owner->nullnode; }
         bool valid_match() const { return valid() and node != owner->root; }
@@ -110,38 +123,42 @@ struct partial_minus
 {
     T operator() (T x) const { return x - minuend; }
 };
+/*
+abccab
+7
+a
+ab
+bab
+bc
+bca
+c
+caa
+*/
 
 int main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    string S;
-    cin >> S;
+    string M;
+    cin >> M;
     uint32_t n;
     cin >> n;
-    vector<string> D(n);
-    vector<pair<string::iterator, string::iterator>> DI(n);
+    vector<string> D(n); vector<pair<string::iterator, string::iterator>> DI(n);
     for(uint32_t i = 0; i < n; i++)
     {
         cin >> D[i];
         DI[i] = {D[i].begin(), D[i].end()};
     }
-    advmemo_aho_corasick<char, 26, partial_minus<char, 'a'>>
+    aho_corasick<char, aho_corasicks::static_node<26>, partial_minus<char, 'a'>>
         T(DI.begin(), DI.end());
-    stack<decltype(T)::state> states;
-    states.push(T.begin());
-    string Z; Z.reserve(S.size());
-    for(uint32_t i = 0; i < S.size(); i++)
+    auto curr = T.begin();
+    for(uint32_t i = 0; i < M.size(); i++)
     {
-        Z += S[i];
-        auto next = states.top().advance(S[i]);
-        states.push(next);
-        auto temp = next.matches() ? next : next.next_match();
-        if(temp.valid_match())
+        curr = curr.advance(M[i]);
+        cout << "curr @ " << curr.node << endl;
+        auto temp = curr.matches() ? curr : curr.next_match();
+        while(temp.valid_match())
         {
-            uint32_t k = D[temp.match()].size();
-            while(k --> 0)
-                Z.pop_back(), states.pop();
+            cout << temp.match() << " @ " << i << endl;
+            temp = temp.next_match();
         }
     }
-    cout << Z;
 }
