@@ -24,8 +24,7 @@ struct disjoint_set
         if(nrank[v = find(v)] > nrank[u = find(u)])
             swap(u, v);
         parent[v] = u;
-        if(nrank[u] == nrank[v])
-            nrank[u]++;
+        nrank[u] += (nrank[u] == nrank[v]);
     }
     size_t find(size_t u)
     {

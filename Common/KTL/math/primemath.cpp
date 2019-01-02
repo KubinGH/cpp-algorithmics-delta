@@ -12,27 +12,26 @@
 #define gcd __gcd
 
 using namespace std;
+using __gnu_cxx::power;
 
 template<typename T>
 struct mod_multiplies : multiplies<T>
 {
     T m; mod_multiplies(T _m) : m(_m) {}
-    T operator()(T a, T b) const
+    T operator()(T a, T b) const { return (a*b) % m; }
+};
+template<>
+struct mod_multiplies<uint64_t> : multiplies<uint64_t>
+{
+    uint64_t m; mod_multiplies(uint64_t _m) : m(_m) {}
+    uint64_t operator()(uint64_t a, uint64_t b) const
     {
-        T r = 0;
-        while(a)
-        {
-            if(a % 2)
-                r += b, r %= m;
-            a /= 2;
-            b *= 2, b %= m;
-        }
-        return r;
+        if(a>=m) a %= m; if(b>=m) b %= m;
+        uint64_t c = (long double)(a) * b / m;
+        int64_t r = a * b - c * m;
+        return r < 0 ? r%m + m : r%m;
     }
 };
-using __gnu_cxx::power;
-template<typename T>
-T modpower(T a, T b, T m) { return power(a, b, mod_multiplies<T>(m)); }
 
 
 // 0: 2^32 - {2, 7, 61} (3)
@@ -55,7 +54,7 @@ bool miller_rabin_isprime(uint64_t n, const vector<uint64_t>& W)
     {
         if(a + 2 > n)
             continue;
-        uint64_t x = modpower(a, d, n);
+        uint64_t x = power(a, d, M);
         if(x == 1 or x == n - 1)
             continue;
         bool comp = true;
@@ -145,3 +144,7 @@ uint32_t pi_prime_count(uint64_t n)
 
 #undef gcd
 
+int main()
+{
+    cout << pi_prime_count((1 << 23));
+}

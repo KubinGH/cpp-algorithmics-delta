@@ -1,90 +1,90 @@
-1. Z³ota skrzynia 
-Dla prostopad³oœciennej tablicy liczb [w][h][d], 
-znajdŸ szeœciañ o boku k o maksymalnej sumie liczb,
-które siê w nim zawieraj¹.
-[analogia do problemu maksymalnego prostok¹ta w dwuwymiarowej tablicy,
- czy maksymalnego spójnego podci¹gu (w tym wypadku maksymalnego o d³ugoœci k]
+ï»¿1. ZÅ‚ota skrzynia 
+Dla prostopadÅ‚oÅ›ciennej tablicy liczb [w][h][d], 
+znajdÅº szeÅ›ciaÅ„ o boku k o maksymalnej sumie liczb,
+ktÃ³re siÄ™ w nim zawierajÄ….
+[analogia do problemu maksymalnego prostokÄ…ta w dwuwymiarowej tablicy,
+ czy maksymalnego spÃ³jnego podciÄ…gu (w tym wypadku maksymalnego o dÅ‚ugoÅ›ci k]
 
 w, h, d <= 128, k <= min(w, h, d)
 -1000 <= a[x,y,z] <= 1000
 
-Wejœcie:
+WejÅ›cie:
 {w} {h} {d} {k}
 d razy:
   h razy:
      w razy:
-       {liczba spe³niaj¹ca a[x,y,z]} spacja
+       {liczba speÅ‚niajÄ…ca a[x,y,z]} spacja
      nowa linia
   nowa linia
 
-Wyjœcie:
+WyjÅ›cie:
 {maksymalna suma}
-{x} {y} {z} # indeksy pocz¹tku szeœcianu
-            # x, y, z oznacza szeœcian opisany indeksami {x, y, z, x+k-1, y+k-1, z+k-1}
+{x} {y} {z} # indeksy poczÄ…tku szeÅ›cianu
+            # x, y, z oznacza szeÅ›cian opisany indeksami {x, y, z, x+k-1, y+k-1, z+k-1}
   
 --- === ---
 
 2. Magiczne schody
-Mamy opis m magicznych schodów w wie¿y o n piêtrach.
-[Piêtra s¹ numerowane od 0 - parter, do n-1 - szczytu wie¿y]
-[Czas mierzymy w chwilach, gdzie chwile s¹ numerowane od 0 - pocz¹tku podró¿y po wie¿y]
-Magiczne schody za pomoc¹ staro¿ytnych czarów s¹ w stanie teleportowaæ
-u¿ytkownika z jednego punktu do drugiego. Teleportacja trwa jedn¹ chwilê.
-Opisuje siê je trzema wartoœciami t_i, a_i, b_i - opowiednio numer
-chwili w którym odbywa siê teleportacja, punkt pocz¹tkowy teleportacji
-i punkt koñcowy teleportacji.
-Nie mo¿na podró¿owaæ magicznymi schodami w drug¹ stronê. Ruch jest jednostronny. 
-(tylko a_i do b_i, nie b_i do a_i). Mo¿e siê zdarzyæ ¿e a_i > b_i.
-Dodatkowo, istniej¹ schody klasyczne, którymi mo¿na przejœæ jedno piêtro *w górê*
-w jedn¹ chwilê.
+Mamy opis m magicznych schodÃ³w w wieÅ¼y o n piÄ™trach.
+[PiÄ™tra sÄ… numerowane od 0 - parter, do n-1 - szczytu wieÅ¼y]
+[Czas mierzymy w chwilach, gdzie chwile sÄ… numerowane od 0 - poczÄ…tku podrÃ³Å¼y po wieÅ¼y]
+Magiczne schody za pomocÄ… staroÅ¼ytnych czarÃ³w sÄ… w stanie teleportowaÄ‡
+uÅ¼ytkownika z jednego punktu do drugiego. Teleportacja trwa jednÄ… chwilÄ™.
+Opisuje siÄ™ je trzema wartoÅ›ciami t_i, a_i, b_i - opowiednio numer
+chwili w ktÃ³rym odbywa siÄ™ teleportacja, punkt poczÄ…tkowy teleportacji
+i punkt koÅ„cowy teleportacji.
+Nie moÅ¼na podrÃ³Å¼owaÄ‡ magicznymi schodami w drugÄ… stronÄ™. Ruch jest jednostronny. 
+(tylko a_i do b_i, nie b_i do a_i). MoÅ¼e siÄ™ zdarzyÄ‡ Å¼e a_i > b_i.
+Dodatkowo, istniejÄ… schody klasyczne, ktÃ³rymi moÅ¼na przejÅ›Ä‡ jedno piÄ™tro *w gÃ³rÄ™*
+w jednÄ… chwilÄ™.
 
-Dla danego zbioru magicznych schodów chcemy dowiedzieæ siê ile (najkrócej)
-potrwa podró¿ do ka¿dego z piêter, do których mo¿emy dotrzeæ z parteru (piêtra 0).
+Dla danego zbioru magicznych schodÃ³w chcemy dowiedzieÄ‡ siÄ™ ile (najkrÃ³cej)
+potrwa podrÃ³Å¼ do kaÅ¼dego z piÄ™ter, do ktÃ³rych moÅ¼emy dotrzeÄ‡ z parteru (piÄ™tra 0).
 
 n, m <= 10**6
 0 <= t_i < 10**9
 0 <= a_i, b_i < n, a_i != b_i
 
-Wejœcie:
+WejÅ›cie:
 {n} {m}
 m razy:
   {t_i} {a_i} {b_i}
   
-Wyjœcie:
+WyjÅ›cie:
 n razy:
-  numer chwili w której mo¿emy dotrzeæ do i-tego piêtra (dla parteru numer chwili to 0)
+  numer chwili w ktÃ³rej moÅ¼emy dotrzeÄ‡ do i-tego piÄ™tra (dla parteru numer chwili to 0)
   
   
 --- === ---
 
 3. ??
-Dla n elementów ci¹gu mamy q zapytañ:
-1. Ustawiamy [na przedziale?] element na dan¹ liczbê
-2. Pytamy czy na przedziale a..b wszystkie elementy s¹ kolejno o k wiêksze
+Dla n elementÃ³w ciÄ…gu mamy q zapytaÅ„:
+1. Ustawiamy [na przedziale?] element na danÄ… liczbÄ™
+2. Pytamy czy na przedziale a..b wszystkie elementy sÄ… kolejno o k wiÄ™ksze
 
 5 4
 = 1 1
 = 2 2
-= 3 3 // ci¹g 1, 2, 3
-? 1 3 1 -> TAK // 1, 2, 3: elementy rosn¹ o 1
+= 3 3 // ciÄ…g 1, 2, 3
+? 1 3 1 -> TAK // 1, 2, 3: elementy rosnÄ… o 1
 
 
 3.2 Piramidy
-Dla n elementów ci¹gu mamy q zapytañ:
-1. Dodajemy na przedziale a..b liczbê
-2. Pytamy czy na przedziale a..b liczby tworz¹ postêp arytmetyczny (a, a+x, a+2x, a+3x..)
+Dla n elementÃ³w ciÄ…gu mamy q zapytaÅ„:
+1. Dodajemy na przedziale a..b liczbÄ™
+2. Pytamy czy na przedziale a..b liczby tworzÄ… postÄ™p arytmetyczny (a, a+x, a+2x, a+3x..)
 
 
 --- === ---
 
-Zajêcia o C++:
+ZajÄ™cia o C++:
 * assert, abort, system
 * fstream
 * template
 * iteratory: binary search, rbegin/rend
 * STL: std::list, std::deque
-* operator strza³eczki - i --> 0
-* litera³y - 0ULL
+* operator strzaÅ‚eczki - i --> 0
+* literaÅ‚y - 0ULL
 * builtins gcc/g++: 
     __gcd, __builtin_popcount, __builtin_clz[ll], __builtin_ctz[ll]    
     
@@ -92,41 +92,69 @@ Zajêcia o C++:
 --- === ---
 
 4. Bity
- * Operacje bitowe na przedzia³ach
+ * Operacje bitowe na przedziaÅ‚ach
  * Suma na przedziale
  
-Model: drzewa przedzia³owe dla ka¿dego bitu
+Model: drzewa przedziaÅ‚owe dla kaÅ¼dego bitu
 
 --- === ---
 
 5. Drzewo na drzewie
 
-Mamy dany graf - drzewo z n wierzcho³kami (n <= 10^5). Mamy podane n - 1 krawêdzi.
-Chcemy pokolorowaæ wierzcho³ki, tak ¿e kolorowanie ma najwiêksz¹ sumê wartoœci kolorów.
-Kolor to liczba ca³kowita dodatnia.
-Wartoœæ koloru k to 
+Mamy dany graf - drzewo z n wierzchoÅ‚kami (n <= 10^5). Mamy podane n - 1 krawÄ™dzi.
+Chcemy pokolorowaÄ‡ wierzchoÅ‚ki, tak Å¼e kolorowanie ma najwiÄ™kszÄ… sumÄ™ wartoÅ›ci kolorÃ³w.
+Kolor to liczba caÅ‚kowita dodatnia.
+WartoÅ›Ä‡ koloru k to 
     2^k % 169831
-(notatka: cykl modulo ma d³ugoœæ 333)
-Gdy wykorzystujemy dany kolor k, s¹siednie wierzcho³ki musz¹ mieæ kolor 
-maksymalnie ró¿ni¹cy siê o 
+(notatka: cykl modulo ma dÅ‚ugoÅ›Ä‡ 333)
+Gdy wykorzystujemy dany kolor k, sÄ…siednie wierzchoÅ‚ki muszÄ… mieÄ‡ kolor 
+maksymalnie rÃ³Å¼niÄ…cy siÄ™ o 
     min(abs((k % 333) - 111), abs((k % 333) - 222))
 Wynik to maksymalna suma kolorowania.
 
 
 Model:
 * Ukorzenienie
-* Dynamik, stan dynamika dla poddrzewa z wierzcho³kiem u to DP[u][k], gdzie k to wykorzystany kolor dla u
-* Mo¿liwe kolory to, po ograniczeniu, 0..332 (niech C = 332)
-    * Drzewa Fenwicka zbudowane dla ka¿dego DP[u]
-* Z³o¿onoœæ: O(n + n * C)
+* Dynamik, stan dynamika dla poddrzewa z wierzchoÅ‚kiem u to DP[u][k], gdzie k to wykorzystany kolor dla u
+* MoÅ¼liwe kolory to, po ograniczeniu, 0..332 (niech C = 332)
+    * Drzewa Fenwicka zbudowane dla kaÅ¼dego DP[u]
+* ZÅ‚oÅ¼onoÅ›Ä‡: O(n + n * C)
     * bez Fenwicka: O(n + n * C * C/3), czyli 10^5 * 333 * 111 ~=\/ 3e9 
-    * Teoretycznie da siê to zrobiæ bez Fenwicka, ale powinno byæ bardzo trudno 
-      (kolejka monotoniczna? drzewo przedzia³owe daje mno¿nik ~x10 i spora sta³¹)
+    * Teoretycznie da siÄ™ to zrobiÄ‡ bez Fenwicka, ale powinno byÄ‡ bardzo trudno 
+      (kolejka monotoniczna? drzewo przedziaÅ‚owe daje mnoÅ¼nik ~x10 i spora staÅ‚Ä…)
       
 --- === ---
 
-6. Z³oty postêp
+6. ZÅ‚oty postÄ™p
+
+(juÅ¼ gotowe) 
 
 ~ ~ ~
 
 --- === ---
+
+7. StrzaÅ‚ki pana Knutha
+
+Policz wartoÅ›Ä‡ wyraÅ¼enia skÅ‚adajÄ…cego siÄ™ z notacji strzaÅ‚kowej Knutha
+
+a ^{n} 0 = 1
+a ^{1} b = a**b
+a ^{n+1} b = a ^{n} (a ^{n+1} (b - 1))
+
+--- === ---
+
+8. ReguÅ‚y gry
+
+Masz n zmiennych ktÃ³re majÄ… docelowe wartoÅ›ci t_i. Wybierz jak najmniejszy ich podzbiÃ³r, aby
+daÅ‚o siÄ™ reprezentowaÄ‡ wszystkie pozostaÅ‚e w postaci t_a * x + t_b, gdzie a i b to indeksy
+wybranych zmiennych a x moÅ¼e byÄ‡ dowolnÄ… liczbÄ….
+
+--- === ---
+
+9. Strzelnica
+
+Dane jest n prostokÄ…tÃ³w o bokach rÃ³wnolegÅ‚ych do jednej z osi ukÅ‚adu wspÃ³Å‚rzÄ™dnych, oraz m
+prostych (takÅ¼e rÃ³wnolegÅ‚ych -//-). Ile prostokÄ…tÃ³w powstaje w wyniku przeciÄ™cia przez wszystkie
+proste.
+
+* online?

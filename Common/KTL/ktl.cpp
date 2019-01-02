@@ -31,6 +31,7 @@ namespace ktl
     #include "structures/value_scaler.cpp"
     #include "structures/wavelet_tree.cpp"
 
+    #include "text/aho_corasick.cpp"
     #include "text/kmr.cpp"
     #include "text/manacher.cpp"
     #include "text/prefixoprefixes.cpp"
@@ -40,6 +41,8 @@ namespace ktl
     #include "util/chronohelper.cpp"
     #include "util/fastio.cpp"
     #include "util/randutil.cpp"
-
-    #include "util/zeus/socket.cpp"
+    namespace zeus
+    {
+        #include "util/zeus/socket.cpp"
+    }
 }
