@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <vector>
 #include <cstdint>
@@ -15,23 +16,20 @@
 using std::size_t;
 using std::vector;
 using std::uint32_t; using std::uint64_t;
+template<typename T>
+T lg(T x) { return std::__lg(x); }
 
 template<typename T, typename BinaryOperation>
 struct sparse_table
 {
-    static constexpr uint32_t log2floor(uint32_t x)
-        { return 31 - __builtin_clz(x); }
-    static constexpr uint32_t log2floor(uint64_t x)
-        { return 63 - __builtin_clzll(x); }
     struct _identity { T operator() (const T& x) const { return x; } };
     BinaryOperation F;
     size_t n;
     vector<vector<T>> A;
     template<typename Iterator, typename TransformOperation = _identity>
     sparse_table(Iterator first, Iterator last, BinaryOperation f = {},
-                 TransformOperation t = {})
+                 TransformOperation t = {}) : F(f)
     {
-        F = move(f);
         n = distance(first, last);
         A.emplace_back(distance(first, last));
         for(size_t i = 0; first != last; first++, i++)
@@ -45,7 +43,7 @@ struct sparse_table
     }
     T operator() (size_t a, size_t b)
     {
-        size_t p = log2floor(b - a + 1);
+        size_t p = lg(b - a + 1);
         return F(A[p][a], A[p][b + 1 - (1 << p)]);
     }
 };

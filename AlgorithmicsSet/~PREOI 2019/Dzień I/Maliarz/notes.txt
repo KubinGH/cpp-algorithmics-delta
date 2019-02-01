@@ -1,0 +1,12 @@
+œcie¿ki dochodz¹ do pewnego miejsca, i sie nie przecinaj¹
+
+œcie¿ka dolna i œcie¿ka górna
+krok:
+* je¿eli siê nie da, to wybieramy to drugie
+* je¿eli s¹ dwie opcje:
+  - dolny w dó³, górny w prawo
+  
+je¿eli siê pokrywaj¹:
+* je¿eli siê nie da, to wybieramy to drugie
+* je¿eli s¹ dwie opcje:
+  - dolny w dó³, górny w prawo

@@ -5,12 +5,14 @@
 
 #pragma once
 
+#include <algorithm>
 #include <vector>
 #include <cstddef>
 #include <ext/functional>
 
 using std::vector;
 using std::size_t;
+using std::__lg;
 using __gnu_cxx::identity_element;
 
 // Segment tree
@@ -26,10 +28,9 @@ struct segment_tree
     vector<T> values;
     size_t w;
     ChildrenOp F;
-    segment_tree(size_t n, ChildrenOp f = {})
+    segment_tree(size_t n, ChildrenOp f = {}) : F(f)
     {
-        F = move(f);
-        w = (31 - __builtin_clz(2*n-1));
+        w = 1 << __lg(2*n-1);
         values.resize(2*w, identity_element(F));
     }
     void set(size_t i, T value)
@@ -38,7 +39,7 @@ struct segment_tree
         values[i] = value; i /= 2;
         while(i) values[i] = F(values[2*i], values[2*i+1]), i /= 2;
     }
-    void get(size_t getL, size_t getR)
+    T get(size_t getL, size_t getR)
     {
         T result = identity_element(F);
         for(getL += w, getR += w+1; getL < getR; getL /= 2, getR /= 2)
@@ -75,9 +76,9 @@ struct segment_tree_i
     vector<T> values;
     vector<MT> mutate;
     segment_tree_i(size_t n, ChildrenOp f = {}, MutateOp m = {}, MergeOp s = {})
+        : F(f), M(m), S(s)
     {
-        F = move(f); M = move(m); S = move(s);
-        w = 1 << (31 - __builtin_clz(2*n-1));
+        w = 1 << __lg(2*n-1);
         values.resize(2*w, identity_element(F));
         mutate.resize(2*w, identity_element(M));
     }

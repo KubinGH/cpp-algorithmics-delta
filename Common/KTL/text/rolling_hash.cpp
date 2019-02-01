@@ -11,8 +11,9 @@
 #include <vector>
 #include <functional>
 #include <utility>
+#include <limits>
 using std::size_t; using std::uint32_t; using std::pair;
-using std::vector; using std::result_of;
+using std::vector; using std::result_of; using std::numeric_limits;
 
 // Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33, 2^31 - 1
 
@@ -58,8 +59,8 @@ struct mersenne_modulus
     static constexpr T P = (T(1) << K) - 1, divisor = P;
     T operator() (T x) const
     {
-        x = (x >> K) + (x & P);
-        x = (x >> K) + (x & P);
+        for(uint32_t i = K; i < numeric_limits<T>::digits; i += K-1)
+            x = (x >> K) + (x & P);
         return x == P ? 0 : x;
     }
 };

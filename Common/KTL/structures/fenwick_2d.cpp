@@ -21,7 +21,7 @@ struct fenwick_tree_2d
     T get_prefix(size_t x, size_t y) const // Sum in [0, x) . [0, y)
         { T r = 0; while(y) r += G[y].get_prefix(x), y &= y - 1; return r; }
     void delta(size_t x, size_t y, T v)
-        { y++; while(y <= h) G[y].delta(x, v), y += y - 1, y++; }
+        { y++; while(y <= h) G[y].delta(x, v), y |= y - 1, y++; }
 
     T get(size_t x1, size_t y1, size_t x2, size_t y2) const
     {
