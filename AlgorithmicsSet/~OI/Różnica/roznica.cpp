@@ -30,9 +30,6 @@ int main()
             if(R[a][b][1])
                 r = max(r, R[a][b][0] - R[a][b][1]);
         }
-        //cout << i << endl;
-        //for(uint32_t i = 0; i < 2; i++) for(uint32_t j = 0; j < 2; j++)
-        //    cout << i << ":" << j << " -> " << R[i][j][0] << " " << R[i][j][1] << " " << R[i][j][2] << endl;
     }
     cout <<  r;
 }
