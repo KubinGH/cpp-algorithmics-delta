@@ -158,3 +158,23 @@ prostych (także równoległych -//-). Ile prostokątów powstaje w wyniku przec
 proste.
 
 * online?
+
+--- === --- 
+
+10. Pif Paf kontratakuje
+
+Ile jest inwersji w ciągu bitów złożonym z kolejnych reprezentacji binarnych liczb 1, 2, ..., n?
+
+n = 5: 
+0 | 1 | 10 | 11 | 100 | 101
+0 1 1 0 1 1 1 0 0 1 0 1
+wynik -> 2 + 10 + 6 = 18
+
+--- === ---
+
+11. Przyjęcie (ILOCAMP)
+
+Każdy ma znajomego, obok którego koniecznie chce usiąść ( f(x) ), 
+jakie największe przyjęcie przy jednym okrągłym stole można urządzić?
+
+:todo: jakiś twist

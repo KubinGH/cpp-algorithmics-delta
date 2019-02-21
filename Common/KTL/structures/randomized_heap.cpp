@@ -13,6 +13,7 @@
 
 using std::mt19937; using std::size_t;
 using std::less; using std::swap;
+using std::uint32_t; using std::uint64_t;
 
 template<typename T, typename Compare = less<T>>
 struct randomized_heap
