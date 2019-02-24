@@ -57,20 +57,14 @@ bool miller_rabin_isprime(uint64_t n, const vector<uint64_t>& W)
         uint64_t x = power(a, d, M);
         if(x == 1 or x == n - 1)
             continue;
-        bool comp = true;
         for(uint32_t i = 0; i < r - 1; i++)
         {
             x = M(x, x);
-            if(x == 1)
-                return false;
             if(x == n - 1)
-            {
-                comp = false;
-                break;
-            }
+                goto next_witness;
         }
-        if(comp)
-            return false;
+        return false;
+    next_witness:;
     }
     return true;
 }
@@ -102,7 +96,7 @@ uint64_t rho_pollard_get_factor(uint64_t n)
     if(miller_rabin_isprime(n))
         return n;
     mod_multiplies<uint64_t> M(n);
-    for(uint64_t c = 1; true; c++)
+    for(uint64_t c = 3; true; c++)
     {
         uint64_t x = 2, y = 2, d = 1;
         while(d == 1)
@@ -143,3 +137,8 @@ uint32_t pi_prime_count(uint64_t n)
 }
 
 #undef gcd
+
+int main()
+{
+    cout << pi_prime_count(1e7);
+}

@@ -172,7 +172,7 @@ wynik -> 2 + 10 + 6 = 18
 
 --- === ---
 
-11. Przyjęcie (ILOCAMP)
+11. Spotkanie towarzyskie (ILOCAMP)
 
 Każdy ma znajomego, obok którego koniecznie chce usiąść ( f(x) ), 
 jakie największe przyjęcie przy jednym okrągłym stole można urządzić?
