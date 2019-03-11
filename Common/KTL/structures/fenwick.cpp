@@ -42,8 +42,6 @@ struct fenwick_tree
 
     size_t lower_bound(T v)
     {
-        // min p: get_prefix(p) >= v
-        // (since it is max p: get(0, p) < v)
         T s = 0; size_t p = 0;
         for(size_t i = lg, q = q_lg; i --> 0; q /= 2)
             if(p + q < n and s + F[p + q] < v)
