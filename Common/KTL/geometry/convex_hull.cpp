@@ -1,3 +1,6 @@
+// Convex hull via Graham Scan
+// Last revision: Beginning of 2019
+
 #pragma once
 
 #include <algorithm>
@@ -8,7 +11,6 @@
 using std::min_element; using std::swap; using std::sort;
 using std::vector; using std::make_pair;
 
-// Graham scan
 vector<vec2d> find_convex_hull(vector<vec2d> points)
 {
     auto it = min_element(points.begin(), points.end(), [](vec2d a, vec2d b) {

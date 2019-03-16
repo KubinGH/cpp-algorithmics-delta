@@ -2,7 +2,7 @@
 // (e.g. Mersenne prime modulo, overflow modulo)
 // Also template-based double hashes.
 
-// Last revision: December 2018
+// Last revision: March 2019
 
 #pragma once
 
@@ -20,7 +20,7 @@ using std::vector; using std::result_of; using std::numeric_limits;
 template<typename T, T Base, typename ModuloOperation>
 struct rolling_hash
 {
-    ModuloOperation M;
+    static ModuloOperation M;
     vector<T> H, P;
     size_t n;
     template<typename Iterator>
@@ -31,7 +31,7 @@ struct rolling_hash
         H[0] = 0; P[0] = 1;
         for(size_t i = 0; i < n; i++, first++)
         {
-            H[i+1] = M(H[i]*Base + (T(*first)+T(fix)));
+            H[i+1] = M(H[i]*Base + (T(*first)+fix));
             P[i+1] = M(P[i]*Base);
         }
     }
@@ -39,6 +39,15 @@ struct rolling_hash
         { return M(M.divisor*M.divisor + H[j+1] - H[i]*P[j-i+1]); }
     bool equals(size_t a, size_t b, size_t c, size_t d) const
         { return (*this)(a, b) == (*this)(c, d); }
+    template<typename Iterator>
+    static T unihash(Iterator first, Iterator last, T fix = 0)
+    {
+        T h = 0;
+        do {
+            h = M(h * Base + (T(*first) + fix));
+        } while(++first != last);
+        return h;
+    }
 };
 
 template<typename T>

@@ -12,10 +12,16 @@ namespace ktl
     #include "geometry/convex_hull.cpp"
     #include "geometry/vec2d.cpp"
 
+    #include "graph/flow/dinic.cpp"
+    #include "graph/flow/edmonds-karp.cpp"
+    #include "graph/flow/ford-fulkerson.cpp"
+    #include "graph/dag-dominators.cpp"
+    #include "graph/edmonds-min-arborescence.cpp"
     #include "graph/kosaraju.cpp"
     #include "graph/lca.cpp"
 
-    #include "math/extended_euclidean.cpp"
+    #include "math/crt.cpp"
+    #include "math/egcd.cpp"
     #include "math/golden_section.cpp"
     #include "math/matrix.cpp"
     #include "math/primemath.cpp"

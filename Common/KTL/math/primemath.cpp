@@ -137,8 +137,3 @@ uint32_t pi_prime_count(uint64_t n)
 }
 
 #undef gcd
-
-int main()
-{
-    cout << pi_prime_count(1e7);
-}

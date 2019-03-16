@@ -1,3 +1,6 @@
+// A bunch of 2D vector utility methods.
+// Last revision: Beginning of 2019
+
 #pragma once
 
 #include <cstdint>

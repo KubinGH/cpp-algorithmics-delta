@@ -11,9 +11,11 @@
 
 #include <cstddef>
 #include <vector>
+#include <algorithm>
+
 using std::size_t;
 using std::vector;
-
+using std::__lg;
 
 namespace fenwicks
 {
@@ -26,12 +28,11 @@ struct fenwick_tree
 {
     size_t n;
     vector<T> F;
-    size_t lg, q_lg;
-    fenwick_tree(size_t _n) : n(_n), F(n+1, 0), lg(32 - __builtin_clz(n)), q_lg(1 << (lg-1)) {}
+    fenwick_tree(size_t _n) : n(_n), F(n+1, 0) {}
     T get_prefix(size_t p) const // Sum in [0, p)
-        { T r = 0; while(p) r += F[p], p &= p - 1; return r; }
+        { T r = 0; while(p) r += F[p], p -= fenwicks::lsb(p); return r; }
     void delta(size_t p, T v)
-        { p++; while(p <= n) F[p] += v, p |= p - 1, p++; }
+        { p++; while(p <= n) F[p] += v, p += fenwicks::lsb(p), p++; }
 
     T get(size_t a, size_t b) const // Get on interval [a, b]
         { return get_prefix(b+1) - get_prefix(a); }
@@ -43,7 +44,7 @@ struct fenwick_tree
     size_t lower_bound(T v)
     {
         T s = 0; size_t p = 0;
-        for(size_t i = lg, q = q_lg; i --> 0; q /= 2)
+        for(size_t i = __lg(n)+1, q = (1u << __lg(n)); i --> 0; q /= 2)
             if(p + q < n and s + F[p + q] < v)
                 s += F[p + q], p += q;
         return p;

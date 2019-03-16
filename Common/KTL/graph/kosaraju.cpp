@@ -1,7 +1,7 @@
 // Kosaraju's algorithm.
 // Call by kosaraju<N>{}(n, graph, rev_graph)
 
-// Last revision: Around July
+// Last revision: July 2018
 
 #pragma once
 
