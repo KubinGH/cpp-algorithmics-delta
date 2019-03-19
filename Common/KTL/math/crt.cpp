@@ -27,7 +27,7 @@ pair<int64_t, int64_t> crt(vector<pair<int64_t, int64_t>> congo)
             return {0, 0};
         int64_t x = (a1*m2*n2 + a2*m1*n1) / g;
 
-        congo.emplace_back(m, umod(x, m));
+        congo.emplace_back(umod(x, m), m);
     }
     return congo.back();
 }
