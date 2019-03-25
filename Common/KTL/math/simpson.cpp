@@ -1,0 +1,22 @@
+// Integration by Simpson's formula.
+// Last revision: March 2019
+#pragma once
+
+#include <cstdint>
+#include <cmath>
+
+using std::size_t;
+using std::abs;
+
+template<typename T, typename Function>
+T simpson_integration(Function f, T a, T b, size_t n)
+{
+    T h = (b - a) / (2 * n);
+    T s = f(a) + f(b);
+    for(size_t i = 1; i < 2 * n; i++)
+    {
+        T x = a + h * i;
+        s += f(x) * (i%2 ? 4 : 2);
+    }
+    return s * (h / 3);
+}
