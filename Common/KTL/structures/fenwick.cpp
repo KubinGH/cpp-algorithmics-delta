@@ -32,7 +32,7 @@ struct fenwick_tree
     T get_prefix(size_t p) const // Sum in [0, p)
         { T r = 0; while(p) r += F[p], p -= fenwicks::lsb(p); return r; }
     void delta(size_t p, T v)
-        { p++; while(p <= n) F[p] += v, p += fenwicks::lsb(p), p++; }
+        { p++; while(p <= n) F[p] += v, p += fenwicks::lsb(p); }
 
     T get(size_t a, size_t b) const // Get on interval [a, b]
         { return get_prefix(b+1) - get_prefix(a); }
