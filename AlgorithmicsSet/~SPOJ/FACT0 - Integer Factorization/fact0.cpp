@@ -1,21 +1,7 @@
-// Miller-Rabin prime test and Rho-Pollard factorization.
-
-// Last revision: Middle of 2018.
-
-#pragma once
-
+#include <bits/stdc++.h>
 #include <ext/numeric>
-#include <functional>
-#include <algorithm>
-#include <iostream>
-#include <cassert>
-#include <cstdint>
-#include <vector>
-#include <list>
 
-using std::multiplies;
-using std::vector; using std::list;
-using std::__lg; using std::__gcd;
+using namespace std;
 using __gnu_cxx::power;
 
 template<typename T>
@@ -132,4 +118,23 @@ list<uint64_t> factorize_int(uint64_t n)
             n /= p, result.push_back(p);
     result.merge(rho_pollard_factorize(n));
     return result;
+}
+
+int main()
+{
+    uint64_t n;
+    while(cin >> n)
+    {
+        if(n == 0) break;
+        auto F = factorize_int(n);
+        uint64_t p = F.front(), k = 0;
+        for(auto f : F)
+        {
+            if(p != f)
+                cout << p << "^" << k << " ", p = f, k = 0;
+            k++;
+        }
+        cout << p << "^" << k << endl;
+    }
+
 }
