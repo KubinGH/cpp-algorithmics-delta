@@ -1,0 +1,16 @@
+from os import system
+print(r"tests-pawpaw\small")
+system(r"thetacheck -a rob.exe -d tests-pawpaw\small")
+print(r"tests-pawpaw\medium")
+system(r"thetacheck -a rob.exe -d tests-pawpaw\medium")
+print(r"tests-pawpaw\big")
+system(r"thetacheck -a rob.exe -d tests-pawpaw\big")
+print(r"tests-kac\small")
+system(r"thetacheck -a rob.exe -d tests-kac\small")
+print(r"tests-kac\medium")
+system(r"thetacheck -a rob.exe -d tests-kac\medium")
+print(r"tests-kac\big")
+system(r"thetacheck -a rob.exe -d tests-kac\big")
+
+print("Done...")
+system("pause")

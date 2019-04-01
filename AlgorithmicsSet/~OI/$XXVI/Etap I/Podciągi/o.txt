@@ -1,0 +1,1541 @@
+Test tests\5\test145, done 0 out of 512 (0.0%)
+Process took 11.18 seconds
+[+] Correct
+Test tests\5\test325, done 1 out of 512 (0.2%)
+Process took 8.44 seconds
+[+] Correct
+Test tests\5\test280, done 2 out of 512 (0.39%)
+Process took 8.23 seconds
+[+] Correct
+Test tests\5\test387, done 3 out of 512 (0.59%)
+Process took 8.68 seconds
+[+] Correct
+Test tests\5\test273, done 4 out of 512 (0.78%)
+Process took 11.13 seconds
+[+] Correct
+Test tests\5\test509, done 5 out of 512 (0.98%)
+Process took 10.65 seconds
+[+] Correct
+Test tests\5\test283, done 6 out of 512 (1.17%)
+Process took 7.63 seconds
+[+] Correct
+Test tests\5\test389, done 7 out of 512 (1.37%)
+Process took 11.17 seconds
+[+] Correct
+Test tests\5\test456, done 8 out of 512 (1.56%)
+Process took 10.39 seconds
+[+] Correct
+Test tests\5\test291, done 9 out of 512 (1.76%)
+Process took 8.18 seconds
+[+] Correct
+Test tests\5\test494, done 10 out of 512 (1.95%)
+Process took 7.98 seconds
+[+] Correct
+Test tests\5\test360, done 11 out of 512 (2.15%)
+Process took 7.55 seconds
+[+] Correct
+Test tests\5\test220, done 12 out of 512 (2.34%)
+Process took 9.06 seconds
+[+] Correct
+Test tests\5\test123, done 13 out of 512 (2.54%)
+Process took 9.21 seconds
+[+] Correct
+Test tests\5\test434, done 14 out of 512 (2.73%)
+Process took 11.55 seconds
+[+] Correct
+Test tests\5\test290, done 15 out of 512 (2.93%)
+Process took 10.09 seconds
+[+] Correct
+Test tests\5\test501, done 16 out of 512 (3.12%)
+Process took 7.64 seconds
+[+] Correct
+Test tests\5\test168, done 17 out of 512 (3.32%)
+Process took 8.95 seconds
+[+] Correct
+Test tests\5\test202, done 18 out of 512 (3.52%)
+Process took 9.47 seconds
+[+] Correct
+Test tests\5\test74, done 19 out of 512 (3.71%)
+Process took 10.95 seconds
+[+] Correct
+Test tests\5\test155, done 20 out of 512 (3.91%)
+Process took 7.81 seconds
+[+] Correct
+Test tests\5\test226, done 21 out of 512 (4.1%)
+Process took 9.81 seconds
+[+] Correct
+Test tests\5\test274, done 22 out of 512 (4.3%)
+Process took 9.65 seconds
+[+] Correct
+Test tests\5\test327, done 23 out of 512 (4.49%)
+Process took 11.46 seconds
+[+] Correct
+Test tests\5\test70, done 24 out of 512 (4.69%)
+Process took 11.33 seconds
+[+] Correct
+Test tests\5\test388, done 25 out of 512 (4.88%)
+Process took 10.81 seconds
+[+] Correct
+Test tests\5\test238, done 26 out of 512 (5.08%)
+Process took 10.09 seconds
+[+] Correct
+Test tests\5\test462, done 27 out of 512 (5.27%)
+Process took 10.97 seconds
+[+] Correct
+Test tests\5\test492, done 28 out of 512 (5.47%)
+Process took 7.41 seconds
+[+] Correct
+Test tests\5\test108, done 29 out of 512 (5.66%)
+Process took 7.95 seconds
+[+] Correct
+Test tests\5\test221, done 30 out of 512 (5.86%)
+Process took 8.16 seconds
+[+] Correct
+Test tests\5\test480, done 31 out of 512 (6.05%)
+Process took 9.67 seconds
+[+] Correct
+Test tests\5\test404, done 32 out of 512 (6.25%)
+Process took 10.41 seconds
+[+] Correct
+Test tests\5\test13, done 33 out of 512 (6.45%)
+Process took 9.06 seconds
+[+] Correct
+Test tests\5\test12, done 34 out of 512 (6.64%)
+Process took 10.62 seconds
+[+] Correct
+Test tests\5\test301, done 35 out of 512 (6.84%)
+Process took 8.52 seconds
+[+] Correct
+Test tests\5\test166, done 36 out of 512 (7.03%)
+Process took 8.63 seconds
+[+] Correct
+Test tests\5\test298, done 37 out of 512 (7.23%)
+Process took 8.36 seconds
+[+] Correct
+Test tests\5\test62, done 38 out of 512 (7.42%)
+Process took 9.7 seconds
+[+] Correct
+Test tests\5\test463, done 39 out of 512 (7.62%)
+Process took 9.98 seconds
+[+] Correct
+Test tests\5\test247, done 40 out of 512 (7.81%)
+Process took 7.37 seconds
+[+] Correct
+Test tests\5\test323, done 41 out of 512 (8.01%)
+Process took 9.14 seconds
+[+] Correct
+Test tests\5\test127, done 42 out of 512 (8.2%)
+Process took 8.58 seconds
+[+] Correct
+Test tests\5\test199, done 43 out of 512 (8.4%)
+Process took 10.99 seconds
+[+] Correct
+Test tests\5\test418, done 44 out of 512 (8.59%)
+Process took 10.27 seconds
+[+] Correct
+Test tests\5\test507, done 45 out of 512 (8.79%)
+Process took 9.15 seconds
+[+] Correct
+Test tests\5\test474, done 46 out of 512 (8.98%)
+Process took 10.09 seconds
+[+] Correct
+Test tests\5\test235, done 47 out of 512 (9.18%)
+Process took 10.09 seconds
+[+] Correct
+Test tests\5\test262, done 48 out of 512 (9.38%)
+Process took 9.64 seconds
+[+] Correct
+Test tests\5\test268, done 49 out of 512 (9.57%)
+Process took 11.65 seconds
+[+] Correct
+Test tests\5\test460, done 50 out of 512 (9.77%)
+Process took 11.33 seconds
+[+] Correct
+Test tests\5\test101, done 51 out of 512 (9.96%)
+Process took 9.99 seconds
+[+] Correct
+Test tests\5\test430, done 52 out of 512 (10.16%)
+Process took 11.28 seconds
+[+] Correct
+Test tests\5\test329, done 53 out of 512 (10.35%)
+Process took 10.12 seconds
+[+] Correct
+Test tests\5\test497, done 54 out of 512 (10.55%)
+Process took 7.42 seconds
+[+] Correct
+Test tests\5\test510, done 55 out of 512 (10.74%)
+Process took 11.03 seconds
+[+] Correct
+Test tests\5\test350, done 56 out of 512 (10.94%)
+Process took 7.84 seconds
+[+] Correct
+Test tests\5\test300, done 57 out of 512 (11.13%)
+Process took 8.22 seconds
+[+] Correct
+Test tests\5\test186, done 58 out of 512 (11.33%)
+Process took 8.5 seconds
+[+] Correct
+Test tests\5\test333, done 59 out of 512 (11.52%)
+Process took 11.16 seconds
+[+] Correct
+Test tests\5\test378, done 60 out of 512 (11.72%)
+Process took 10.95 seconds
+[+] Correct
+Test tests\5\test249, done 61 out of 512 (11.91%)
+Process took 8.19 seconds
+[+] Correct
+Test tests\5\test316, done 62 out of 512 (12.11%)
+Process took 7.7 seconds
+[+] Correct
+Test tests\5\test448, done 63 out of 512 (12.3%)
+Process took 11.78 seconds
+[+] Correct
+Test tests\5\test464, done 64 out of 512 (12.5%)
+Process took 10.55 seconds
+[+] Correct
+Test tests\5\test175, done 65 out of 512 (12.7%)
+Process took 11.59 seconds
+[+] Correct
+Test tests\5\test163, done 66 out of 512 (12.89%)
+Process took 11.25 seconds
+[+] Correct
+Test tests\5\test374, done 67 out of 512 (13.09%)
+Process took 8.41 seconds
+[+] Correct
+Test tests\5\test17, done 68 out of 512 (13.28%)
+Process took 10.43 seconds
+[+] Correct
+Test tests\5\test263, done 69 out of 512 (13.48%)
+Process took 8.39 seconds
+[+] Correct
+Test tests\5\test15, done 70 out of 512 (13.67%)
+Process took 7.21 seconds
+[+] Correct
+Test tests\5\test152, done 71 out of 512 (13.87%)
+Process took 10.44 seconds
+[+] Correct
+Test tests\5\test216, done 72 out of 512 (14.06%)
+Process took 9.55 seconds
+[+] Correct
+Test tests\5\test484, done 73 out of 512 (14.26%)
+Process took 9.12 seconds
+[+] Correct
+Test tests\5\test71, done 74 out of 512 (14.45%)
+Process took 10.37 seconds
+[+] Correct
+Test tests\5\test385, done 75 out of 512 (14.65%)
+Process took 10.85 seconds
+[+] Correct
+Test tests\5\test131, done 76 out of 512 (14.84%)
+Process took 8.6 seconds
+[+] Correct
+Test tests\5\test499, done 77 out of 512 (15.04%)
+Process took 9.58 seconds
+[+] Correct
+Test tests\5\test164, done 78 out of 512 (15.23%)
+Process took 9.17 seconds
+[+] Correct
+Test tests\5\test92, done 79 out of 512 (15.43%)
+Process took 10.61 seconds
+[+] Correct
+Test tests\5\test32, done 80 out of 512 (15.62%)
+Process took 11.22 seconds
+[+] Correct
+Test tests\5\test395, done 81 out of 512 (15.82%)
+Process took 8.42 seconds
+[+] Correct
+Test tests\5\test441, done 82 out of 512 (16.02%)
+Process took 10.27 seconds
+[+] Correct
+Test tests\5\test176, done 83 out of 512 (16.21%)
+Process took 10.01 seconds
+[+] Correct
+Test tests\5\test222, done 84 out of 512 (16.41%)
+Process took 9.13 seconds
+[+] Correct
+Test tests\5\test398, done 85 out of 512 (16.6%)
+Process took 9.85 seconds
+[+] Correct
+Test tests\5\test27, done 86 out of 512 (16.8%)
+Process took 7.57 seconds
+[+] Correct
+Test tests\5\test51, done 87 out of 512 (16.99%)
+Process took 11.67 seconds
+[+] Correct
+Test tests\5\test237, done 88 out of 512 (17.19%)
+Process took 10.0 seconds
+[+] Correct
+Test tests\5\test373, done 89 out of 512 (17.38%)
+Process took 10.18 seconds
+[+] Correct
+Test tests\5\test488, done 90 out of 512 (17.58%)
+Process took 7.59 seconds
+[+] Correct
+Test tests\5\test227, done 91 out of 512 (17.77%)
+Process took 8.86 seconds
+[+] Correct
+Test tests\5\test332, done 92 out of 512 (17.97%)
+Process took 10.51 seconds
+[+] Correct
+Test tests\5\test244, done 93 out of 512 (18.16%)
+Process took 11.64 seconds
+[+] Correct
+Test tests\5\test173, done 94 out of 512 (18.36%)
+Process took 8.29 seconds
+[+] Correct
+Test tests\5\test292, done 95 out of 512 (18.55%)
+Process took 7.23 seconds
+[+] Correct
+Test tests\5\test141, done 96 out of 512 (18.75%)
+Process took 11.42 seconds
+[+] Correct
+Test tests\5\test495, done 97 out of 512 (18.95%)
+Process took 10.36 seconds
+[+] Correct
+Test tests\5\test24, done 98 out of 512 (19.14%)
+Process took 10.16 seconds
+[+] Correct
+Test tests\5\test103, done 99 out of 512 (19.34%)
+Process took 9.56 seconds
+[+] Correct
+Test tests\5\test431, done 100 out of 512 (19.53%)
+Process took 9.39 seconds
+[+] Correct
+Test tests\5\test83, done 101 out of 512 (19.73%)
+Process took 7.65 seconds
+[+] Correct
+Test tests\5\test406, done 102 out of 512 (19.92%)
+Process took 9.33 seconds
+[+] Correct
+Test tests\5\test114, done 103 out of 512 (20.12%)
+Process took 11.65 seconds
+[+] Correct
+Test tests\5\test219, done 104 out of 512 (20.31%)
+Process took 9.29 seconds
+[+] Correct
+Test tests\5\test153, done 105 out of 512 (20.51%)
+Process took 8.88 seconds
+[+] Correct
+Test tests\5\test230, done 106 out of 512 (20.7%)
+Process took 7.89 seconds
+[+] Correct
+Test tests\5\test403, done 107 out of 512 (20.9%)
+Process took 10.35 seconds
+[+] Correct
+Test tests\5\test500, done 108 out of 512 (21.09%)
+Process took 7.91 seconds
+[+] Correct
+Test tests\5\test84, done 109 out of 512 (21.29%)
+Process took 9.35 seconds
+[+] Correct
+Test tests\5\test110, done 110 out of 512 (21.48%)
+Process took 10.01 seconds
+[+] Correct
+Test tests\5\test201, done 111 out of 512 (21.68%)
+Process took 11.6 seconds
+[+] Correct
+Test tests\5\test454, done 112 out of 512 (21.88%)
+Process took 10.1 seconds
+[+] Correct
+Test tests\5\test54, done 113 out of 512 (22.07%)
+Process took 8.08 seconds
+[+] Correct
+Test tests\5\test187, done 114 out of 512 (22.27%)
+Process took 7.75 seconds
+[+] Correct
+Test tests\5\test313, done 115 out of 512 (22.46%)
+Process took 10.12 seconds
+[+] Correct
+Test tests\5\test178, done 116 out of 512 (22.66%)
+Process took 7.57 seconds
+[+] Correct
+Test tests\5\test9, done 117 out of 512 (22.85%)
+Process took 7.7 seconds
+[+] Correct
+Test tests\5\test363, done 118 out of 512 (23.05%)
+Process took 7.68 seconds
+[+] Correct
+Test tests\5\test399, done 119 out of 512 (23.24%)
+Process took 9.06 seconds
+[+] Correct
+Test tests\5\test56, done 120 out of 512 (23.44%)
+Process took 10.48 seconds
+[+] Correct
+Test tests\5\test1, done 121 out of 512 (23.63%)
+Process took 9.28 seconds
+[+] Correct
+Test tests\5\test154, done 122 out of 512 (23.83%)
+Process took 11.78 seconds
+[+] Correct
+Test tests\5\test156, done 123 out of 512 (24.02%)
+Process took 11.33 seconds
+[+] Correct
+Test tests\5\test324, done 124 out of 512 (24.22%)
+Process took 7.79 seconds
+[+] Correct
+Test tests\5\test408, done 125 out of 512 (24.41%)
+Process took 9.66 seconds
+[+] Correct
+Test tests\5\test95, done 126 out of 512 (24.61%)
+Process took 7.69 seconds
+[+] Correct
+Test tests\5\test102, done 127 out of 512 (24.8%)
+Process took 7.88 seconds
+[+] Correct
+Test tests\5\test5, done 128 out of 512 (25.0%)
+Process took 7.68 seconds
+[+] Correct
+Test tests\5\test36, done 129 out of 512 (25.2%)
+Process took 10.83 seconds
+[+] Correct
+Test tests\5\test72, done 130 out of 512 (25.39%)
+Process took 7.96 seconds
+[+] Correct
+Test tests\5\test87, done 131 out of 512 (25.59%)
+Process took 7.97 seconds
+[+] Correct
+Test tests\5\test212, done 132 out of 512 (25.78%)
+Process took 9.69 seconds
+[+] Correct
+Test tests\5\test384, done 133 out of 512 (25.98%)
+Process took 7.41 seconds
+[+] Correct
+Test tests\5\test69, done 134 out of 512 (26.17%)
+Process took 10.73 seconds
+[+] Correct
+Test tests\5\test400, done 135 out of 512 (26.37%)
+Process took 9.36 seconds
+[+] Correct
+Test tests\5\test267, done 136 out of 512 (26.56%)
+Process took 8.59 seconds
+[+] Correct
+Test tests\5\test428, done 137 out of 512 (26.76%)
+Process took 11.09 seconds
+[+] Correct
+Test tests\5\test293, done 138 out of 512 (26.95%)
+Process took 10.65 seconds
+[+] Correct
+Test tests\5\test10, done 139 out of 512 (27.15%)
+Process took 10.33 seconds
+[+] Correct
+Test tests\5\test423, done 140 out of 512 (27.34%)
+Process took 7.58 seconds
+[+] Correct
+Test tests\5\test182, done 141 out of 512 (27.54%)
+Process took 7.93 seconds
+[+] Correct
+Test tests\5\test91, done 142 out of 512 (27.73%)
+Process took 10.77 seconds
+[+] Correct
+Test tests\5\test81, done 143 out of 512 (27.93%)
+Process took 11.07 seconds
+[+] Correct
+Test tests\5\test391, done 144 out of 512 (28.12%)
+Process took 8.22 seconds
+[+] Correct
+Test tests\5\test47, done 145 out of 512 (28.32%)
+Process took 9.43 seconds
+[+] Correct
+Test tests\5\test104, done 146 out of 512 (28.52%)
+Process took 10.87 seconds
+[+] Correct
+Test tests\5\test25, done 147 out of 512 (28.71%)
+Process took 10.78 seconds
+[+] Correct
+Test tests\5\test419, done 148 out of 512 (28.91%)
+Process took 7.92 seconds
+[+] Correct
+Test tests\5\test473, done 149 out of 512 (29.1%)
+Process took 8.6 seconds
+[+] Correct
+Test tests\5\test193, done 150 out of 512 (29.3%)
+Process took 7.85 seconds
+[+] Correct
+Test tests\5\test282, done 151 out of 512 (29.49%)
+Process took 8.35 seconds
+[+] Correct
+Test tests\5\test246, done 152 out of 512 (29.69%)
+Process took 9.26 seconds
+[+] Correct
+Test tests\5\test392, done 153 out of 512 (29.88%)
+Process took 8.2 seconds
+[+] Correct
+Test tests\5\test504, done 154 out of 512 (30.08%)
+Process took 8.68 seconds
+[+] Correct
+Test tests\5\test109, done 155 out of 512 (30.27%)
+Process took 8.72 seconds
+[+] Correct
+Test tests\5\test386, done 156 out of 512 (30.47%)
+Process took 11.93 seconds
+[+] Correct
+Test tests\5\test96, done 157 out of 512 (30.66%)
+Process took 7.89 seconds
+[+] Correct
+Test tests\5\test305, done 158 out of 512 (30.86%)
+Process took 7.75 seconds
+[+] Correct
+Test tests\5\test344, done 159 out of 512 (31.05%)
+Process took 9.03 seconds
+[+] Correct
+Test tests\5\test417, done 160 out of 512 (31.25%)
+Process took 10.42 seconds
+[+] Correct
+Test tests\5\test322, done 161 out of 512 (31.45%)
+Process took 9.02 seconds
+[+] Correct
+Test tests\5\test137, done 162 out of 512 (31.64%)
+Process took 8.68 seconds
+[+] Correct
+Test tests\5\test149, done 163 out of 512 (31.84%)
+Process took 10.98 seconds
+[+] Correct
+Test tests\5\test493, done 164 out of 512 (32.03%)
+Process took 7.76 seconds
+[+] Correct
+Test tests\5\test48, done 165 out of 512 (32.23%)
+Process took 7.4 seconds
+[+] Correct
+Test tests\5\test393, done 166 out of 512 (32.42%)
+Process took 10.3 seconds
+[+] Correct
+Test tests\5\test179, done 167 out of 512 (32.62%)
+Process took 10.19 seconds
+[+] Correct
+Test tests\5\test165, done 168 out of 512 (32.81%)
+Process took 8.22 seconds
+[+] Correct
+Test tests\5\test469, done 169 out of 512 (33.01%)
+Process took 9.89 seconds
+[+] Correct
+Test tests\5\test73, done 170 out of 512 (33.2%)
+Process took 10.69 seconds
+[+] Correct
+Test tests\5\test317, done 171 out of 512 (33.4%)
+Process took 9.39 seconds
+[+] Correct
+Test tests\5\test335, done 172 out of 512 (33.59%)
+Process took 7.81 seconds
+[+] Correct
+Test tests\5\test331, done 173 out of 512 (33.79%)
+Process took 9.85 seconds
+[+] Correct
+Test tests\5\test257, done 174 out of 512 (33.98%)
+Process took 9.12 seconds
+[+] Correct
+Test tests\5\test490, done 175 out of 512 (34.18%)
+Process took 7.48 seconds
+[+] Correct
+Test tests\5\test180, done 176 out of 512 (34.38%)
+Process took 10.43 seconds
+[+] Correct
+Test tests\5\test63, done 177 out of 512 (34.57%)
+Process took 11.28 seconds
+[+] Correct
+Test tests\5\test255, done 178 out of 512 (34.77%)
+Process took 10.7 seconds
+[+] Correct
+Test tests\5\test405, done 179 out of 512 (34.96%)
+Process took 7.59 seconds
+[+] Correct
+Test tests\5\test286, done 180 out of 512 (35.16%)
+Process took 10.79 seconds
+[+] Correct
+Test tests\5\test250, done 181 out of 512 (35.35%)
+Process took 8.55 seconds
+[+] Correct
+Test tests\5\test37, done 182 out of 512 (35.55%)
+Process took 10.36 seconds
+[+] Correct
+Test tests\5\test128, done 183 out of 512 (35.74%)
+Process took 10.15 seconds
+[+] Correct
+Test tests\5\test121, done 184 out of 512 (35.94%)
+Process took 7.68 seconds
+[+] Correct
+Test tests\5\test427, done 185 out of 512 (36.13%)
+Process took 10.54 seconds
+[+] Correct
+Test tests\5\test364, done 186 out of 512 (36.33%)
+Process took 10.91 seconds
+[+] Correct
+Test tests\5\test206, done 187 out of 512 (36.52%)
+Process took 10.61 seconds
+[+] Correct
+Test tests\5\test468, done 188 out of 512 (36.72%)
+Process took 9.0 seconds
+[+] Correct
+Test tests\5\test208, done 189 out of 512 (36.91%)
+Process took 10.73 seconds
+[+] Correct
+Test tests\5\test401, done 190 out of 512 (37.11%)
+Process took 7.67 seconds
+[+] Correct
+Test tests\5\test224, done 191 out of 512 (37.3%)
+Process took 10.87 seconds
+[+] Correct
+Test tests\5\test357, done 192 out of 512 (37.5%)
+Process took 7.49 seconds
+[+] Correct
+Test tests\5\test369, done 193 out of 512 (37.7%)
+Process took 7.61 seconds
+[+] Correct
+Test tests\5\test112, done 194 out of 512 (37.89%)
+Process took 10.52 seconds
+[+] Correct
+Test tests\5\test256, done 195 out of 512 (38.09%)
+Process took 10.85 seconds
+[+] Correct
+Test tests\5\test447, done 196 out of 512 (38.28%)
+Process took 8.67 seconds
+[+] Correct
+Test tests\5\test370, done 197 out of 512 (38.48%)
+Process took 8.87 seconds
+[+] Correct
+Test tests\5\test11, done 198 out of 512 (38.67%)
+Process took 8.55 seconds
+[+] Correct
+Test tests\5\test218, done 199 out of 512 (38.87%)
+Process took 8.05 seconds
+[+] Correct
+Test tests\5\test204, done 200 out of 512 (39.06%)
+Process took 11.12 seconds
+[+] Correct
+Test tests\5\test304, done 201 out of 512 (39.26%)
+Process took 9.17 seconds
+[+] Correct
+Test tests\5\test78, done 202 out of 512 (39.45%)
+Process took 8.51 seconds
+[+] Correct
+Test tests\5\test258, done 203 out of 512 (39.65%)
+Process took 8.73 seconds
+[+] Correct
+Test tests\5\test380, done 204 out of 512 (39.84%)
+Process took 8.8 seconds
+[+] Correct
+Test tests\5\test39, done 205 out of 512 (40.04%)
+Process took 8.91 seconds
+[+] Correct
+Test tests\5\test125, done 206 out of 512 (40.23%)
+Process took 10.93 seconds
+[+] Correct
+Test tests\5\test486, done 207 out of 512 (40.43%)
+Process took 10.49 seconds
+[+] Correct
+Test tests\5\test138, done 208 out of 512 (40.62%)
+Process took 10.13 seconds
+[+] Correct
+Test tests\5\test49, done 209 out of 512 (40.82%)
+Process took 7.64 seconds
+[+] Correct
+Test tests\5\test140, done 210 out of 512 (41.02%)
+Process took 9.83 seconds
+[+] Correct
+Test tests\5\test215, done 211 out of 512 (41.21%)
+Process took 10.84 seconds
+[+] Correct
+Test tests\5\test394, done 212 out of 512 (41.41%)
+Process took 7.7 seconds
+[+] Correct
+Test tests\5\test479, done 213 out of 512 (41.6%)
+Process took 10.71 seconds
+[+] Correct
+Test tests\5\test8, done 214 out of 512 (41.8%)
+Process took 8.77 seconds
+[+] Correct
+Test tests\5\test281, done 215 out of 512 (41.99%)
+Process took 9.48 seconds
+[+] Correct
+Test tests\5\test43, done 216 out of 512 (42.19%)
+Process took 9.37 seconds
+[+] Correct
+Test tests\5\test506, done 217 out of 512 (42.38%)
+Process took 8.25 seconds
+[+] Correct
+Test tests\5\test195, done 218 out of 512 (42.58%)
+Process took 10.31 seconds
+[+] Correct
+Test tests\5\test113, done 219 out of 512 (42.77%)
+Process took 10.47 seconds
+[+] Correct
+Test tests\5\test233, done 220 out of 512 (42.97%)
+Process took 7.13 seconds
+[+] Correct
+Test tests\5\test132, done 221 out of 512 (43.16%)
+Process took 10.14 seconds
+[+] Correct
+Test tests\5\test413, done 222 out of 512 (43.36%)
+Process took 9.69 seconds
+[+] Correct
+Test tests\5\test240, done 223 out of 512 (43.55%)
+Process took 8.42 seconds
+[+] Correct
+Test tests\5\test142, done 224 out of 512 (43.75%)
+Process took 10.77 seconds
+[+] Correct
+Test tests\5\test478, done 225 out of 512 (43.95%)
+Process took 11.68 seconds
+[+] Correct
+Test tests\5\test23, done 226 out of 512 (44.14%)
+Process took 9.67 seconds
+[+] Correct
+Test tests\5\test26, done 227 out of 512 (44.34%)
+Process took 8.34 seconds
+[+] Correct
+Test tests\5\test397, done 228 out of 512 (44.53%)
+Process took 9.86 seconds
+[+] Correct
+Test tests\5\test475, done 229 out of 512 (44.73%)
+Process took 9.46 seconds
+[+] Correct
+Test tests\5\test336, done 230 out of 512 (44.92%)
+Process took 11.11 seconds
+[+] Correct
+Test tests\5\test20, done 231 out of 512 (45.12%)
+Process took 8.29 seconds
+[+] Correct
+Test tests\5\test321, done 232 out of 512 (45.31%)
+Process took 9.81 seconds
+[+] Correct
+Test tests\5\test89, done 233 out of 512 (45.51%)
+Process took 11.5 seconds
+[+] Correct
+Test tests\5\test97, done 234 out of 512 (45.7%)
+Process took 8.97 seconds
+[+] Correct
+Test tests\5\test471, done 235 out of 512 (45.9%)
+Process took 10.66 seconds
+[+] Correct
+Test tests\5\test105, done 236 out of 512 (46.09%)
+Process took 11.85 seconds
+[+] Correct
+Test tests\5\test66, done 237 out of 512 (46.29%)
+Process took 9.26 seconds
+[+] Correct
+Test tests\5\test223, done 238 out of 512 (46.48%)
+Process took 7.32 seconds
+[+] Correct
+Test tests\5\test239, done 239 out of 512 (46.68%)
+Process took 12.2 seconds
+[+] Correct
+Test tests\5\test342, done 240 out of 512 (46.88%)
+Process took 10.14 seconds
+[+] Correct
+Test tests\5\test487, done 241 out of 512 (47.07%)
+Process took 11.29 seconds
+[+] Correct
+Test tests\5\test190, done 242 out of 512 (47.27%)
+Process took 9.11 seconds
+[+] Correct
+Test tests\5\test93, done 243 out of 512 (47.46%)
+Process took 11.42 seconds
+[+] Correct
+Test tests\5\test295, done 244 out of 512 (47.66%)
+Process took 11.87 seconds
+[+] Correct
+Test tests\5\test205, done 245 out of 512 (47.85%)
+Process took 11.1 seconds
+[+] Correct
+Test tests\5\test359, done 246 out of 512 (48.05%)
+Process took 10.61 seconds
+[+] Correct
+Test tests\5\test379, done 247 out of 512 (48.24%)
+Process took 7.72 seconds
+[+] Correct
+Test tests\5\test211, done 248 out of 512 (48.44%)
+Process took 10.48 seconds
+[+] Correct
+Test tests\5\test44, done 249 out of 512 (48.63%)
+Process took 8.17 seconds
+[+] Correct
+Test tests\5\test440, done 250 out of 512 (48.83%)
+Process took 10.03 seconds
+[+] Correct
+Test tests\5\test433, done 251 out of 512 (49.02%)
+Process took 9.04 seconds
+[+] Correct
+Test tests\5\test210, done 252 out of 512 (49.22%)
+Process took 7.88 seconds
+[+] Correct
+Test tests\5\test196, done 253 out of 512 (49.41%)
+Process took 8.38 seconds
+[+] Correct
+Test tests\5\test58, done 254 out of 512 (49.61%)
+Process took 10.97 seconds
+[+] Correct
+Test tests\5\test425, done 255 out of 512 (49.8%)
+Process took 8.54 seconds
+[+] Correct
+Test tests\5\test21, done 256 out of 512 (50.0%)
+Process took 11.12 seconds
+[+] Correct
+Test tests\5\test31, done 257 out of 512 (50.2%)
+Process took 11.37 seconds
+[+] Correct
+Test tests\5\test511, done 258 out of 512 (50.39%)
+Process took 7.62 seconds
+[+] Correct
+Test tests\5\test259, done 259 out of 512 (50.59%)
+Process took 10.93 seconds
+[+] Correct
+Test tests\5\test243, done 260 out of 512 (50.78%)
+Process took 8.01 seconds
+[+] Correct
+Test tests\5\test348, done 261 out of 512 (50.98%)
+Process took 9.69 seconds
+[+] Correct
+Test tests\5\test461, done 262 out of 512 (51.17%)
+Process took 8.3 seconds
+[+] Correct
+Test tests\5\test455, done 263 out of 512 (51.37%)
+Process took 8.56 seconds
+[+] Correct
+Test tests\5\test80, done 264 out of 512 (51.56%)
+Process took 8.12 seconds
+[+] Correct
+Test tests\5\test340, done 265 out of 512 (51.76%)
+Process took 9.66 seconds
+[+] Correct
+Test tests\5\test303, done 266 out of 512 (51.95%)
+Process took 10.35 seconds
+[+] Correct
+Test tests\5\test412, done 267 out of 512 (52.15%)
+Process took 11.26 seconds
+[+] Correct
+Test tests\5\test122, done 268 out of 512 (52.34%)
+Process took 9.64 seconds
+[+] Correct
+Test tests\5\test65, done 269 out of 512 (52.54%)
+Process took 11.31 seconds
+[+] Correct
+Test tests\5\test254, done 270 out of 512 (52.73%)
+Process took 9.85 seconds
+[+] Correct
+Test tests\5\test171, done 271 out of 512 (52.93%)
+Process took 9.67 seconds
+[+] Correct
+Test tests\5\test167, done 272 out of 512 (53.12%)
+Process took 9.31 seconds
+[+] Correct
+Test tests\5\test496, done 273 out of 512 (53.32%)
+Process took 8.31 seconds
+[+] Correct
+Test tests\5\test353, done 274 out of 512 (53.52%)
+Process took 11.57 seconds
+[+] Correct
+Test tests\5\test390, done 275 out of 512 (53.71%)
+Process took 9.89 seconds
+[+] Correct
+Test tests\5\test117, done 276 out of 512 (53.91%)
+Process took 8.32 seconds
+[+] Correct
+Test tests\5\test248, done 277 out of 512 (54.1%)
+Process took 9.73 seconds
+[+] Correct
+Test tests\5\test422, done 278 out of 512 (54.3%)
+Process took 8.76 seconds
+[+] Correct
+Test tests\5\test19, done 279 out of 512 (54.49%)
+Process took 11.36 seconds
+[+] Correct
+Test tests\5\test181, done 280 out of 512 (54.69%)
+Process took 10.4 seconds
+[+] Correct
+Test tests\5\test269, done 281 out of 512 (54.88%)
+Process took 11.08 seconds
+[+] Correct
+Test tests\5\test50, done 282 out of 512 (55.08%)
+Process took 10.6 seconds
+[+] Correct
+Test tests\5\test68, done 283 out of 512 (55.27%)
+Process took 10.1 seconds
+[+] Correct
+Test tests\5\test310, done 284 out of 512 (55.47%)
+Process took 9.9 seconds
+[+] Correct
+Test tests\5\test41, done 285 out of 512 (55.66%)
+Process took 10.89 seconds
+[+] Correct
+Test tests\5\test207, done 286 out of 512 (55.86%)
+Process took 8.68 seconds
+[+] Correct
+Test tests\5\test40, done 287 out of 512 (56.05%)
+Process took 7.28 seconds
+[+] Correct
+Test tests\5\test498, done 288 out of 512 (56.25%)
+Process took 11.02 seconds
+[+] Correct
+Test tests\5\test130, done 289 out of 512 (56.45%)
+Process took 9.46 seconds
+[+] Correct
+Test tests\5\test3, done 290 out of 512 (56.64%)
+Process took 7.27 seconds
+[+] Correct
+Test tests\5\test148, done 291 out of 512 (56.84%)
+Process took 9.89 seconds
+[+] Correct
+Test tests\5\test106, done 292 out of 512 (57.03%)
+Process took 7.96 seconds
+[+] Correct
+Test tests\5\test60, done 293 out of 512 (57.23%)
+Process took 8.72 seconds
+[+] Correct
+Test tests\5\test444, done 294 out of 512 (57.42%)
+Process took 8.89 seconds
+[+] Correct
+Test tests\5\test347, done 295 out of 512 (57.62%)
+Process took 10.04 seconds
+[+] Correct
+Test tests\5\test241, done 296 out of 512 (57.81%)
+Process took 10.21 seconds
+[+] Correct
+Test tests\5\test289, done 297 out of 512 (58.01%)
+Process took 8.27 seconds
+[+] Correct
+Test tests\5\test116, done 298 out of 512 (58.2%)
+Process took 11.63 seconds
+[+] Correct
+Test tests\5\test476, done 299 out of 512 (58.4%)
+Process took 9.64 seconds
+[+] Correct
+Test tests\5\test352, done 300 out of 512 (58.59%)
+Process took 9.78 seconds
+[+] Correct
+Test tests\5\test35, done 301 out of 512 (58.79%)
+Process took 9.29 seconds
+[+] Correct
+Test tests\5\test16, done 302 out of 512 (58.98%)
+Process took 7.41 seconds
+[+] Correct
+Test tests\5\test375, done 303 out of 512 (59.18%)
+Process took 7.61 seconds
+[+] Correct
+Test tests\5\test185, done 304 out of 512 (59.38%)
+Process took 11.65 seconds
+[+] Correct
+Test tests\5\test312, done 305 out of 512 (59.57%)
+Process took 8.29 seconds
+[+] Correct
+Test tests\5\test30, done 306 out of 512 (59.77%)
+Process took 11.77 seconds
+[+] Correct
+Test tests\5\test6, done 307 out of 512 (59.96%)
+Process took 9.04 seconds
+[+] Correct
+Test tests\5\test236, done 308 out of 512 (60.16%)
+Process took 11.03 seconds
+[+] Correct
+Test tests\5\test266, done 309 out of 512 (60.35%)
+Process took 9.85 seconds
+[+] Correct
+Test tests\5\test184, done 310 out of 512 (60.55%)
+Process took 10.11 seconds
+[+] Correct
+Test tests\5\test94, done 311 out of 512 (60.74%)
+Process took 8.97 seconds
+[+] Correct
+Test tests\5\test409, done 312 out of 512 (60.94%)
+Process took 11.21 seconds
+[+] Correct
+Test tests\5\test439, done 313 out of 512 (61.13%)
+Process took 9.33 seconds
+[+] Correct
+Test tests\5\test169, done 314 out of 512 (61.33%)
+Process took 11.72 seconds
+[+] Correct
+Test tests\5\test420, done 315 out of 512 (61.52%)
+Process took 9.36 seconds
+[+] Correct
+Test tests\5\test120, done 316 out of 512 (61.72%)
+Process took 10.24 seconds
+[+] Correct
+Test tests\5\test61, done 317 out of 512 (61.91%)
+Process took 11.05 seconds
+[+] Correct
+Test tests\5\test343, done 318 out of 512 (62.11%)
+Process took 9.95 seconds
+[+] Correct
+Test tests\5\test253, done 319 out of 512 (62.3%)
+Process took 8.19 seconds
+[+] Correct
+Test tests\5\test338, done 320 out of 512 (62.5%)
+Process took 10.71 seconds
+[+] Correct
+Test tests\5\test502, done 321 out of 512 (62.7%)
+Process took 8.71 seconds
+[+] Correct
+Test tests\5\test446, done 322 out of 512 (62.89%)
+Process took 7.55 seconds
+[+] Correct
+Test tests\5\test136, done 323 out of 512 (63.09%)
+Process took 9.12 seconds
+[+] Correct
+Test tests\5\test362, done 324 out of 512 (63.28%)
+Process took 10.38 seconds
+[+] Correct
+Test tests\5\test277, done 325 out of 512 (63.48%)
+Process took 9.35 seconds
+[+] Correct
+Test tests\5\test278, done 326 out of 512 (63.67%)
+Process took 9.64 seconds
+[+] Correct
+Test tests\5\test285, done 327 out of 512 (63.87%)
+Process took 9.31 seconds
+[+] Correct
+Test tests\5\test465, done 328 out of 512 (64.06%)
+Process took 11.23 seconds
+[+] Correct
+Test tests\5\test410, done 329 out of 512 (64.26%)
+Process took 9.21 seconds
+[+] Correct
+Test tests\5\test260, done 330 out of 512 (64.45%)
+Process took 11.7 seconds
+[+] Correct
+Test tests\5\test339, done 331 out of 512 (64.65%)
+Process took 9.28 seconds
+[+] Correct
+Test tests\5\test82, done 332 out of 512 (64.84%)
+Process took 9.39 seconds
+[+] Correct
+Test tests\5\test79, done 333 out of 512 (65.04%)
+Process took 9.62 seconds
+[+] Correct
+Test tests\5\test194, done 334 out of 512 (65.23%)
+Process took 10.59 seconds
+[+] Correct
+Test tests\5\test376, done 335 out of 512 (65.43%)
+Process took 8.85 seconds
+[+] Correct
+Test tests\5\test45, done 336 out of 512 (65.62%)
+Process took 8.25 seconds
+[+] Correct
+Test tests\5\test57, done 337 out of 512 (65.82%)
+Process took 9.49 seconds
+[+] Correct
+Test tests\5\test314, done 338 out of 512 (66.02%)
+Process took 8.48 seconds
+[+] Correct
+Test tests\5\test158, done 339 out of 512 (66.21%)
+Process took 11.33 seconds
+[+] Correct
+Test tests\5\test346, done 340 out of 512 (66.41%)
+Process took 10.97 seconds
+[+] Correct
+Test tests\5\test432, done 341 out of 512 (66.6%)
+Process took 9.88 seconds
+[+] Correct
+Test tests\5\test134, done 342 out of 512 (66.8%)
+Process took 9.11 seconds
+[+] Correct
+Test tests\5\test177, done 343 out of 512 (66.99%)
+Process took 7.76 seconds
+[+] Correct
+Test tests\5\test503, done 344 out of 512 (67.19%)
+Process took 9.1 seconds
+[+] Correct
+Test tests\5\test318, done 345 out of 512 (67.38%)
+Process took 7.9 seconds
+[+] Correct
+Test tests\5\test349, done 346 out of 512 (67.58%)
+Process took 11.58 seconds
+[+] Correct
+Test tests\5\test225, done 347 out of 512 (67.77%)
+Process took 9.71 seconds
+[+] Correct
+Test tests\5\test445, done 348 out of 512 (67.97%)
+Process took 10.92 seconds
+[+] Correct
+Test tests\5\test217, done 349 out of 512 (68.16%)
+Process took 7.97 seconds
+[+] Correct
+Test tests\5\test341, done 350 out of 512 (68.36%)
+Process took 7.61 seconds
+[+] Correct
+Test tests\5\test231, done 351 out of 512 (68.55%)
+Process took 8.35 seconds
+[+] Correct
+Test tests\5\test355, done 352 out of 512 (68.75%)
+Process took 11.03 seconds
+[+] Correct
+Test tests\5\test28, done 353 out of 512 (68.95%)
+Process took 11.15 seconds
+[+] Correct
+Test tests\5\test421, done 354 out of 512 (69.14%)
+Process took 10.18 seconds
+[+] Correct
+Test tests\5\test436, done 355 out of 512 (69.34%)
+Process took 9.01 seconds
+[+] Correct
+Test tests\5\test467, done 356 out of 512 (69.53%)
+Process took 8.72 seconds
+[+] Correct
+Test tests\5\test299, done 357 out of 512 (69.73%)
+Process took 10.57 seconds
+[+] Correct
+Test tests\5\test203, done 358 out of 512 (69.92%)
+Process took 10.98 seconds
+[+] Correct
+Test tests\5\test276, done 359 out of 512 (70.12%)
+Process took 11.56 seconds
+[+] Correct
+Test tests\5\test76, done 360 out of 512 (70.31%)
+Process took 11.2 seconds
+[+] Correct
+Test tests\5\test160, done 361 out of 512 (70.51%)
+Process took 9.6 seconds
+[+] Correct
+Test tests\5\test435, done 362 out of 512 (70.7%)
+Process took 10.44 seconds
+[+] Correct
+Test tests\5\test470, done 363 out of 512 (70.9%)
+Process took 9.11 seconds
+[+] Correct
+Test tests\5\test414, done 364 out of 512 (71.09%)
+Process took 9.37 seconds
+[+] Correct
+Test tests\5\test38, done 365 out of 512 (71.29%)
+Process took 11.71 seconds
+[+] Correct
+Test tests\5\test297, done 366 out of 512 (71.48%)
+Process took 9.15 seconds
+[+] Correct
+Test tests\5\test188, done 367 out of 512 (71.68%)
+Process took 9.36 seconds
+[+] Correct
+Test tests\5\test67, done 368 out of 512 (71.88%)
+Process took 9.42 seconds
+[+] Correct
+Test tests\5\test371, done 369 out of 512 (72.07%)
+Process took 8.44 seconds
+[+] Correct
+Test tests\5\test296, done 370 out of 512 (72.27%)
+Process took 8.61 seconds
+[+] Correct
+Test tests\5\test377, done 371 out of 512 (72.46%)
+Process took 8.98 seconds
+[+] Correct
+Test tests\5\test294, done 372 out of 512 (72.66%)
+Process took 9.91 seconds
+[+] Correct
+Test tests\5\test452, done 373 out of 512 (72.85%)
+Process took 10.99 seconds
+[+] Correct
+Test tests\5\test270, done 374 out of 512 (73.05%)
+Process took 9.34 seconds
+[+] Correct
+Test tests\5\test328, done 375 out of 512 (73.24%)
+Process took 11.75 seconds
+[+] Correct
+Test tests\5\test53, done 376 out of 512 (73.44%)
+Process took 10.09 seconds
+[+] Correct
+Test tests\5\test22, done 377 out of 512 (73.63%)
+Process took 7.72 seconds
+[+] Correct
+Test tests\5\test337, done 378 out of 512 (73.83%)
+Process took 9.55 seconds
+[+] Correct
+Test tests\5\test183, done 379 out of 512 (74.02%)
+Process took 8.92 seconds
+[+] Correct
+Test tests\5\test252, done 380 out of 512 (74.22%)
+Process took 8.43 seconds
+[+] Correct
+Test tests\5\test0, done 381 out of 512 (74.41%)
+Process took 7.8 seconds
+[+] Correct
+Test tests\5\test481, done 382 out of 512 (74.61%)
+Process took 8.46 seconds
+[+] Correct
+Test tests\5\test124, done 383 out of 512 (74.8%)
+Process took 7.78 seconds
+[+] Correct
+Test tests\5\test99, done 384 out of 512 (75.0%)
+Process took 9.75 seconds
+[+] Correct
+Test tests\5\test146, done 385 out of 512 (75.2%)
+Process took 10.9 seconds
+[+] Correct
+Test tests\5\test491, done 386 out of 512 (75.39%)
+Process took 11.32 seconds
+[+] Correct
+Test tests\5\test52, done 387 out of 512 (75.59%)
+Process took 7.88 seconds
+[+] Correct
+Test tests\5\test361, done 388 out of 512 (75.78%)
+Process took 11.24 seconds
+[+] Correct
+Test tests\5\test356, done 389 out of 512 (75.98%)
+Process took 8.29 seconds
+[+] Correct
+Test tests\5\test265, done 390 out of 512 (76.17%)
+Process took 7.9 seconds
+[+] Correct
+Test tests\5\test367, done 391 out of 512 (76.37%)
+Process took 8.15 seconds
+[+] Correct
+Test tests\5\test275, done 392 out of 512 (76.56%)
+Process took 11.99 seconds
+[+] Correct
+Test tests\5\test214, done 393 out of 512 (76.76%)
+Process took 9.7 seconds
+[+] Correct
+Test tests\5\test302, done 394 out of 512 (76.95%)
+Process took 7.95 seconds
+[+] Correct
+Test tests\5\test143, done 395 out of 512 (77.15%)
+Process took 12.24 seconds
+[+] Correct
+Test tests\5\test170, done 396 out of 512 (77.34%)
+Process took 12.55 seconds
+[+] Correct
+Test tests\5\test86, done 397 out of 512 (77.54%)
+Process took 7.79 seconds
+[+] Correct
+Test tests\5\test191, done 398 out of 512 (77.73%)
+Process took 12.47 seconds
+[+] Correct
+Test tests\5\test29, done 399 out of 512 (77.93%)
+Process took 7.6 seconds
+[+] Correct
+Test tests\5\test407, done 400 out of 512 (78.12%)
+Process took 11.62 seconds
+[+] Correct
+Test tests\5\test308, done 401 out of 512 (78.32%)
+Process took 7.79 seconds
+[+] Correct
+Test tests\5\test351, done 402 out of 512 (78.52%)
+Process took 7.66 seconds
+[+] Correct
+Test tests\5\test271, done 403 out of 512 (78.71%)
+Process took 11.04 seconds
+[+] Correct
+Test tests\5\test2, done 404 out of 512 (78.91%)
+Process took 7.96 seconds
+[+] Correct
+Test tests\5\test85, done 405 out of 512 (79.1%)
+Process took 8.11 seconds
+[+] Correct
+Test tests\5\test200, done 406 out of 512 (79.3%)
+Process took 10.77 seconds
+[+] Correct
+Test tests\5\test75, done 407 out of 512 (79.49%)
+Process took 11.82 seconds
+[+] Correct
+Test tests\5\test382, done 408 out of 512 (79.69%)
+Process took 11.92 seconds
+[+] Correct
+Test tests\5\test150, done 409 out of 512 (79.88%)
+Process took 10.3 seconds
+[+] Correct
+Test tests\5\test213, done 410 out of 512 (80.08%)
+Process took 9.92 seconds
+[+] Correct
+Test tests\5\test424, done 411 out of 512 (80.27%)
+Process took 8.51 seconds
+[+] Correct
+Test tests\5\test162, done 412 out of 512 (80.47%)
+Process took 8.29 seconds
+[+] Correct
+Test tests\5\test55, done 413 out of 512 (80.66%)
+Process took 8.48 seconds
+[+] Correct
+Test tests\5\test197, done 414 out of 512 (80.86%)
+Process took 9.98 seconds
+[+] Correct
+Test tests\5\test366, done 415 out of 512 (81.05%)
+Process took 9.84 seconds
+[+] Correct
+Test tests\5\test242, done 416 out of 512 (81.25%)
+Process took 8.11 seconds
+[+] Correct
+Test tests\5\test228, done 417 out of 512 (81.45%)
+Process took 10.06 seconds
+[+] Correct
+Test tests\5\test192, done 418 out of 512 (81.64%)
+Process took 8.46 seconds
+[+] Correct
+Test tests\5\test147, done 419 out of 512 (81.84%)
+Process took 7.53 seconds
+[+] Correct
+Test tests\5\test209, done 420 out of 512 (82.03%)
+Process took 12.09 seconds
+[+] Correct
+Test tests\5\test368, done 421 out of 512 (82.23%)
+Process took 9.66 seconds
+[+] Correct
+Test tests\5\test98, done 422 out of 512 (82.42%)
+Process took 8.63 seconds
+[+] Correct
+Test tests\5\test129, done 423 out of 512 (82.62%)
+Process took 11.1 seconds
+[+] Correct
+Test tests\5\test284, done 424 out of 512 (82.81%)
+Process took 8.65 seconds
+[+] Correct
+Test tests\5\test315, done 425 out of 512 (83.01%)
+Process took 9.94 seconds
+[+] Correct
+Test tests\5\test415, done 426 out of 512 (83.2%)
+Process took 10.68 seconds
+[+] Correct
+Test tests\5\test358, done 427 out of 512 (83.4%)
+Process took 10.68 seconds
+[+] Correct
+Test tests\5\test307, done 428 out of 512 (83.59%)
+Process took 10.99 seconds
+[+] Correct
+Test tests\5\test159, done 429 out of 512 (83.79%)
+Process took 8.78 seconds
+[+] Correct
+Test tests\5\test245, done 430 out of 512 (83.98%)
+Process took 7.99 seconds
+[+] Correct
+Test tests\5\test383, done 431 out of 512 (84.18%)
+Process took 10.11 seconds
+[+] Correct
+Test tests\5\test449, done 432 out of 512 (84.38%)
+Process took 10.24 seconds
+[+] Correct
+Test tests\5\test64, done 433 out of 512 (84.57%)
+Process took 8.3 seconds
+[+] Correct
+Test tests\5\test7, done 434 out of 512 (84.77%)
+Process took 12.06 seconds
+[+] Correct
+Test tests\5\test482, done 435 out of 512 (84.96%)
+Process took 11.57 seconds
+[+] Correct
+Test tests\5\test438, done 436 out of 512 (85.16%)
+Process took 11.85 seconds
+[+] Correct
+Test tests\5\test174, done 437 out of 512 (85.35%)
+Process took 11.72 seconds
+[+] Correct
+Test tests\5\test443, done 438 out of 512 (85.55%)
+Process took 8.61 seconds
+[+] Correct
+Test tests\5\test118, done 439 out of 512 (85.74%)
+Process took 11.01 seconds
+[+] Correct
+Test tests\5\test458, done 440 out of 512 (85.94%)
+Process took 8.68 seconds
+[+] Correct
+Test tests\5\test287, done 441 out of 512 (86.13%)
+Process took 8.56 seconds
+[+] Correct
+Test tests\5\test157, done 442 out of 512 (86.33%)
+Process took 10.69 seconds
+[+] Correct
+Test tests\5\test381, done 443 out of 512 (86.52%)
+Process took 8.78 seconds
+[+] Correct
+Test tests\5\test309, done 444 out of 512 (86.72%)
+Process took 7.64 seconds
+[+] Correct
+Test tests\5\test272, done 445 out of 512 (86.91%)
+Process took 11.28 seconds
+[+] Correct
+Test tests\5\test234, done 446 out of 512 (87.11%)
+Process took 10.71 seconds
+[+] Correct
+Test tests\5\test100, done 447 out of 512 (87.3%)
+Process took 8.62 seconds
+[+] Correct
+Test tests\5\test416, done 448 out of 512 (87.5%)
+Process took 8.29 seconds
+[+] Correct
+Test tests\5\test483, done 449 out of 512 (87.7%)
+Process took 11.72 seconds
+[+] Correct
+Test tests\5\test319, done 450 out of 512 (87.89%)
+Process took 10.33 seconds
+[+] Correct
+Test tests\5\test4, done 451 out of 512 (88.09%)
+Process took 11.68 seconds
+[+] Correct
+Test tests\5\test330, done 452 out of 512 (88.28%)
+Process took 10.34 seconds
+[+] Correct
+Test tests\5\test59, done 453 out of 512 (88.48%)
+Process took 9.04 seconds
+[+] Correct
+Test tests\5\test411, done 454 out of 512 (88.67%)
+Process took 9.4 seconds
+[+] Correct
+Test tests\5\test354, done 455 out of 512 (88.87%)
+Process took 7.86 seconds
+[+] Correct
+Test tests\5\test450, done 456 out of 512 (89.06%)
+Process took 9.88 seconds
+[+] Correct
+Test tests\5\test396, done 457 out of 512 (89.26%)
+Process took 7.26 seconds
+[+] Correct
+Test tests\5\test229, done 458 out of 512 (89.45%)
+Process took 11.33 seconds
+[+] Correct
+Test tests\5\test459, done 459 out of 512 (89.65%)
+Process took 8.23 seconds
+[+] Correct
+Test tests\5\test442, done 460 out of 512 (89.84%)
+Process took 9.36 seconds
+[+] Correct
+Test tests\5\test111, done 461 out of 512 (90.04%)
+Process took 10.6 seconds
+[+] Correct
+Test tests\5\test14, done 462 out of 512 (90.23%)
+Process took 9.61 seconds
+[+] Correct
+Test tests\5\test372, done 463 out of 512 (90.43%)
+Process took 8.06 seconds
+[+] Correct
+Test tests\5\test279, done 464 out of 512 (90.62%)
+Process took 9.11 seconds
+[+] Correct
+Test tests\5\test311, done 465 out of 512 (90.82%)
+Process took 10.43 seconds
+[+] Correct
+Test tests\5\test365, done 466 out of 512 (91.02%)
+Process took 10.0 seconds
+[+] Correct
+Test tests\5\test33, done 467 out of 512 (91.21%)
+Process took 7.89 seconds
+[+] Correct
+Test tests\5\test107, done 468 out of 512 (91.41%)
+Process took 9.45 seconds
+[+] Correct
+Test tests\5\test139, done 469 out of 512 (91.6%)
+Process took 11.7 seconds
+[+] Correct
+Test tests\5\test437, done 470 out of 512 (91.8%)
+Process took 11.84 seconds
+[+] Correct
+Test tests\5\test198, done 471 out of 512 (91.99%)
+Process took 10.67 seconds
+[+] Correct
+Test tests\5\test90, done 472 out of 512 (92.19%)
+Process took 7.88 seconds
+[+] Correct
+Test tests\5\test320, done 473 out of 512 (92.38%)
+Process took 8.26 seconds
+[+] Correct
+Test tests\5\test477, done 474 out of 512 (92.58%)
+Process took 7.36 seconds
+[+] Correct
+Test tests\5\test232, done 475 out of 512 (92.77%)
+Process took 8.43 seconds
+[+] Correct
+Test tests\5\test345, done 476 out of 512 (92.97%)
+Process took 10.74 seconds
+[+] Correct
+Test tests\5\test189, done 477 out of 512 (93.16%)
+Process took 8.87 seconds
+[+] Correct
+Test tests\5\test402, done 478 out of 512 (93.36%)
+Process took 10.2 seconds
+[+] Correct
+Test tests\5\test485, done 479 out of 512 (93.55%)
+Process took 10.24 seconds
+[+] Correct
+Test tests\5\test334, done 480 out of 512 (93.75%)
+Process took 10.43 seconds
+[+] Correct
+Test tests\5\test172, done 481 out of 512 (93.95%)
+Process took 7.53 seconds
+[+] Correct
+Test tests\5\test126, done 482 out of 512 (94.14%)
+Process took 8.7 seconds
+[+] Correct
+Test tests\5\test451, done 483 out of 512 (94.34%)
+Process took 8.07 seconds
+[+] Correct
+Test tests\5\test306, done 484 out of 512 (94.53%)
+Process took 11.74 seconds
+[+] Correct
+Test tests\5\test46, done 485 out of 512 (94.73%)
+Process took 9.18 seconds
+[+] Correct
+Test tests\5\test251, done 486 out of 512 (94.92%)
+Process took 9.61 seconds
+[+] Correct
+Test tests\5\test326, done 487 out of 512 (95.12%)
+Process took 8.57 seconds
+[+] Correct
+Test tests\5\test151, done 488 out of 512 (95.31%)
+Process took 10.31 seconds
+[+] Correct
+Test tests\5\test489, done 489 out of 512 (95.51%)
+Process took 11.29 seconds
+[+] Correct
+Test tests\5\test34, done 490 out of 512 (95.7%)
+Process took 12.21 seconds
+[+] Correct
+Test tests\5\test135, done 491 out of 512 (95.9%)
+Process took 8.76 seconds
+[+] Correct
+Test tests\5\test508, done 492 out of 512 (96.09%)
+Process took 10.86 seconds
+[+] Correct
+Test tests\5\test144, done 493 out of 512 (96.29%)
+Process took 9.55 seconds
+[+] Correct
+Test tests\5\test288, done 494 out of 512 (96.48%)
+Process took 12.18 seconds
+[+] Correct
+Test tests\5\test115, done 495 out of 512 (96.68%)
+Process took 11.12 seconds
+[+] Correct
+Test tests\5\test472, done 496 out of 512 (96.88%)
+Process took 10.35 seconds
+[+] Correct
+Test tests\5\test119, done 497 out of 512 (97.07%)
+Process took 11.16 seconds
+[+] Correct
+Test tests\5\test453, done 498 out of 512 (97.27%)
+Process took 7.42 seconds
+[+] Correct
+Test tests\5\test88, done 499 out of 512 (97.46%)
+Process took 7.71 seconds
+[+] Correct
+Test tests\5\test426, done 500 out of 512 (97.66%)
+Process took 9.71 seconds
+[+] Correct
+Test tests\5\test261, done 501 out of 512 (97.85%)
+Process took 7.34 seconds
+[+] Correct
+Test tests\5\test264, done 502 out of 512 (98.05%)
+Process took 7.34 seconds
+[+] Correct
+Test tests\5\test77, done 503 out of 512 (98.24%)
+Process took 10.72 seconds
+[+] Correct
+Test tests\5\test429, done 504 out of 512 (98.44%)
+Process took 7.9 seconds
+[+] Correct
+Test tests\5\test457, done 505 out of 512 (98.63%)
+Process took 9.79 seconds
+[+] Correct
+Test tests\5\test505, done 506 out of 512 (98.83%)
+Process took 11.37 seconds
+[+] Correct
+Test tests\5\test42, done 507 out of 512 (99.02%)
+Process took 8.04 seconds
+[+] Correct
+Test tests\5\test466, done 508 out of 512 (99.22%)
+Process took 10.96 seconds
+[+] Correct
+Test tests\5\test18, done 509 out of 512 (99.41%)
+Process took 7.47 seconds
+[+] Correct
+Test tests\5\test133, done 510 out of 512 (99.61%)
+Process took 8.55 seconds
+[+] Correct
+Test tests\5\test161, done 511 out of 512 (99.8%)
+Process took 8.57 seconds
+[+] Correct
+Done testing pod-H.exe
+Correct 512 out of 512 (100.0%)
+512 out of 512 (100.0%) tests went overtime:
+tests\5\test145, tests\5\test325, tests\5\test280, tests\5\test387, tests\5\test273, tests\5\test509, tests\5\test283, tests\5\test389, tests\5\test456, tests\5\test291, tests\5\test494, tests\5\test360, tests\5\test220, tests\5\test123, tests\5\test434, tests\5\test290, tests\5\test501, tests\5\test168, tests\5\test202, tests\5\test74, tests\5\test155, tests\5\test226, tests\5\test274, tests\5\test327, tests\5\test70, tests\5\test388, tests\5\test238, tests\5\test462, tests\5\test492, tests\5\test108, tests\5\test221, tests\5\test480, tests\5\test404, tests\5\test13, tests\5\test12, tests\5\test301, tests\5\test166, tests\5\test298, tests\5\test62, tests\5\test463, tests\5\test247, tests\5\test323, tests\5\test127, tests\5\test199, tests\5\test418, tests\5\test507, tests\5\test474, tests\5\test235, tests\5\test262, tests\5\test268, tests\5\test460, tests\5\test101, tests\5\test430, tests\5\test329, tests\5\test497, tests\5\test510, tests\5\test350, tests\5\test300, tests\5\test186, tests\5\test333, tests\5\test378, tests\5\test249, tests\5\test316, tests\5\test448, tests\5\test464, tests\5\test175, tests\5\test163, tests\5\test374, tests\5\test17, tests\5\test263, tests\5\test15, tests\5\test152, tests\5\test216, tests\5\test484, tests\5\test71, tests\5\test385, tests\5\test131, tests\5\test499, tests\5\test164, tests\5\test92, tests\5\test32, tests\5\test395, tests\5\test441, tests\5\test176, tests\5\test222, tests\5\test398, tests\5\test27, tests\5\test51, tests\5\test237, tests\5\test373, tests\5\test488, tests\5\test227, tests\5\test332, tests\5\test244, tests\5\test173, tests\5\test292, tests\5\test141, tests\5\test495, tests\5\test24, tests\5\test103, tests\5\test431, tests\5\test83, tests\5\test406, tests\5\test114, tests\5\test219, tests\5\test153, tests\5\test230, tests\5\test403, tests\5\test500, tests\5\test84, tests\5\test110, tests\5\test201, tests\5\test454, tests\5\test54, tests\5\test187, tests\5\test313, tests\5\test178, tests\5\test9, tests\5\test363, tests\5\test399, tests\5\test56, tests\5\test1, tests\5\test154, tests\5\test156, tests\5\test324, tests\5\test408, tests\5\test95, tests\5\test102, tests\5\test5, tests\5\test36, tests\5\test72, tests\5\test87, tests\5\test212, tests\5\test384, tests\5\test69, tests\5\test400, tests\5\test267, tests\5\test428, tests\5\test293, tests\5\test10, tests\5\test423, tests\5\test182, tests\5\test91, tests\5\test81, tests\5\test391, tests\5\test47, tests\5\test104, tests\5\test25, tests\5\test419, tests\5\test473, tests\5\test193, tests\5\test282, tests\5\test246, tests\5\test392, tests\5\test504, tests\5\test109, tests\5\test386, tests\5\test96, tests\5\test305, tests\5\test344, tests\5\test417, tests\5\test322, tests\5\test137, tests\5\test149, tests\5\test493, tests\5\test48, tests\5\test393, tests\5\test179, tests\5\test165, tests\5\test469, tests\5\test73, tests\5\test317, tests\5\test335, tests\5\test331, tests\5\test257, tests\5\test490, tests\5\test180, tests\5\test63, tests\5\test255, tests\5\test405, tests\5\test286, tests\5\test250, tests\5\test37, tests\5\test128, tests\5\test121, tests\5\test427, tests\5\test364, tests\5\test206, tests\5\test468, tests\5\test208, tests\5\test401, tests\5\test224, tests\5\test357, tests\5\test369, tests\5\test112, tests\5\test256, tests\5\test447, tests\5\test370, tests\5\test11, tests\5\test218, tests\5\test204, tests\5\test304, tests\5\test78, tests\5\test258, tests\5\test380, tests\5\test39, tests\5\test125, tests\5\test486, tests\5\test138, tests\5\test49, tests\5\test140, tests\5\test215, tests\5\test394, tests\5\test479, tests\5\test8, tests\5\test281, tests\5\test43, tests\5\test506, tests\5\test195, tests\5\test113, tests\5\test233, tests\5\test132, tests\5\test413, tests\5\test240, tests\5\test142, tests\5\test478, tests\5\test23, tests\5\test26, tests\5\test397, tests\5\test475, tests\5\test336, tests\5\test20, tests\5\test321, tests\5\test89, tests\5\test97, tests\5\test471, tests\5\test105, tests\5\test66, tests\5\test223, tests\5\test239, tests\5\test342, tests\5\test487, tests\5\test190, tests\5\test93, tests\5\test295, tests\5\test205, tests\5\test359, tests\5\test379, tests\5\test211, tests\5\test44, tests\5\test440, tests\5\test433, tests\5\test210, tests\5\test196, tests\5\test58, tests\5\test425, tests\5\test21, tests\5\test31, tests\5\test511, tests\5\test259, tests\5\test243, tests\5\test348, tests\5\test461, tests\5\test455, tests\5\test80, tests\5\test340, tests\5\test303, tests\5\test412, tests\5\test122, tests\5\test65, tests\5\test254, tests\5\test171, tests\5\test167, tests\5\test496, tests\5\test353, tests\5\test390, tests\5\test117, tests\5\test248, tests\5\test422, tests\5\test19, tests\5\test181, tests\5\test269, tests\5\test50, tests\5\test68, tests\5\test310, tests\5\test41, tests\5\test207, tests\5\test40, tests\5\test498, tests\5\test130, tests\5\test3, tests\5\test148, tests\5\test106, tests\5\test60, tests\5\test444, tests\5\test347, tests\5\test241, tests\5\test289, tests\5\test116, tests\5\test476, tests\5\test352, tests\5\test35, tests\5\test16, tests\5\test375, tests\5\test185, tests\5\test312, tests\5\test30, tests\5\test6, tests\5\test236, tests\5\test266, tests\5\test184, tests\5\test94, tests\5\test409, tests\5\test439, tests\5\test169, tests\5\test420, tests\5\test120, tests\5\test61, tests\5\test343, tests\5\test253, tests\5\test338, tests\5\test502, tests\5\test446, tests\5\test136, tests\5\test362, tests\5\test277, tests\5\test278, tests\5\test285, tests\5\test465, tests\5\test410, tests\5\test260, tests\5\test339, tests\5\test82, tests\5\test79, tests\5\test194, tests\5\test376, tests\5\test45, tests\5\test57, tests\5\test314, tests\5\test158, tests\5\test346, tests\5\test432, tests\5\test134, tests\5\test177, tests\5\test503, tests\5\test318, tests\5\test349, tests\5\test225, tests\5\test445, tests\5\test217, tests\5\test341, tests\5\test231, tests\5\test355, tests\5\test28, tests\5\test421, tests\5\test436, tests\5\test467, tests\5\test299, tests\5\test203, tests\5\test276, tests\5\test76, tests\5\test160, tests\5\test435, tests\5\test470, tests\5\test414, tests\5\test38, tests\5\test297, tests\5\test188, tests\5\test67, tests\5\test371, tests\5\test296, tests\5\test377, tests\5\test294, tests\5\test452, tests\5\test270, tests\5\test328, tests\5\test53, tests\5\test22, tests\5\test337, tests\5\test183, tests\5\test252, tests\5\test0, tests\5\test481, tests\5\test124, tests\5\test99, tests\5\test146, tests\5\test491, tests\5\test52, tests\5\test361, tests\5\test356, tests\5\test265, tests\5\test367, tests\5\test275, tests\5\test214, tests\5\test302, tests\5\test143, tests\5\test170, tests\5\test86, tests\5\test191, tests\5\test29, tests\5\test407, tests\5\test308, tests\5\test351, tests\5\test271, tests\5\test2, tests\5\test85, tests\5\test200, tests\5\test75, tests\5\test382, tests\5\test150, tests\5\test213, tests\5\test424, tests\5\test162, tests\5\test55, tests\5\test197, tests\5\test366, tests\5\test242, tests\5\test228, tests\5\test192, tests\5\test147, tests\5\test209, tests\5\test368, tests\5\test98, tests\5\test129, tests\5\test284, tests\5\test315, tests\5\test415, tests\5\test358, tests\5\test307, tests\5\test159, tests\5\test245, tests\5\test383, tests\5\test449, tests\5\test64, tests\5\test7, tests\5\test482, tests\5\test438, tests\5\test174, tests\5\test443, tests\5\test118, tests\5\test458, tests\5\test287, tests\5\test157, tests\5\test381, tests\5\test309, tests\5\test272, tests\5\test234, tests\5\test100, tests\5\test416, tests\5\test483, tests\5\test319, tests\5\test4, tests\5\test330, tests\5\test59, tests\5\test411, tests\5\test354, tests\5\test450, tests\5\test396, tests\5\test229, tests\5\test459, tests\5\test442, tests\5\test111, tests\5\test14, tests\5\test372, tests\5\test279, tests\5\test311, tests\5\test365, tests\5\test33, tests\5\test107, tests\5\test139, tests\5\test437, tests\5\test198, tests\5\test90, tests\5\test320, tests\5\test477, tests\5\test232, tests\5\test345, tests\5\test189, tests\5\test402, tests\5\test485, tests\5\test334, tests\5\test172, tests\5\test126, tests\5\test451, tests\5\test306, tests\5\test46, tests\5\test251, tests\5\test326, tests\5\test151, tests\5\test489, tests\5\test34, tests\5\test135, tests\5\test508, tests\5\test144, tests\5\test288, tests\5\test115, tests\5\test472, tests\5\test119, tests\5\test453, tests\5\test88, tests\5\test426, tests\5\test261, tests\5\test264, tests\5\test77, tests\5\test429, tests\5\test457, tests\5\test505, tests\5\test42, tests\5\test466, tests\5\test18, tests\5\test133, tests\5\test161
+Times: 11.1806, 8.4415, 8.2295, 8.6785, 11.1326, 10.6536, 7.6344, 11.1656, 10.3876, 8.1775, 7.9795, 7.5494, 9.0585, 9.2115, 11.5547, 10.0936, 7.6394, 8.9455, 9.4735, 10.9506, 7.8144, 9.8066, 9.6476, 11.4597, 11.3276, 10.8076, 10.0916, 10.9686, 7.4104, 7.9525, 8.1575, 9.6686, 10.4076, 9.0605, 10.6186, 8.5175, 8.6285, 8.3635, 9.6966, 9.9846, 7.3684, 9.1355, 8.5765, 10.9856, 10.2716, 9.1475, 10.0936, 10.0946, 9.6376, 11.6477, 11.3286, 9.9886, 11.2846, 10.1166, 7.4234, 11.0346, 7.8414, 8.2205, 8.4965, 11.1606, 10.9526, 8.1895, 7.7014, 11.7767, 10.5506, 11.5877, 11.2476, 8.4055, 10.4276, 8.3855, 7.2084, 10.4376, 9.5525, 9.1225, 10.3696, 10.8456, 8.6003, 9.5805, 9.1675, 10.6116, 11.2206, 8.4195, 10.2725, 10.0058, 9.1343, 9.8532, 7.5669, 11.6714, 10.0004, 10.182, 7.5895, 8.8567, 10.5145, 11.644, 8.2912, 7.2347, 11.4198, 10.3634, 10.1626, 9.5604, 9.3939, 7.6531, 9.3267, 11.6518, 9.2891, 8.8763, 7.8945, 10.3462, 7.9147, 9.3521, 10.0092, 11.6006, 10.0976, 8.0755, 7.7473, 10.117, 7.5705, 7.7035, 7.6769, 9.0559, 10.4794, 9.2757, 11.7756, 11.3254, 7.7903, 9.6567, 7.6927, 7.8811, 7.6811, 10.828, 7.9623, 7.9665, 9.6924, 7.4075, 10.7286, 9.3643, 8.5921, 11.0882, 10.6546, 10.3308, 7.5755, 7.9293, 10.7672, 11.0706, 8.2235, 9.4345, 10.8746, 10.7806, 7.9205, 8.6025, 7.8514, 8.3505, 9.2595, 8.2045, 8.6835, 8.7155, 11.9297, 7.8895, 7.7474, 9.0305, 10.4186, 9.0185, 8.6755, 10.9756, 7.7644, 7.3974, 10.3036, 10.1886, 8.2215, 9.8906, 10.6926, 9.3935, 7.8054, 9.8496, 9.1175, 7.4814, 10.4276, 11.2836, 10.7046, 7.5924, 10.7906, 8.5525, 10.3586, 10.1546, 7.6774, 10.5386, 10.9106, 10.6116, 8.9985, 10.7256, 7.6744, 10.8736, 7.4874, 7.6144, 10.5216, 10.8456, 8.6685, 8.8685, 8.5475, 8.0525, 11.1206, 9.1665, 8.5075, 8.7315, 8.8025, 8.9095, 10.9286, 10.4946, 10.1276, 7.6404, 9.8296, 10.8396, 7.7034, 10.7056, 8.7665, 9.4805, 9.3685, 8.2545, 10.3056, 10.4736, 7.1334, 10.1416, 9.6906, 8.4165, 10.7676, 11.6807, 9.6736, 8.3435, 9.8636, 9.4595, 11.1116, 8.2895, 9.8076, 11.4987, 8.9695, 10.6586, 11.8497, 9.2645, 7.3154, 12.2037, 10.1416, 11.2936, 9.1055, 11.4167, 11.8667, 11.1016, 10.6056, 7.7214, 10.4826, 8.1685, 10.0266, 9.0405, 7.8785, 8.3845, 10.9736, 8.5405, 11.1226, 11.3676, 7.6224, 10.9276, 8.0145, 9.6886, 8.3025, 8.5555, 8.1225, 9.6606, 10.3546, 11.2556, 9.6416, 11.3066, 9.8526, 9.6726, 9.3115, 8.3095, 11.5737, 9.8946, 8.3164, 9.7336, 8.7555, 11.3556, 10.3956, 11.0786, 10.6026, 10.0976, 9.9046, 10.8866, 8.6785, 7.2794, 11.0154, 9.4585, 7.2734, 9.8886, 7.9605, 8.7215, 8.8945, 10.0356, 10.2126, 8.2675, 11.6257, 9.6436, 9.7776, 9.2865, 7.4094, 7.6124, 11.6486, 8.2945, 11.7717, 9.0405, 11.0296, 9.8516, 10.1126, 8.9685, 11.2086, 9.3345, 11.7157, 9.3555, 10.2446, 11.0516, 9.9536, 8.1905, 10.7056, 8.7075, 7.5514, 9.1155, 10.3766, 9.3485, 9.6386, 9.3065, 11.2286, 9.2085, 11.7007, 9.2775, 9.3895, 9.6236, 10.5906, 8.8505, 8.2545, 9.4915, 8.4755, 11.3316, 10.9696, 9.8756, 9.1075, 7.7594, 9.1035, 7.9025, 11.5827, 9.7066, 10.9166, 7.9665, 7.6054, 8.3515, 11.0296, 11.1496, 10.1776, 9.0145, 8.7175, 10.5716, 10.9826, 11.5637, 11.2016, 9.6005, 10.4356, 9.1125, 9.3665, 11.7107, 9.1535, 9.3645, 9.4185, 8.4405, 8.6065, 8.9815, 9.9136, 10.9926, 9.3445, 11.7517, 10.0946, 7.7154, 9.5515, 8.9165, 8.4265, 7.8024, 8.4605, 7.7794, 9.7496, 10.8956, 11.3246, 7.8785, 11.2356, 8.2915, 7.8975, 8.1515, 11.9927, 9.6986, 7.9525, 12.2367, 12.5507, 7.7944, 12.4707, 7.5994, 11.6217, 7.7924, 7.6564, 11.0446, 7.9635, 8.1085, 10.7706, 11.8197, 11.9227, 10.3016, 9.9226, 8.5065, 8.2915, 8.4805, 9.9776, 9.8366, 8.1125, 10.0646, 8.4645, 7.5254, 12.0857, 9.6556, 8.6255, 11.1026, 8.6465, 9.9366, 10.6836, 10.6816, 10.9886, 8.7785, 7.9875, 10.1056, 10.2406, 8.3045, 12.0557, 11.5677, 11.8457, 11.7187, 8.6135, 11.0126, 8.6835, 8.5595, 10.6856, 8.7775, 7.6364, 11.2766, 10.7116, 8.6235, 8.2915, 11.7237, 10.3296, 11.6797, 10.3366, 9.0425, 9.3965, 7.8614, 9.8776, 7.2634, 11.3256, 8.2335, 9.3575, 10.5996, 9.6105, 8.0645, 9.1073, 10.4276, 10.0046, 7.8925, 9.4475, 11.6997, 11.8427, 10.6666, 7.8835, 8.2595, 7.3634, 8.4285, 10.7406, 8.8685, 10.2026, 10.2406, 10.4256, 7.5254, 8.6975, 8.0745, 11.7387, 9.1755, 9.6065, 8.5715, 10.3056, 11.2906, 12.2107, 8.7625, 10.8596, 9.5495, 12.1827, 11.1166, 10.3546, 11.1586, 7.4204, 7.7114, 9.7116, 7.3394, 7.3374, 10.7166, 7.9005, 9.7906, 11.3697, 8.0395, 10.9626, 7.4724, 8.5535, 8.5744

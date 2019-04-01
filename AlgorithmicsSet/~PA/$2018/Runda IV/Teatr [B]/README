@@ -1,0 +1,30 @@
+Biblioteczka dla zawodnika do zadania Teatr.
+----------------------------------------------------------
+
+To archiwum zawiera pliki przydatne do lokalnego testowania zadania Teatr.
+Zawartość:
+
+  * teatr.h, futbol.cpp - kod źródłowy lokalnej biblioteki testującej,
+  * tea0?.in - plik z testem przykładowym,
+  * tea_wrong.cpp - przykładowe (błędne) rozwiązanie zadania.
+
+Aby skompilować program (dla przykładu, tea.cpp) z biblioteką, pliki
+  biblioteczki powinny znajdować się razem z kompilowanym programem.
+Zakładamy, że alias 'rpa' wskazuje na program uruchamiający lokalną
+  infrastrukturę testującą (dokładne zasady konfiguracji opisane
+  są na stronie PA, https://potyczki.mimuw.edu.pl/l/zadania_rozproszone/).
+Należy wydać komendę:
+
+  rpa build --source tea.cpp --library teatr.cpp
+
+Skompilowany program wczytuje test ze standardowego wejścia,
+w formacie opisanym w treści zadania.
+
+Aby uruchomić program na teście przykładowym tea0a.in na 10 instancjach,
+  można wydać następującą komendę:
+
+  rpa test --source tea.cpp --library teatr.cpp --nodes 10 <tea0a.in
+
+Uwaga: ta implementacja biblioteczki wczytuje tablicę ze wzrostem osób
+  do każdej instancji programu. Należy uważać na możliwość przekroczenia
+  pamięci dostępnej na Twoim systemie operacyjnym.
