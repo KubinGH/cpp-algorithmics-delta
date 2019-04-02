@@ -1,0 +1,25 @@
+﻿* Sparse table
+* Operacje bitowe i bitsety
+* Fenwick
+* Wyszukiwanie ternarne, równoległe wyszukiwanie binarne
+* Digit DP
+* KMR
+* Pierwiastki
+* Kopiec randomizowany
+- Randomizowane
+* Wavelet
+* Aho-Corasick
+* Efektywna implementacja
+* Kompilator: Alokacja pamięci, optymalizacje, flagi
+* Policy Based Data Structures
+* Magiczne modulowanie
+* Mobius i inne funkcje multiplikatywne
+* Rho i Miller-Rabin
+* Eliminacja Gaussa
+* Simpson
+* Python
+- Heavy-Light Decomposition
+- Centroidy
+* Fast Fourier Transform
+- Przepływy/skojarzenia
+- BST
