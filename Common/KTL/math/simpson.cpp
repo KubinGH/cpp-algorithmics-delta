@@ -1,5 +1,6 @@
 // Integration by Simpson's formula.
 // Last revision: March 2019
+
 #pragma once
 
 #include <cstdint>

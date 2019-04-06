@@ -1,6 +1,8 @@
 // Miller-Rabin prime test and Rho-Pollard factorization.
+// Also includes a linear sieve, faster modular multiplication
+// by approximation and a factorization utility function.
 
-// Last revision: Middle of 2018.
+// Last revision: March 2019.
 
 #pragma once
 

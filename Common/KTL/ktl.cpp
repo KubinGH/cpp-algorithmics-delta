@@ -18,13 +18,11 @@ namespace ktl
     #include "graph/dag-dominators.cpp"
     #include "graph/edmonds-min-arborescence.cpp"
     #include "graph/kosaraju.cpp"
-    #include "graph/lca.cpp"
 
     #include "math/crt.cpp"
     #include "math/egcd.cpp"
-    #include "math/golden_section.cpp"
-    #include "math/matrix.cpp"
     #include "math/primemath.cpp"
+    #include "math/simpson.cpp"
 
     #include "structures/disjoint_set.cpp"
     #include "structures/fenwick.cpp"
@@ -34,7 +32,6 @@ namespace ktl
     #include "structures/randomized_heap.cpp"
     #include "structures/segment_tree.cpp"
     #include "structures/sparse_table.cpp"
-    #include "structures/value_scaler.cpp"
     #include "structures/wavelet_tree.cpp"
 
     #include "text/aho_corasick.cpp"

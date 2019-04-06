@@ -76,6 +76,8 @@ namespace edmonds
         }
     };
 
+    // Returns the weight of the minimal arborescence,
+    // such that there is a path from every vertex to the root.
     weight_t min_arborescence(const graph& G, size_t root)
     {
         const uint32_t n = G.size();

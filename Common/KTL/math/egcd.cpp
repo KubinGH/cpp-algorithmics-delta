@@ -7,7 +7,11 @@
 
 // Last revision: March 2019
 
+#include <cstdint>
+
 #pragma once
+
+using std::int64_t;
 
 struct egcd_res { int64_t d, x, y; };
 egcd_res egcd(int64_t a, int64_t b)

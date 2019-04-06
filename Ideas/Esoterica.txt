@@ -1,25 +1,39 @@
 ﻿* Sparse table
 * Operacje bitowe i bitsety
-* Fenwick
+* Fenwick | < Operacje bitowe i bitsety
 * Wyszukiwanie ternarne, równoległe wyszukiwanie binarne
 * Digit DP
-* KMR
 * Pierwiastki
 * Kopiec randomizowany
-- Randomizowane
+- Algorytmy randomizowane | < Kopiec randomizowany
 * Wavelet
-* Aho-Corasick
-* Efektywna implementacja
+* Aho-Corasick | # Tekstówki
+* KMR | < Sparse table | # Hashe | # Tekstówki
+* Efektywna implementacja i biblioteka standardowa
+  * range-for, auto, makra, lambdy, etc.
+  * std::stable_partition, std::merge, std::reverse, std::set_union, etc.
 * Kompilator: Alokacja pamięci, optymalizacje, flagi
+  * dynamiczna, statyczna, na stosie
+  * -O2, -march, -tune, pragma
+  * -fsanitize, warningi
 * Policy Based Data Structures
-* Magiczne modulowanie
+* Magiczne modulowanie | # Hashe
 * Mobius i inne funkcje multiplikatywne
 * Rho i Miller-Rabin
 * Eliminacja Gaussa
 * Simpson
 * Python
+  * eksperymentowanie, bruty
+  * numpy
 - Heavy-Light Decomposition
 - Centroidy
+* Zastosowania wielomianów
+  - tekstowe
+  * trik do pseudo-plecaka na parach/trójkach elementów
+  * interpolacja zamiast wzorków (wielomiany Lagrange'a albo numpy)
+  * sploty
+  * liczby dowolnej precyzji
 * Fast Fourier Transform
+  * Number Theoretic Transform
 - Przepływy/skojarzenia
 - BST

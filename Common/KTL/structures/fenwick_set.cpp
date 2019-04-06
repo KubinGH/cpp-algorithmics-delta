@@ -4,7 +4,8 @@
 // It has around the same speed as std::set, but exploiting
 // the internal structure is easier
 // (e.g. rebinding the left/right pointers helps
-//  to get rid of an extra binary search)
+// to get rid of an extra binary search) - hence it can help
+// in optimizing solutions.
 
 // Last revision: December 2018
 
@@ -86,7 +87,7 @@ struct fenwick_set
 };
 
 /*
-Example driver
+// Example
 #include <bits/stdc++.h>
 using namespace std;
 int main()

@@ -21,10 +21,6 @@ using std::iterator_traits;
 
 struct knuth_miller_rosenberg
 {
-    static constexpr uint32_t log2floor(uint32_t x)
-        { return 31 - __builtin_clz(x); }
-    static constexpr uint32_t log2floor(uint64_t x)
-        { return 63 - __builtin_clzll(x); }
     struct hash_2size
     {
         size_t operator() (const pair<size_t, size_t>& p) const
@@ -61,7 +57,7 @@ struct knuth_miller_rosenberg
     }
     pair<size_t, size_t> operator() (size_t a, size_t b)
     {
-        size_t p = log2floor(b - a + 1);
+        size_t p = __lg(b - a + 1);
         return {A[p][a], A[p][b + 1 - (1 << p)]};
     }
 };

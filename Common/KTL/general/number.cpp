@@ -1,263 +1,115 @@
-// Simple biginteger.
-// Based with powers of 2.
-// Last revision: September 2018
-
-#pragma once
-
-#include <deque>
-#include <vector>
-#include <cstdint>
-#include <iostream>
-#include <stack>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-const size_t MAX = 1 << 16;
-
-template<size_t K = 30, typename T = uint64_t, typename Container = vector<T>>
+template<typename T, T Base, typename Container>
 struct number_t
 {
-    const T M = (1 << K);
+    static_assert(Base > 1, "Invalid Base");
     Container A;
+
     number_t() {}
-    number_t(T x) { A.push_back(x); carry(); }
-    number_t(const Container& a) { A = a; }
-    void dprint() const { for(T d : A) cout << d << " "; cout << endl; }
-    template<bool Normalize = true>
+    template<typename Tp>
+    static number_t from_integer(Tp x) { number_t n; n.A = {T(x)}; n.carry(); return n; }
+
+    bool empty()                      const { return A.empty(); }
+    number_t& operator= (const number_t& B) { A = B.A; return *this; }
+    T& operator[] (size_t i)                { return A[i]; }
+    const T& operator[] (size_t i)    const { return i < A.size() ? A[i] : 0; }
+    size_t size() const                     { return A.size(); }
+    void clear()                            { A.clear(); }
+
+    void swap(number_t& o)
+    {
+        A.swap(o.A);
+    }
+
     void carry()
     {
-        if(not A.empty()) for(size_t i = 0; i < A.size() - 1; i++)
-            if(A[i] >= M)
-                A[i+1] += A[i] / M, A[i] %= M;
-        if(not A.empty() and A.back() >= M)
-            A.push_back(A.back() / M), A[A.size() - 2] %= M;
-        if(Normalize)
-            while(not A.empty() and A.back() == 0)
-                A.pop_back();
+        if(A.empty()) return;
+        for(size_t i = 0; i + 1 < A.size(); i++)
+            if(A[i] >= Base)
+                A[i+1] += A[i] / Base, A[i] %= Base;
+        while(A.back() >= Base)
+        {
+            T x = A.back() / Base;
+            A.back() %= Base;
+            A.push_back(x);
+        }
     }
-    bool empty() const { return A.empty(); }
-    operator bool() const { return not empty(); }
-    number_t& operator= (T x) { A = {x}; carry(); return *this; }
-    number_t& operator= (const number_t& B) { A = B.A; return *this; }
-    T& operator[] (size_t i) { return A[i]; }
-    const T& operator[] (size_t i) const { return A[i]; }
-    size_t size() const { return A.size(); }
-    void resize(size_t n) { A.resize(n); }
-    bool operator<= (const number_t& B) const
+    void fix_tail()
     {
-        if(A.size() != B.size()) return A.size() < B.size();
-        for(size_t i = size(); i --> 0; )
-            if(A[i] > B[i])
-                return false;
-            else if(A[i] < B[i])
-                return true;
-        return true;
+        while(not A.empty() and not A.back())
+            A.pop_back();
     }
-    bool operator!= (T x) const
+
+    number_t& operator+= (const number_t& o)
     {
-        if(size() != 1)
-            return size() > 1;
-        else
-            return A[0] != x;
-    }
-    bool operator!= (int x) const { return *this != (T)x; }
-    bool operator== (const number_t& B) const { return (*this <= B) and (B <= *this); }
-    bool operator!= (const number_t& B) const { return not (*this == B); }
-    bool operator< (const number_t& B) const { return *this <= B and *this != B; }
-    bool operator>  (const number_t& B) const { return not (*this <= B); }
-    bool operator>= (const number_t& B) const { return not (*this < B); }
-    number_t& operator<<= (size_t n)
-    {
-        for(size_t i = 0; i < n; i++)
-            A.push_front(0);
-        return *this;
-    }
-    number_t operator<< (size_t b) const { number_t R = *this; return R <<= b; }
-    void increment(size_t i = 0) { A[i]++; carry(); }
-    number_t& operator+= (const number_t& B)
-    {
-        if(A.size() < B.size()) A.resize(B.size());
-        for(size_t i = 0; i < B.size(); i++)
-            A[i] += B[i];
+        if(o.A.size() > A.size())
+            A.resize(o.A.size());
+        for(size_t i = 0; i < o.size(); i++)
+            A[i] += o.A[i];
         carry();
         return *this;
     }
-    number_t operator+ (const number_t& B) const { number_t R = *this; return R += B; }
-    number_t& operator-= (const number_t& B)
+    number_t operator+ (const number_t& o) const { number_t x = *this; x += o; return x; }
+
+    number_t& operator-= (const number_t& o)
     {
-        //assert(*this >= B);
-        if(not B) return *this;
-        for(size_t i = size(); i --> 1; )
-        {
-            if(i<B.size())
-                A[i] -= B[i];
-            if(A[i]) A[i]--, A[i-1] += M;
-        }
-        A[0] -= B[0];
-        carry();
+        A.push_back(0);
+        for(size_t i = o.size(); i --> 0; )
+            A[i+1]--, A[i] += Base - o.A[i];
+        carry(); fix_tail();
         return *this;
     }
-    number_t operator- (const number_t& B) const { number_t R = *this; return R -= B; }
-    number_t brute_multiply(const number_t& B) const
-    {
-        if(not *this or not B) return number_t();
-        number_t R; R.resize(A.size() + B.size() + 1);
-        for(size_t i = 0; i < A.size(); i++)
-        {
-            for(size_t j = 0; j < B.size(); j++)
-                R[i+j] += A[i] * B[j];
-            R.carry<false>();
-        }
-        R.carry();
-        return R;
-    }
-    pair<number_t, number_t> halven() const
-    {
-        number_t L, R;
-        for(size_t i = 0; i < A.size()/2; i++)
-            L.A.push_back(A[i]);
-        for(size_t i = (A.size()+1)/2; i < A.size(); i++)
-            R.A.push_back(A[i]);
-        L.carry(); R.carry();
-        return {L, R};
-    }
-    number_t karatsuba_multiply(number_t& B)
-    {
-        //cout << "karatsuba " << *this << " " << B << "\n";
-        number_t a1, a2; tie(a1, a2) =   halven();
-        number_t b1, b2; tie(b1, b2) = B.halven();
-        number_t X = a2 * b2;
-        number_t Y = a1 * b1;
-        number_t P = a1 + a2, Q = b1 + b2;
-        number_t Z = P * Q - X - Y;
-        size_t m = size()/2;
-        return Y + (Z << m) + (X << (2*m));
-    }
-    number_t operator* (number_t& B)
-    {
-        if(true or min(A.size(), B.size()) * min(A.size(), B.size())
-                < max(A.size(), B.size()) or
-          A.size() * B.size() < 64)
-            return brute_multiply(B);
-        else
-        {
-            while(A.size() < B.size()) A.push_back(0);
-            while(B.size() < A.size()) B.A.push_back(0);
-            if(size() % 2) A.push_back(0), B.A.push_back(0);
-            number_t R = karatsuba_multiply(B);
-            carry(); B.carry(); R.carry();
-            return R;
-        }
-    }
-    number_t operator* (T b) const
-    {
-        number_t R; R.resize(size() + 1);
-        for(size_t i = 0; i < size(); i++)
-            R[i] += A[i] * b;
-        R.carry();
-        return R;
-    }
-    number_t& operator*= (number_t& B) { number_t R = *this * B; return *this = R; }
-    number_t& operator*= (T b) { number_t R = *this * b; return *this = R; }
+    number_t operator- (const number_t& o) const { number_t x = *this; x -= o; return x; }
 
-    T __T_last_divisor, __T_last_modulo;
-
-    Container __last_divisor, __last_dividend, __last_modulo;
-    void __divmod (T b)
-    {
-        __T_last_divisor = b;
-        number_t result;
-        T buffer = 0;
-        result.resize(A.size());
-        for(size_t i = size(); i --> 0; )
-        {
-            if(buffer < b)
-                buffer *= M, buffer += A[i];
-            result[i] += buffer / b;
-            buffer %= b;
-        }
-        result.carry();
-        __last_dividend = result.A;
-        __T_last_modulo = buffer;
-    }
-    number_t operator/ (T b) { __divmod(b); return number_t(__last_dividend); }
-    number_t operator% (T b) { __divmod(b); return number_t(__T_last_modulo); }
-    number_t& operator/= (T b) { number_t R = *this / b; return *this = R; }
-    number_t& operator%= (T b) { number_t R = *this % b; return *this = R; }
-    void __divmod (number_t& B)
-    {
-        if(K > 10)
-        {
-            __last_divisor = B.A;
-            number_t lo, hi = *this + number_t(1); hi += 1;
-            while(lo < hi)
-            {
-                number_t mid = (lo + hi) / T(2);
-                number_t X = mid * B;
-                if(X <= *this)
-                    lo = mid, lo += 1;
-                else
-                    hi = mid;
-            }
-            lo -= 1;
-            __last_dividend = lo.A;
-            __last_modulo = (*this - lo * B).A;
-        }
-        else
-        {
-            __last_divisor = B.A;
-            number_t result, buffer;
-            result.resize(A.size());
-            for(size_t i = size(); i --> 0; )
-            {
-                if(buffer < B)
-                    buffer <<= 1, buffer += A[i];
-                while(buffer >= B)
-                    result[i]++, buffer -= B;
-            }
-            result.carry();
-            __last_dividend = result.A;
-            __last_modulo = buffer.A;
-        }
-    }
-    number_t operator/ (number_t& B) { __divmod(B); return number_t(__last_dividend); }
-    number_t operator% (number_t& B) { __divmod(B); return number_t(__last_modulo); }
-    number_t& operator/= (number_t& B) { number_t R = *this / B; return *this = R; }
-    number_t& operator%= (number_t& B) { number_t R = *this % B; return *this = R; }
 };
 
+static constexpr array<uint64_t, 11> pow10 = {
+    1, 10, 100, 1000, 10000, 100000, 1000000,
+    10000000, 100000000, 1000000000, 10000000000
+};
 
-template<size_t K, typename T>
-istream& operator>> (istream& in, number_t<K, T>& n)
+template<typename T, T Base, typename Container>
+ostream& operator<< (ostream& out, const number_t<T, Base, Container>& n)
 {
-    string s; in >> s;
-    number_t<K> p = 1;
-    n.A.clear();
-    for(size_t i = s.size(); i --> 0; )
+    if(n.empty())
+        return out << '0';
+    size_t k10 = find(pow10.begin(), pow10.end(), Base) - pow10.begin();
+    if(k10 < pow10.size())
     {
-        number_t<K> d = T(s[i] - '0');
-        number_t<K> m = p * d;
-        n += m;
-        p *= T(10);
+        out << n.A.back();
+        out << setfill('0');
+        for(size_t i = n.A.size()-1; i --> 0; )
+            out << setw(k10) << n.A[i];
     }
-    return in;
-}
-template<size_t K, typename T>
-ostream& operator<< (ostream& out, number_t<K, T> n)
-{
-    stack<char> o;
-    while(n)
-    {
-        auto m = n % T(10);
-        if(not m)
-            o.push(0);
-        else
-            o.push(m[0]);
-        n /= T(10);
-    }
-    if(o.empty()) out << '0';
-    else while(not o.empty())
-        out << char('0' + o.top()), o.pop();
+    else
+        assert(false);
     return out;
 }
+template<typename T, T Base, typename Container>
+istream& operator>> (istream& in, number_t<T, Base, Container>& n)
+{
+    static string buffer; buffer.clear();
+    in >> buffer;
+    if(buffer == "0")
+    {
+        n.A = {0};
+        return in;
+    }
+    n.clear();
+    size_t k10 = find(pow10.begin(), pow10.end(), Base) - pow10.begin();
+    if(k10 < pow10.size())
+    {
+        reverse(buffer.begin(), buffer.end());
+        buffer.insert(buffer.end(), (k10 - buffer.size()%k10) % k10, '0');
+        n.A.resize(buffer.size() / k10);
+        for(size_t i = buffer.size(); i --> 0; )
+            n.A[i / k10] *= 10, n.A[i / k10] += buffer[i] - '0';
+    }
+    else
+        assert(false);
+    return in;
+}
+
