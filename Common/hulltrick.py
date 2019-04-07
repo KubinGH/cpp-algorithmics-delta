@@ -4,7 +4,7 @@ class Line:
     def __init__(self, a, b):
         self.a, self.b = a, b
     def __xor__(self, other):
-        return Fraction(other.b - self.b, self.a, other.a)
+        return Fraction(other.b - self.b, self.a - other.a)
     def __call__(self, x):
         return self.a * x + self.b
     def __repr__(self):
@@ -14,11 +14,15 @@ def build_line_convex_hull(lines):
     def covered(A, B, C):
         # C covered by A and B
         return (A ^ B) >= (B ^ C)
-    lines.sort(key=lambda k: (-k.a, k.b))
+    lines.sort(key=lambda k: (-k.a, -k.b))
     hull = []
+    a = None
     for C in lines:
+        if C.a == a: continue
+        a = C.a
         while len(hull) >= 2:
             A, B = hull[-2:]
+            print(A, B, C)
             if not covered(A, B, C):
                 break
             else:
