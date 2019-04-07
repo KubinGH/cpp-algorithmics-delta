@@ -12,27 +12,30 @@
 using std::size_t;
 using std::vector; using std::reverse;
 using std::pair;
+
 struct kosaraju
 {
     using graph_t = vector<vector<size_t>>;
+
+    const graph_t& graph;
     size_t n;
     vector<bool> vis;
 
-    kosaraju(size_t _n) : n(_n), vis(n) {}
+    kosaraju(const graph_t& _graph) : graph(_graph), n(graph.size()), vis(n) {}
 
-    void marker_dfs(size_t u, const graph_t& graph, vector<uint32_t>& out)
+    void marker_dfs(size_t u, const graph_t& G, vector<uint32_t>& out)
     {
         vis[u] = true;
-        for(size_t v : graph[u])
+        for(size_t v : G[u])
             if(not vis[v])
-                marker_dfs(v, graph, out);
+                marker_dfs(v, G, out);
         out.push_back(u);
     }
 
     // Returns a list of strongly connected components, and
     // a list containing which SCC does a vertex belong to.
     pair<vector<vector<size_t>>, vector<size_t>>
-    operator() (const graph_t& graph)
+    operator() ()
     {
         vector<size_t> order; order.reserve(n);
         fill(vis.begin(), vis.end(), false);
@@ -59,10 +62,10 @@ struct kosaraju
         }
         return {scc, scc_idx};
     }
-    
+
     // Construct a SCC graph.
     pair<vector<size_t>, graph_t>
-    make_scc_graph(const graph_t& graph, const vector<vector<size_t>>& scc, const vector<size_t>& scc_idx)
+    make_scc_graph(const vector<vector<size_t>>& scc, const vector<size_t>& scc_idx)
     {
         fill(vis.begin(), vis.end(), false);
         graph_t scc_graph(scc.size());

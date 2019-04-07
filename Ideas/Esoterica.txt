@@ -19,7 +19,10 @@
 * Policy Based Data Structures
 * Magiczne modulowanie | # Hashe
 * Mobius i inne funkcje multiplikatywne
-* Rho i Miller-Rabin
+* Algorytmy teorioliczbowe
+  * Miller-Rabin
+  * Rho Pollarda
+  * Binarne GCD
 * Eliminacja Gaussa
 * Simpson
 * Python

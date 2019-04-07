@@ -6,40 +6,32 @@
 
 #pragma once
 
-#include <cstdint>
+#include <cstddef>
 #include <string>
 #include <vector>
 
-using std::vector; using std::string;
-using std::uint32_t; using std::iterator_traits;
+using std::vector; using std::string; using std::size_t;
 
-template<typename Iterator, class T = typename iterator_traits<Iterator>::value_type >
-vector<uint32_t> manacher(Iterator first, Iterator last, T leaf = '$')
+vector<uint32_t> manacher(const string& So, char leaf = '#')
 {
-    vector<T> A(distance(first, last)*2 + 1);
-    for(auto it = A.begin(); first != last; first++)
+    size_t n = So.size();
+    vector<char> S(2*n+1);
+    for(size_t i = 0; i < n; i++)
+        S[2*i] = leaf, S[2*i+1] = So[i];
+    S[2*n] = leaf;
+    n = 2*n + 1;
+    vector<size_t> R(n);
+    size_t m = 0;
+    for(size_t i = 1; i < n; i++)
     {
-        *it++ = leaf;
-        *it++ = *first;
+        if(i < 2*m and i < m+R[m])
+            R[i] = min(R[2*m - i], m+R[m] - i);
+        while(i > R[i] and i+R[i] < n-1 and S[i-R[i]-1] == S[i+R[i]+1])
+            R[i]++;
+        if(i + R[i] > m + R[m])
+            m = i;
     }
-    A.back() = '$';
-    vector<uint32_t> P(A.size(), 0);
-    uint32_t right = 0, center = 0;
-    for(uint32_t i = 1; i < A.size(); i++)
-    {
-        uint32_t mirror = 2*center - i;
-        if(i + P[mirror] <= min(right, A.size() - 1))
-            P[i] = P[mirror];
-        while(i >= P[i]+1 and i+P[i]+1 < A.size()
-              and A[i-P[i]-1] == A[i+P[i]+1])
-            P[i]++;
-        if(i + P[i] > right)
-        {
-            center = i;
-            right = center + P[i];
-        }
-    }
-    for(uint32_t i = 0; i < A.size(); i++)
-        P[i] = P[i]/2 + i%2;
-    return P;
+    for(uint32_t i = 0; i < n; i++)
+        R[i] = (R[i]+1) / 2;
+    return R;
 }

@@ -1,6 +1,22 @@
-#include <bits/stdc++.h>
+// Classic bigintegers.
+// At this point they do not support much.
 
-using namespace std;
+// Last revision: April 2019
+
+#pragma once
+
+#include <algorithm>
+#include <iostream>
+#include <cassert>
+#include <cstdint>
+#include <iomanip>
+#include <string>
+#include <array>
+
+using std::istream; using std::ostream;
+using std::uint64_t;
+using std::array; using std::string;
+using std::reverse;
 
 template<typename T, T Base, typename Container>
 struct number_t
@@ -80,9 +96,9 @@ ostream& operator<< (ostream& out, const number_t<T, Base, Container>& n)
     if(k10 < pow10.size())
     {
         out << n.A.back();
-        out << setfill('0');
+        out << std::setfill('0');
         for(size_t i = n.A.size()-1; i --> 0; )
-            out << setw(k10) << n.A[i];
+            out << std::setw(k10) << n.A[i];
     }
     else
         assert(false);
@@ -112,4 +128,3 @@ istream& operator>> (istream& in, number_t<T, Base, Container>& n)
         assert(false);
     return in;
 }
-

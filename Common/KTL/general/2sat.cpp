@@ -31,10 +31,6 @@ struct solver_2sat
     {
         imp_graph[as_index(a)].push_back(as_index(b));
     }
-    void add_force_true(int32_t a)
-    {
-        add_implication(-a, a);
-    }
     void add_or_clause(int32_t a, int32_t b)
     {
         add_implication(-a, b);
@@ -54,7 +50,7 @@ struct solver_2sat
     struct solution_2sat { bool exists; vector<bool> value; };
     solution_2sat solve()
     {
-        auto pscc = kosaraju{2*n}(imp_graph);
+        auto pscc = kosaraju{imp_graph}();
         auto scc = pscc.first; auto scc_idx = pscc.second;
         const size_t s = scc.size();
         for(size_t u = 0; u < 2*n; u += 2)
