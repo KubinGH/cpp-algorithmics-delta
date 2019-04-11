@@ -10,25 +10,30 @@ class Line:
     def __repr__(self):
         return "Line({}, {})".format(self.a, self.b)
 
-def build_line_convex_hull(lines):
-    def covered(A, B, C):
+
+def hull_append(hull, C):
+    def line_covered(A, B):
         # C covered by A and B
-        return (A ^ B) >= (B ^ C)
-    lines.sort(key=lambda k: (-k.a, -k.b))
-    hull = []
-    a = None
-    for C in lines:
-        if C.a == a: continue
-        a = C.a
-        while len(hull) >= 2:
-            A, B = hull[-2:]
-            print(A, B, C)
-            if not covered(A, B, C):
-                break
-            else:
-                hull.pop()
-        hull.append(C)
-    return hull
+        return (B.a == C.a and B.b >= C.b) or (A ^ B) >= (B ^ C)
+    while len(hull) >= 2:
+        A, B = hull[-2], hull[-1]
+        if not line_covered(A, B):
+            break
+        else:
+            hull.pop()
+    hull.append(C)
+
+def hull_appendleft(hull, C):    
+    def line_covered(A, B):
+        # C covered by A and B
+        return (B.a == C.a and B.b >= C.b) or (A ^ B) <= (B ^ C)
+    while len(hull) >= 2:
+        A, B = hull[0], hull[1]
+        if not line_covered(A, B):
+            break
+        else:
+            hull.popleft()
+    hull.appendleft(C)
 
 def find_min_line(hull, x):
     lo, hi = 0, len(hull)
@@ -39,6 +44,9 @@ def find_min_line(hull, x):
         else:
             lo = mid+1
     return lo
+
+def find_min_line_value(hull, x):
+    return hull[find_min_line(hull, x)](x)s
 
 hull = build_line_convex_hull([Line(2, 3), Line(2, 2), Line(1, 1), Line(5, 0), Line(-1, 10)])
 

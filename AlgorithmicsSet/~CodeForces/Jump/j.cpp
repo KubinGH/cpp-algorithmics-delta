@@ -22,14 +22,15 @@ string __M;
 uint32_t query(const vector<bool>& S)
 {
     uint32_t r = 0;
-    cerr << "? ";
+    //cerr << "? ";
     for(uint32_t i = 0; i < S.size(); i++)
     {
-        cerr << S[i];
+        //cerr << S[i];
         if(__M[i] - '0' == S[i])
             r++;
     }
-    cerr << endl;
+    //cerr << endl;
+    //cout << "= " << r << endl;
     return r == S.size() ? 2 : (r == S.size()/2);
 }
 #else
@@ -48,30 +49,33 @@ int main()
 {
     uint32_t n;
 #ifdef XHOVA
-    cin >> __M;
-    n = __M.size();
+    //cin >> __M;
+    cin >> n;
+    __M.resize(n, '1');
 #else
     cin >> n;
 #endif
     bits_generator bit;
+    bit.gen.seed(time(0));
     vector<bool> S(n);
-    for(uint32_t i = 0; i < n + 500; i++)
+
+    uint32_t c0 = 0, c1 = 0;
+    for(uint32_t i = 0; i < n/2+250; i++)
     {
-        for(uint32_t i = 0; i < n; i++)
+        for(uint32_t i = 1; i < n; i++)
             S[i] = bit();
         uint32_t r = query(S);
-        if(r == 2)
-        {
-            cerr << "+" << endl;
-            break;
-        }
-        else if(r == 1)
-        {
-            cerr << "/" << endl;
-        }
-        else
-        {
-            cerr << "-" << endl;
-        }
+        if(r == 1)
+            c0++;
     }
+    S[0] = 1;
+    for(uint32_t i = 0; i < n/2+250; i++)
+    {
+        for(uint32_t i = 1; i < n; i++)
+            S[i] = bit();
+        uint32_t r = query(S);
+        if(r == 1)
+            c1++;
+    }
+    cout << c0 << " " << c1 << endl;
 }

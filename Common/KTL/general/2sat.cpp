@@ -63,13 +63,11 @@ struct solver_2sat
         for(size_t u = s; u --> 0; )
         {
             if(not is_set[u])
-            {
                 is_set[u] = true, truth_value[u] = true;
-                for(size_t i : scc[u])
-                {
-                    size_t v = scc_idx[i^1];
-                    is_set[v] = true; truth_value[v] = false;
-                }
+            for(size_t i : scc[u])
+            {
+                size_t v = scc_idx[i^1];
+                is_set[v] = true; truth_value[v] = not truth_value[u];
             }
         }
         vector<bool> out(n);
