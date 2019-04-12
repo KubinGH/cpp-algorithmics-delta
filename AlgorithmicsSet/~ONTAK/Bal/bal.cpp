@@ -4,14 +4,26 @@
 using namespace std;
 using namespace __gnu_cxx;
 
+template<typename Container>
+ostream& _rshift_impl (ostream& out, const Container& c)
+{
+    out << "< ";
+    for(const auto& x : c)
+        out << x << "; ";
+    out << ">";
+    return out;
+}
+ostream& operator<< (ostream& out, const vector<uint32_t>& c) { return _rshift_impl(out, c); }
+ostream& operator<< (ostream& out, const rope<uint32_t>& c) { return _rshift_impl(out, c); }
+
 void swap_segments(rope<uint32_t>& R, size_t a, size_t b, size_t x, size_t y)
 {
     auto seg1 = R.substr(a, b - a + 1);
     auto seg2 = R.substr(x, y - x + 1);
     R.erase(x, y - x + 1);
     R.erase(a, b - a + 1);
-    R.insert(R.mutable_begin() + a, seg2);
-    R.insert(R.mutable_begin() + x, seg1);
+    R.insert(a, seg2);
+    R.insert(x, seg1);
 }
 
 int main()

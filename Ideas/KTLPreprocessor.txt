@@ -1,0 +1,37 @@
+0. Command
+$ ktlpp <input> <output>
+$ ktlpp file.cpp file.k.cpp
+
+Motivation: ease to use via IDEs, by modifying a build command.
+
+1. The #ktl directive.
+
+```
+#ktl <feature> <arguments>
+```
+
+
+1) for multiuse code
+```
+#ktl feature container_io vector<uint32_t>
+#ktl feature container_io set<T> -t template<typename T>
+```
+Source code for printing vector<uint32_t> and sets holding any type is generated.
+This in turn would first include the file "util/container_io.cpp" if it wasn't included beforehand.
+Motivation: sometimes excess code is not needed, and a universal version may be nontrivial to write.
+
+2) for including library files without additional handling
+```
+#ktl include "structures/segment_tree.cpp"
+```
+Would generate the code for segment trees from the given file.
+
+3) features with additional handling
+The code could depend on local compilation flags, e.g. for debugging.
+```
+#ktl feature dbg_stream cdbg -f debuglog.txt -i XHOVA
+```
+A debug stream `cdbg` would be created, that is also echoed to `debuglog.txt` and doesn't do anything
+if the XHOVA compilation flag is defined.
+
+4) 
