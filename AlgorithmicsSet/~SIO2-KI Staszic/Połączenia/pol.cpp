@@ -1,17 +1,27 @@
-// Dinic's max-flow algorithm.
-// Complexity: O(|V|^2 |E|); with unit weights: O(min(|V|^(2/3), |E|^(1/2)) * |E|)
-
-#pragma once
-
-#include <functional>
-#include <utility>
-#include <vector>
-#include <queue>
-#include <limits>
-#include <algorithm>
-#include "flow-graph.hpp"
+#include <bits/stdc++.h>
 
 using namespace std;
+
+namespace flow
+{
+    using capacity_t = uint32_t;
+
+    struct edge
+    {
+        size_t v; capacity_t c;
+        edge(size_t _v, capacity_t _c) : v(_v), c(_c) {}
+    };
+    struct bnd_edge
+    {
+        size_t u, v; capacity_t c; size_t rev_i;
+        bnd_edge(size_t _u, size_t _v, capacity_t _c, size_t _rev_i)
+            : u(_u), v(_v), c(_c), rev_i(_rev_i) {}
+    };
+
+    using graph = vector<vector<edge>>;
+    using bnd_graph = vector<vector<bnd_edge>>;
+}
+
 
 namespace dinic
 {
@@ -87,4 +97,36 @@ namespace dinic
 
         return {max_flow, R};
     }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+    size_t h, w, x1, y1, x2, y2;
+    cin >> h >> w >> x1 >> y1 >> x2 >> y2;
+    x1--; y1--; x2--; y2--;
+
+    const size_t n = w*h;
+
+    flow::graph G(2*n);
+
+    vector<vector<uint32_t>> A(h, vector<uint32_t>(w));
+
+    auto I = [&](size_t x, size_t y) {
+        return y * w + x;
+    };
+    for(size_t y = 0; y < h; y++)
+    {
+        for(size_t x = 0; x < w; x++)
+        {
+            cin >> A[y][x];
+            G[I(x, y)].push_back({n+I(x, y), A[y][x]});
+            if(x+1 < w) G[n+I(x, y)].push_back({I(x+1, y), UINT32_MAX});
+            if(x-1 < w) G[n+I(x, y)].push_back({I(x-1, y), UINT32_MAX});
+            if(y+1 < h) G[n+I(x, y)].push_back({I(x, y+1), UINT32_MAX});
+            if(y-1 < h) G[n+I(x, y)].push_back({I(x, y-1), UINT32_MAX});
+        }
+    }
+
+    cout << dinic::find_max_flow(G, I(x1, y1), n+I(x2, y2)).first;
 }

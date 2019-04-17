@@ -33,5 +33,3 @@ The code could depend on local compilation flags, e.g. for debugging.
 ```
 A debug stream `cdbg` would be created, that is also echoed to `debuglog.txt` and doesn't do anything
 if the XHOVA compilation flag is defined.
-
-4) 

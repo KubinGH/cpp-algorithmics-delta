@@ -9,6 +9,8 @@
 
 // Last revision: December 2018
 
+#pragma once
+
 #include "fenwick.cpp"
 
 struct fenwick_set

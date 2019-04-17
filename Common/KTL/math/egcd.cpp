@@ -4,12 +4,11 @@
 //   x' = x + k (b / gcd(a, b))
 //   y' = y - k (a / gcd(a, b))
 //   ax' + by' = p*gcd(a, b)
-
 // Last revision: March 2019
 
-#include <cstdint>
-
 #pragma once
+
+#include <cstdint>
 
 using std::int64_t;
 

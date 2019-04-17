@@ -39,18 +39,3 @@ pair<uint64_t, uint64_t> crt(vector<pair<uint64_t, uint64_t>> congo)
     }
     return congo.back();
 }
-
-/*
-// Example
-#include <iostream>
-using std::cout; using std::endl;
-int main()
-{
-    auto p = crt({{1, 3}, {4, 5}, {6, 7}});
-    cout << p.first << " (mod " << p.second << ")" << endl;
-    auto q = crt({{5, 6}, {3, 8}});
-    cout << q.first << " (mod " << q.second << ")" << endl;
-    auto r = crt({{2, 6}, {5, 9}, {7, 15}});
-    cout << r.first << " (mod " << r.second << ")" << endl;
-}
-*/

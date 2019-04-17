@@ -1,3 +1,10 @@
+// Aho-Corasick data structure.
+// Automaton-like structure built on a dictionary
+// of patterns.
+// Last revision: December 2018
+
+#pragma once
+
 #include <array>
 #include <map>
 #include <queue>

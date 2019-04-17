@@ -25,23 +25,23 @@ struct fenwick_tree
     fenwick_tree(size_t _n) : n(_n), F(n+1, 0) {}
 
     static constexpr inline size_t lsb(size_t x) { return x & -x; }
-    T get_prefix(size_t p) const // Sum in [0, p)
+    T get_prefix(size_t p) const
     {
         T r = 0;
         while(p)
             r += F[p], p -= lsb(p);
         return r;
     }
-    void delta(size_t p, T v) // Change index p by v
+    void delta(size_t p, T v)
     {
         p++;
         while(p <= n)
             F[p] += v, p += lsb(p);
     }
 
-    T get(size_t a, size_t b) const // Get on interval [a, b]
+    T get(size_t a, size_t b) const
         { return get_prefix(b+1) - get_prefix(a); }
-    T get(size_t p) const // Get on point [p]
+    T get(size_t p) const
         { return get(p, p); }
     void set(size_t p, T v)
         { return delta(p, v - get(p)); }

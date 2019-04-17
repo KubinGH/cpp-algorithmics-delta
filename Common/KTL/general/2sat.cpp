@@ -6,6 +6,8 @@
 
 // Last revision: April 2019
 
+#pragma once
+
 #include <vector>
 #include <cstddef>
 #include <algorithm>
@@ -76,25 +78,3 @@ struct solver_2sat
         return {true, out};
     }
 };
-
-/*
-// Example
-int main()
-{
-    uint32_t n, m;
-    cin >> n >> m;
-    solver_2sat SAT(n);
-    for(uint32_t i = 0; i < m; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        SAT.add_or_clause(a, b);
-    }
-    auto sol = SAT.solve();
-    if(sol.exists)
-        for(auto b : sol.values)
-            cout << b << " ";
-    else
-        cout << "No solution exists.";
-}
-*/

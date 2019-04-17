@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
-#include "KTL/math/simpson.cpp"
+
+#pragma KTL include "math/simpson.cpp"
 
 using namespace std;
 

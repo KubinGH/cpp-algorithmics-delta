@@ -46,3 +46,32 @@ struct unlocked_cin
         return *this;
     }
 } ucin;
+
+struct unlocked_cout
+{
+    unlocked_cout& operator<< (char x)
+    {
+        putchar_unlocked(x);
+        return *this;
+    }
+    template<typename T>
+    typename enable_if<is_integral<T>::value && is_unsigned<T>::value, unlocked_cin&>::type
+    operator<< (T x)
+    {
+        static char buffer[64];
+        size_t i;
+        for(i = 0; x; i++)
+            buffer[i] = (x % 10) + '0', x /= 10;
+        for(; i --> 0; )
+            putchar_unlocked(buffer[i]);
+        return *this;
+    }
+    template<typename T>
+    typename enable_if<is_integral<T>::value && is_signed<T>::value, unlocked_cin&>::type
+    operator<< (T x)
+    {
+        if(x < 0)
+            cout << '-', x = -x;
+        return *this << (make_unsigned<T>)x;
+    }
+} ucout;
