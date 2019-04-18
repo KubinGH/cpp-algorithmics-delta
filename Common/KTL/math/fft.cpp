@@ -1,37 +1,32 @@
-#include <bits/stdc++.h>
+// Fast Fourier Transform.
+// Implemented iteratively.
+// real_fft<T>::operator() returns the values of polynomial A evaluated in the powers of the root of unity.
+// real_fft<T>::operator[] returns the coefficients of a polynomial with given values in the powers of the root of unity.
 
-using namespace std;
+#include <ext/numeric>
+#include <functional>
+#include <algorithm>
+#include <complex>
+#include <vector>
+#include <cmath>
 
-constexpr long double Q_PI = acos(-1.0L);
+using std::vector; using std::complex;
+using std::size_t;
+using std::acos; using std::cos; using std::sin;
+using std::function;
+using __gnu_cxx::power; using std::__lg;
 
 namespace fft_base
 {
     template<typename T>
-    vector<T> fft(const vector<T>& A, const function<T(size_t)>& w)
+    T bit_reverse(T x, size_t lim)
     {
-        const size_t n = A.size();
-        if(n == 1)
-            return {A[0]};
-
-        const size_t m = n / 2;
-        vector<T> A0(m), A1(m);
-        for(size_t i = 0; i < m; i++)
-            A0[i] = A[2*i], A1[i] = A[2*i+1];
-        auto Y0 = fft(A0, w);
-        auto Y1 = fft(A1, w);
-
-        vector<T> Y(n);
-        T w_n = w(n), t = w_n;
-        for(size_t i = 0; i < m; i++)
-        {
-            Y[i]   = Y0[i] + Y1[i] * t;
-            Y[i+m] = Y0[i] - Y1[i] * t;
-            t *= w_n;
-        }
-
-        return Y;
+        T y = 0;
+        for(size_t i = 0; i < lim; i++, x >>= 1)
+            if(x & 1)
+                y |= (1 << (lim - i - 1));
+        return y;
     }
-
     template<typename T, typename Ti>
     vector<T> convert(const vector<Ti>& iA)
     {
@@ -44,34 +39,55 @@ namespace fft_base
 template<typename T>
 struct real_fft
 {
-    static_assert(is_floating_point<T>::value, "Real FFT must use floating-point type");
     using C = complex<T>;
+    static constexpr long double Q_PI = acos(-1.0L);
     static C root_of_unity(size_t k) { return C(cos(2*Q_PI / k), sin(2*Q_PI / k)); }
-    static C inverse_root_of_unity(size_t k) { return root_of_unity(-k); }
+    static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
     static C divide(C x, size_t n) { return x / C(n); }
 
-    template<typename Ti>
-    vector<C> operator() (const vector<Ti>& iA) // fourier transform
+    vector<C> call(vector<C> A, const function<C(size_t)>& w)
     {
-        return fft_base::fft<C>(fft_base::convert<C>(iA), root_of_unity);
+        const size_t n = A.size();
+
+        for(size_t i = 0; i < n; i++)
+        {
+            size_t j = fft_base::bit_reverse(i, __lg(n));
+            if(i < j)
+                swap(A[i], A[j]);
+        }
+
+        for(size_t block = 2; block <= n; block *= 2)
+        {
+            C w_b = w(block);
+            for(size_t i = 0; i < n; i += block)
+            {
+                C t = 1;
+                const size_t m = block / 2;
+                for(size_t j = 0; j < m; j++)
+                {
+                    auto u = A[i+j], v = A[i+j+m] * t;
+                    A[i+j]   = u + v;
+                    A[i+j+m] = u - v;
+                    t *= w_b;
+                }
+            }
+        }
+
+        return A;
+    }
+
+    template<typename Ti>
+    vector<C> operator() (const vector<Ti>& iA)
+    {
+        return call(fft_base::convert<C>(iA), root_of_unity);
     }
     template<typename Ti>
-    vector<C> operator[] (const vector<Ti>& iY) // inverse fourier transform
+    vector<C> operator[] (const vector<Ti>& iY)
     {
-        auto A = fft_base::fft<C>(fft_base::convert<C>(iY), inverse_root_of_unity);
+        auto A = call(fft_base::convert<C>(iY), inverse_root_of_unity);
         for(size_t i = 0; i < A.size(); i++)
             A[i] = divide(A[i], A.size());
         return A;
     }
 };
 
-int main()
-{
-    vector<uint32_t> A = {1, 4, 6};
-    auto Y = real_fft<double>{}(A);
-    for(auto y : Y)
-        cout << y << " "; cout << endl;
-    auto A1 = real_fft<double>{}[Y];
-    for(auto a : A1)
-        cout << a << " "; cout << endl;
-}
