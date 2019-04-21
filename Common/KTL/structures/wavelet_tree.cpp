@@ -10,27 +10,11 @@
 #include <cstddef>
 #include <vector>
 #include <algorithm>
+#include "../general/binary_search.cpp"
 
 using std::size_t; using std::vector;
 using std::stable_partition;
 using std::min_element; using std::max_element;
-
-namespace wavelets
-{
-    template<typename Arg, typename MonoOperation>
-    Arg first_true(Arg lo, Arg hi, MonoOperation f)
-    {
-        while(lo < hi)
-        {
-            Arg mid = (lo + hi) / 2;
-            if(f(mid))
-                hi = mid;
-            else
-                lo = mid + 1;
-        }
-        return lo;
-    }
-}
 
 template<typename T>
 struct wavelet_tree
@@ -66,9 +50,9 @@ struct wavelet_tree
         size_t rank1(size_t i) const { return i - rank0(i); }
         // Return the index of the x-th 0
         size_t select0(size_t x) const
-            { return wavelets::first_true(0, n, [x](size_t i) { return rank0(i+1) >= x; }); }
+            { return first_true(0, n, [this, x](size_t i) { return rank0(i+1) >= x; }); }
         size_t select1(size_t x) const
-            { return wavelets::first_true(0, n, [x](size_t i) { return rank1(i+1) >= x; }); }
+            { return first_true(0, n, [this, x](size_t i) { return rank1(i+1) >= x; }); }
         // Return the count of elements that are >= k in the range [0, i)
         size_t count_greater_or_equal(size_t i, T k) const
         {

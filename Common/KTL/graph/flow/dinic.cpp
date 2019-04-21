@@ -1,5 +1,6 @@
 // Dinic's max-flow algorithm.
 // Complexity: O(|V|^2 |E|); with unit weights: O(min(|V|^(2/3), |E|^(1/2)) * |E|)
+// Last revision: March 2019
 
 #pragma once
 

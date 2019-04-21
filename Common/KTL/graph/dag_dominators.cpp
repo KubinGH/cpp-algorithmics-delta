@@ -3,55 +3,59 @@
 
 #pragma once
 
+#include <algorithm>
 #include <vector>
 #include <cstdint>
 #include <functional>
 
-using namespace std;
+using std::vector; using std::pair;
+using std::function;
+using std::swap;
+using std::size_t;
 
-using graph_t = vector<vector<uint32_t>>;
+using graph_t = vector<vector<size_t>>;
 
-vector<uint32_t> src_topological(const graph_t& graph, uint32_t source)
+vector<size_t> src_topological(const graph_t& graph, size_t source)
 {
-    const uint32_t n = graph.size();
-    vector<uint32_t> indegree(n);
-    vector<uint32_t> V; vector<bool> vis(n);
-    function<void(uint32_t)> dfs_explore = [&](uint32_t u) {
+    const size_t n = graph.size();
+    vector<size_t> indegree(n);
+    vector<size_t> V; vector<bool> vis(n);
+    function<void(size_t)> dfs_explore = [&](size_t u) {
         vis[u] = true;
         V.push_back(u);
-        for(uint32_t v : graph[u])
+        for(size_t v : graph[u])
             if(not vis[v])
                 dfs_explore(v);
     };
     dfs_explore(source);
-    for(uint32_t u : V)
-        for(uint32_t v : graph[u])
+    for(size_t u : V)
+        for(size_t v : graph[u])
             indegree[v]++;
-    vector<uint32_t> T; T.reserve(V.size());
+    vector<size_t> T; T.reserve(V.size());
     T.push_back(source);
-    for(uint32_t t = 0; t < T.size(); t++)
+    for(size_t t = 0; t < T.size(); t++)
     {
-        uint32_t u = T[t];
-        for(uint32_t v : graph[u])
+        size_t u = T[t];
+        for(size_t v : graph[u])
             if(--indegree[v] == 0)
                 T.push_back(v);
     }
     return T;
 }
 
-pair<vector<uint32_t>, vector<uint32_t>> dag_dominators(const graph_t& graph, uint32_t root)
+pair<vector<size_t>, vector<size_t>> dag_dominators(const graph_t& graph, size_t root)
 {
-    const uint32_t n = graph.size();
-    vector<uint32_t> idom(n, -1u), id_depth(n, 0);
-    vector<vector<uint32_t>> id_jump(n);
+    const size_t n = graph.size();
+    vector<size_t> idom(n, -1u), id_depth(n, 0);
+    vector<vector<size_t>> id_jump(n);
 
-    auto lca = [&](uint32_t u, uint32_t v) {
+    auto lca = [&](size_t u, size_t v) {
         if(id_depth[u] > id_depth[v]) swap(u, v);
-        for(uint32_t k = id_jump[v].size(); k --> 0; )
+        for(size_t k = id_jump[v].size(); k --> 0; )
             if(id_depth[v] >= id_depth[u] + (1u << k))
                 v = id_jump[v][k];
         if(u == v) return v;
-        for(uint32_t k = id_jump[v].size(); k --> 0; )
+        for(size_t k = id_jump[v].size(); k --> 0; )
             if(id_jump[u][k] != id_jump[v][k])
                 u = id_jump[u][k], v = id_jump[v][k];
         return id_jump[u][0];
@@ -60,25 +64,25 @@ pair<vector<uint32_t>, vector<uint32_t>> dag_dominators(const graph_t& graph, ui
     auto T = src_topological(graph, root);
 
     graph_t ingraph(n);
-    for(uint32_t u : T)
-        for(uint32_t v : graph[u])
+    for(size_t u : T)
+        for(size_t v : graph[u])
             ingraph[v].push_back(u);
 
-    for(uint32_t u : T)
+    for(size_t u : T)
     {
         if(ingraph[u].empty())
         {
             idom[u] = -1u;
             continue;
         }
-        uint32_t a = ingraph[u][0];
-        for(uint32_t v : ingraph[u])
+        size_t a = ingraph[u][0];
+        for(size_t v : ingraph[u])
             a = lca(a, v);
         idom[u] = a;
         id_jump[u].push_back(a);
-        for(uint32_t k = 1; true; k++)
+        for(size_t k = 1; true; k++)
         {
-            uint32_t v = id_jump[u][k-1];
+            size_t v = id_jump[u][k-1];
             if(id_jump[v].size() >= k)
                 id_jump[u].push_back(id_jump[v][k-1]);
             else

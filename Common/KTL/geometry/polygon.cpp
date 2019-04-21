@@ -1,3 +1,7 @@
+// Polygon-related geometry.
+// Polygon area via triangle anchored in (0, 0).
+// Last revision: March 2019
+
 #pragma once
 
 #include <vector>

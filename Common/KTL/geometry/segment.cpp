@@ -1,3 +1,7 @@
+// Segment-related geometry.
+// Segment intersection is strict.
+// Last revision: March 2019
+
 #pragma once
 
 #include <algorithm>

@@ -6,13 +6,15 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <string>
 #include <vector>
 
 using std::vector; using std::string; using std::size_t;
+using std::min;
 
-vector<uint32_t> manacher(const string& So, char leaf = '#')
+vector<size_t> manacher(const string& So, char leaf = '#')
 {
     size_t n = So.size();
     vector<char> S(2*n+1);
@@ -31,7 +33,7 @@ vector<uint32_t> manacher(const string& So, char leaf = '#')
         if(i + R[i] > m + R[m])
             m = i;
     }
-    for(uint32_t i = 0; i < n; i++)
+    for(size_t i = 0; i < n; i++)
         R[i] = (R[i]+1) / 2;
     return R;
 }

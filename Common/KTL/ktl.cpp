@@ -1,9 +1,9 @@
 // Kubin's Template Library (tm)
 
-#include "general/binary_search.cpp"
-#include "general/number.cpp"
 #include "general/2sat.cpp"
+#include "general/binary_search.cpp"
 #include "general/make_vector.cpp"
+#include "general/number.cpp"
 
 #include "geometry/convex_hull.cpp"
 #include "geometry/vec2d.cpp"
@@ -16,13 +16,17 @@
 #include "graph/dag_dominators.cpp"
 #include "graph/edmonds_min_arborescence.cpp"
 #include "graph/kosaraju.cpp"
+#include "graph/toposort.cpp"
 
 #include "math/crt.cpp"
+#include "math/discrete_logarithm.cpp"
 #include "math/egcd.cpp"
+#include "math/fft.cpp"
 #include "math/mod_multiplies.cpp"
 #include "math/linear_sieve.cpp"
 #include "math/miller_rabin.cpp"
 #include "math/pollard_rho.cpp"
+#include "math/primitive_root.cpp"
 #include "math/simpson.cpp"
 
 #include "structures/disjoint_set.cpp"

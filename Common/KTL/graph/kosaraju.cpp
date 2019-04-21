@@ -1,5 +1,6 @@
 // Kosaraju's algorithm for finding strongly connected components.
-
+// Example of the graph algorithm scheme: object that is constructed on the graph, operator() performs the algorithm.
+// Any memory allocation is done in the constructor. The graph is kept in a const-reference.
 // Last revision: April 2019
 
 #pragma once
@@ -23,7 +24,7 @@ struct kosaraju
 
     kosaraju(const graph_t& _graph) : graph(_graph), n(graph.size()), vis(n) {}
 
-    void marker_dfs(size_t u, const graph_t& G, vector<uint32_t>& out)
+    void marker_dfs(size_t u, const graph_t& G, vector<size_t>& out)
     {
         vis[u] = true;
         for(size_t v : G[u])
