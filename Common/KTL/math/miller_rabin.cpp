@@ -1,5 +1,8 @@
 // Miller Rabin primality test.
-// Complexity: 12 (64bit) or 3 (32bit) runs with O(log n) complexity each.
+// Bases taken from http://miller-rabin.appspot.com/ - those should be pretty good.
+// You can do better for 32-bit, but then you have to use a 64-bit type partially to handle
+// 64-bit bases. Seems like a hassle for not too much gain.
+// Complexity: O(log n) per witness.
 
 // Last revision: Beginning of 2019
 
@@ -9,27 +12,27 @@
 #include <cstddef>
 #include <vector>
 
+#include "../general/gcc_bit_ext.cpp"
 #include "linear_sieve.cpp"
 #include "mod_multiplies.cpp"
 
 using std::size_t;
 using __gnu_cxx::power;
 
-const vector<size_t> MILLER_RABIN_WITNESSES_32 = {2, 7, 61};
-const vector<size_t> MILLER_RABIN_WITNESSES_64 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
-
 template<typename T>
-bool miller_rabin_isprime(T n, const vector<size_t>& W)
+bool miller_rabin_test(T n, const vector<T>& W)
 {
-    if(n <= 1 or n % 2 == 0) return false;
-    if(n <= 3) return true;
+    if(n <= 1) return false;
+    else if(n <= 3) return true;
+    else if(n % 2 == 0) return false;
     mod_multiplies<T> M(n);
-    T d = n - 1;
-    size_t r = 0;
+    size_t r = ctz(n);
+    T d = (n - 1) >> r;
     while(d % 2 == 0) d /= 2, r++;
     for(auto a : W)
     {
-        if(a + 2 > n)
+        a %= n;
+        if(not a)
             continue;
         T x = power(a, d, M);
         if(x == 1 or x == n - 1)
@@ -45,16 +48,28 @@ bool miller_rabin_isprime(T n, const vector<size_t>& W)
     }
     return true;
 }
+
 template<typename T>
-bool miller_rabin_isprime(T n);
+bool is_prime(T n);
 
 template<>
-bool miller_rabin_isprime<uint64_t>(uint64_t n)
+bool is_prime<uint32_t>(uint32_t n)
 {
-    return miller_rabin_isprime(n, MILLER_RABIN_WITNESSES_64);
+    if(n < 2047)
+        return miller_rabin_test(n, {2});
+    else if(n < 9080191)
+        return miller_rabin_test(n, {31, 73});
+    else
+        return miller_rabin_test(n, {2, 7, 61});
 }
+
 template<>
-bool miller_rabin_isprime<uint32_t>(uint32_t n)
+bool is_prime<uint64_t>(uint64_t n)
 {
-    return miller_rabin_isprime(n, MILLER_RABIN_WITNESSES_32);
+    if(n < ((uint64_t)1 << 31))
+        return is_prime((uint32_t)n);
+    else if(n < 55245642489451)
+        return miller_rabin_test(n, {2, 141889084524735, 1199124725622454117, 11096072698276303650ull});
+    else
+        return miller_rabin_test(n, {2, 325, 9375, 28178, 450775, 9780504, 1795265022});
 }

@@ -2,6 +2,7 @@
 
 #include "general/2sat.cpp"
 #include "general/binary_search.cpp"
+#include "general/gcc_bit_ext.cpp"
 #include "general/make_vector.cpp"
 #include "general/number.cpp"
 

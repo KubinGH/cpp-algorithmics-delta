@@ -27,7 +27,7 @@ T rho_pollard_get_factor(T n)
 {
     if(n % 2 == 0)
         return 2;
-    if(miller_rabin_isprime(n))
+    if(is_prime(n))
         return n;
     mod_multiplies<T> M(n);
     for(T c = 3; true; c++)
@@ -50,10 +50,9 @@ OutIterator rho_pollard_factorize(T n, OutIterator out)
 {
     if(n == 1)
         return out;
-    uint64_t d = rho_pollard_get_factor(n);
+    T d = rho_pollard_get_factor(n);
     if(n == d)
         return *out++ = d;
-    list<uint64_t> result;
     out = rho_pollard_factorize(d, out);
     out = rho_pollard_factorize(n/d, out);
     return out;
