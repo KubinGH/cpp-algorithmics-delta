@@ -2,7 +2,6 @@
 
 #include "general/2sat.cpp"
 #include "general/binary_search.cpp"
-#include "general/gcc_bit_ext.cpp"
 #include "general/make_vector.cpp"
 #include "general/number.cpp"
 
@@ -49,7 +48,7 @@
 
 #include "util/chronohelper.cpp"
 #include "util/fastio.cpp"
-#include "util/randutil.cpp"
+#include "util/gcc_bit_ext.cpp"
 
 #include "util/zeus/socket.cpp"
 

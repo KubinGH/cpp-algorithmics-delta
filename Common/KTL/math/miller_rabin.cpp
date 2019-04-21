@@ -12,7 +12,7 @@
 #include <cstddef>
 #include <vector>
 
-#include "../general/gcc_bit_ext.cpp"
+#include "../util/gcc_bit_ext.cpp"
 #include "linear_sieve.cpp"
 #include "mod_multiplies.cpp"
 
