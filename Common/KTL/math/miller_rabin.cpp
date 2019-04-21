@@ -26,9 +26,8 @@ bool miller_rabin_test(T n, const vector<T>& W)
     else if(n <= 3) return true;
     else if(n % 2 == 0) return false;
     mod_multiplies<T> M(n);
-    size_t r = ctz(n);
+    size_t r = ctz(n - 1);
     T d = (n - 1) >> r;
-    while(d % 2 == 0) d /= 2, r++;
     for(auto a : W)
     {
         a %= n;
