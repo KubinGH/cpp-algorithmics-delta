@@ -1,5 +1,5 @@
 // Pollard's rho algorithm for finding factors.
-// Complexity: O(log n + n ^ 0.25)
+// Complexity: O(n ^ 0.25 log n)
 // Note: use the factorize_int function for actual factorization.
 // Since it checks primes up to L = BRUTE_FACTOR_LIMIT before running
 // Pollard's rho, at most log_L(n) runs will be executed.
@@ -10,31 +10,29 @@
 #pragma once
 
 #include <algorithm>
-#include <cstdint>
 #include <vector>
-#include <list>
 
 #include "linear_sieve.cpp"
 #include "mod_multiplies.cpp"
 #include "miller_rabin.cpp"
 
 using std::multiplies;
-using std::vector; using std::list;
+using std::vector;
 using std::__lg; using std::__gcd;
-using std::uint64_t;
 
-constexpr size_t BRUTE_FACTOR_LIMIT = 1 << 16;
+constexpr size_t BRUTE_FACTOR_LIMIT = 1 << 10;
 
-uint64_t rho_pollard_get_factor(uint64_t n)
+template<typename T>
+T rho_pollard_get_factor(T n)
 {
     if(n % 2 == 0)
         return 2;
     if(miller_rabin_isprime(n))
         return n;
-    mod_multiplies M(n);
-    for(uint64_t c = 3; true; c++)
+    mod_multiplies<T> M(n);
+    for(T c = 3; true; c++)
     {
-        uint64_t x = 2, y = 2, d = 1;
+        T x = 2, y = 2, d = 1;
         while(d == 1)
         {
             x = (M(x, x) + c) % n;
@@ -47,27 +45,48 @@ uint64_t rho_pollard_get_factor(uint64_t n)
     return 1;
 }
 
-list<uint64_t> rho_pollard_factorize(uint64_t n)
+template<typename T, typename OutIterator>
+OutIterator rho_pollard_factorize(T n, OutIterator out)
 {
     if(n == 1)
-        return {};
+        return out;
     uint64_t d = rho_pollard_get_factor(n);
     if(n == d)
-        return {n};
+        return *out++ = d;
     list<uint64_t> result;
-    result.merge(rho_pollard_factorize(d));
-    result.merge(rho_pollard_factorize(n/d));
-    return result;
+    out = rho_pollard_factorize(d, out);
+    out = rho_pollard_factorize(n/d, out);
+    return out;
 }
 
 const auto __prime_cache_fact = linear_sieve(BRUTE_FACTOR_LIMIT);
 
-list<uint64_t> factorize_int(uint64_t n)
+template<typename T>
+vector<T> factorize_int(T n)
 {
-    list<uint64_t> result;
+    vector<T> result;
     for(auto p : __prime_cache_fact)
         while(n % p == 0)
             n /= p, result.push_back(p);
-    result.merge(rho_pollard_factorize(n));
+    rho_pollard_factorize(n, back_inserter(result));
+    sort(result.begin(), result.end());
     return result;
+}
+
+template<typename T>
+vector<T> divisors(T n)
+{
+    const auto F = factorize_int(n);
+    vector<T> D;
+    for(size_t i = 0; i < (size_t(1) << F.size()); i++)
+    {
+        T d = 1;
+        for(size_t k = 0; k < F.size(); k++)
+            if(i & (size_t(1) << k))
+                d *= F[k];
+        D.push_back(d);
+    }
+    sort(D.begin(), D.end());
+    D.erase(unique(D.begin(), D.end()), D.end());
+    return D;
 }

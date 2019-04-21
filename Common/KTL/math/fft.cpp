@@ -2,6 +2,9 @@
 // Implemented iteratively.
 // real_fft<T>::operator() returns the values of polynomial A evaluated in the powers of the root of unity.
 // real_fft<T>::operator[] returns the coefficients of a polynomial with given values in the powers of the root of unity.
+// Complexity: O(n log n)
+// Last revision: April 2019
+// To do: use baby-step, giant-step to reduce the count of trigonometric operations.
 
 #include <ext/numeric>
 #include <functional>

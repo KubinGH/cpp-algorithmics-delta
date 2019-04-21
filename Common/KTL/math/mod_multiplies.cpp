@@ -47,3 +47,10 @@ struct mod_multiplies<uint32_t> : multiplies<uint32_t>
         return ((uint64_t)a * b) % m;
     }
 };
+
+template<typename T>
+T mod_mul(T a, T b, T m)
+{
+    mod_multiplies<T> M(m);
+    return M(a, b);
+}
