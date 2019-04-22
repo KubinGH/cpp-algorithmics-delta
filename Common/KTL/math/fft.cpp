@@ -46,7 +46,6 @@ struct real_fft
     static constexpr long double Q_PI = acos(-1.0L);
     static C root_of_unity(size_t k) { return C(cos(2*Q_PI / k), sin(2*Q_PI / k)); }
     static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
-    static C divide(C x, size_t n) { return x / C(n); }
 
     vector<C> call(vector<C> A, const function<C(size_t)>& w)
     {
@@ -89,7 +88,7 @@ struct real_fft
     {
         auto A = call(fft_base::convert<C>(iY), inverse_root_of_unity);
         for(size_t i = 0; i < A.size(); i++)
-            A[i] = divide(A[i], A.size());
+            A[i] /= A.size();
         return A;
     }
 };
