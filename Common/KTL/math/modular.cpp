@@ -11,6 +11,7 @@
 // _KTL_DEBUG enables coprimality checks when trying to compute the modular inverse.
 // Last revision: April 2019
 
+#pragma once
 
 #include <ext/numeric>
 #include <functional>
@@ -19,9 +20,9 @@
 #include "mod_multiplies.cpp"
 #include "egcd.cpp"
 
+#include "../ktl_debug_mode.cpp"
 #ifdef _KTL_DEBUG
 #include <algorithm>
-#include <cassert>
 using std::__gcd;
 #endif
 
@@ -43,7 +44,7 @@ T mint_global_mod(T m)
 
 template<
     typename T, T _Mod, bool UseFermat = true,
-    bool DoubleWordMultiply = (_Mod == 0) or (numeric_limits<T>::digits > 2 * (__lg(_Mod) + 2))
+    bool DoubleWordMultiply = (_Mod == 0) or (numeric_limits<T>::digits < 2 * (__lg(_Mod) + 2))
 >
 struct mint
 {
@@ -80,14 +81,8 @@ struct mint
     PARAM_ENABLE (DoubleWordMultiply, operator*, const) { return mod_mul(value, other.value, Mod()); }
     PARAM_DISABLE(DoubleWordMultiply, operator*, const) { return (value * other.value) % Mod(); }
 
-    #ifdef _KTL_DEBUG
-    #define COPRIME_CHECK(__A, __B) { assert(__gcd(__A, __B) == 1); }
-    #else
-    #define COPRIME_CHECK(__A, __B) {}
-    #endif
-
-    PARAM_ENABLE (UseFermat, operator/, const) { COPRIME_CHECK(other.value, Mod()); return *this * power(other, Mod() - 2); }
-    PARAM_DISABLE(UseFermat, operator/, const) { COPRIME_CHECK(other.value, Mod()); return *this * mint(egcd(other.value, Mod()).x); }
+    PARAM_ENABLE (UseFermat, operator/, const) { KTL_DEBUG_ASSERT(__gcd(other.value, Mod()) == 1); return *this * power(other, Mod() - 2); }
+    PARAM_DISABLE(UseFermat, operator/, const) { KTL_DEBUG_ASSERT(__gcd(other.value, Mod()) == 1); return *this * mint(egcd(other.value, Mod()).x); }
 
     #undef PARAM_ENABLE
     #undef PARAM_DISABLE
@@ -99,6 +94,14 @@ struct mint
     INPLACE_ARITHMETIC(*=, *)
     INPLACE_ARITHMETIC(/=, /)
     #undef INPLACE_ARITHMETIC
+
+    #define COMPARISON(__OP) bool operator __OP (const mint& other) const { return this->value __OP other.value; }
+    COMPARISON(<)
+    COMPARISON(<=)
+    COMPARISON(>)
+    COMPARISON(>=)
+    COMPARISON(==)
+    COMPARISON(!=)
 };
 
 #define MINT_PARAM typename T, T _Mod, bool UseFermat, bool DoubleWordMultiply
@@ -144,6 +147,8 @@ int main()
     for(size_t i = 0; i < 1e8; i++)
         n3 += i, n3 %= uint32_t(1e9+7);
     cout << n3 << " @ " << (time(0) - start) << endl;
+
+    n1 *= 2;
 
     using Z = mint<uint32_t, 11>;
     Z a = 5, b = 3;

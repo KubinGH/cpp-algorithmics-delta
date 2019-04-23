@@ -1,7 +1,7 @@
 // Sparse table - O(n log n) construction, O(1) queries.
 // Note: memory usage is not optimized in this implementation
 // Requires idempotency, commutativity and associativity
-// (a @ b) @ b = a @ b, a @ b = b @ a, (a @ b) @ c = a @ (b @ c)
+// [(a @ b) @ b = a @ b, a @ b = b @ a, (a @ b) @ c = a @ (b @ c) respectively]
 // Examples: min, max, bit and, bit or
 
 // Last revision: October 2018

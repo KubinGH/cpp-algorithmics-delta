@@ -11,6 +11,7 @@
 #include <bits/stdc++.h>
 #include <ext/numeric>
 #include "mod_multiplies.cpp"
+#include "../ktl_debug_mode.cpp"
 
 using namespace std;
 using __gnu_cxx::power;
@@ -18,6 +19,7 @@ using __gnu_cxx::power;
 template<typename T>
 T discrete_logarithm(T a, T b, T m)
 {
+    KTL_DEBUG_ASSERT(m != 0);
     a %= m; b %= m;
     if(b == 1)
         return 0;

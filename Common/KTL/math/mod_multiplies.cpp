@@ -1,14 +1,15 @@
 // Modular multiplication of 64-bit integers using the approximation method
-// in constant time.
-// Will probably fail for numbers larger than ~2^63, but this is enough
-// most of the time.
-
+// in constant time. Uses built-in 128-bit integers on 64-bit architecture.
+// Will probably fail for moduli larger than ~2^63, but this is mostly enough.
+// Moduli larger than 2^63 can't be achieved with russian peasant method either,
+// so 128-bit integers would have to be implemented anyways.
 // Last revision: Beginning of 2019
 
 #pragma once
 
 #include <functional>
 #include <cstdint>
+#include "../ktl_debug_mode.cpp"
 
 using std::multiplies;
 using std::uint64_t; using std::int64_t;
@@ -21,7 +22,7 @@ template<>
 struct mod_multiplies<uint64_t> : multiplies<uint64_t>
 {
     uint64_t m;
-    mod_multiplies(uint64_t _m) : m(_m) {}
+    mod_multiplies(uint64_t _m) : m(_m) { KTL_DEBUG_ASSERT(m > 0); }
     uint64_t operator() (uint64_t a, uint64_t b) const
     {
         if(a >= m) a %= m;
@@ -43,7 +44,7 @@ template<>
 struct mod_multiplies<uint32_t> : multiplies<uint32_t>
 {
     uint32_t m;
-    mod_multiplies(uint32_t _m) : m(_m) {}
+    mod_multiplies(uint32_t _m) : m(_m) { KTL_DEBUG_ASSERT(m > 0); }
     uint32_t operator() (uint32_t a, uint32_t b) const
     {
         return ((uint64_t)a * b) % m;

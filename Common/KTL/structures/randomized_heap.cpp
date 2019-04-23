@@ -1,6 +1,6 @@
 // Pointer-based randomized heap implementation
-// Allows for merging heaps
-// Gives the same interface as ktl::heap
+// Allows for merging heaps in O(log n) - can be quite useful.
+// Uses the same interface as ktl::heap
 
 // Last revision: November 2018
 

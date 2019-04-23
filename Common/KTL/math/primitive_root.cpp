@@ -16,6 +16,7 @@
 #include <algorithm>
 #include "pollard_rho.cpp"
 #include "mod_multiplies.cpp"
+#include "../ktl_debug_mode.cpp"
 
 using std::size_t;
 using std::__gcd;
@@ -38,6 +39,7 @@ T totient_from_factorization(T n)
 template<typename T>
 T primitive_root(T m)
 {
+    KTL_DEBUG_ASSERT(m != 0);
     if(m == 1) return 0;
 
     T t = totient_from_factorization(m);

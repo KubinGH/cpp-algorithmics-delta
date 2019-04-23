@@ -1,21 +1,32 @@
 // Gaussian elimination.
 // Solves a system of linear equations. Transformations are done in-place on the provided 2D vector.
-// Should adapt easily with mints (gauss_compare_sel should probably be overloaded).
+// Should adapt easily with mints.
+// gaussian_elimination(a) performs the elimination on the matrix a in-place and
+// returns the vector `where` of indices of non-zero element row in given column.
+// solve_system_of_linear_equations(eq) returns solutions to the system of equations specified by the matrix `eq`.
+// determinant(a) returns the determinant of the matrix a.
+
 // Complexity: O(n^2 m), where n x m is the dimensions of the provided matrix (n rows, m columns).
 // Last revision: April 2019
+
+#pragma once
 
 #include <cmath>
 #include <vector>
 #include <cstddef>
 #include <cstdint>
 
+#include "../ktl_debug_mode.cpp"
+#ifdef _KTL_DEBUG
+#include <algorithm>
+using std::all_of;
+#endif
+
 using std::abs;
 using std::vector;
 using std::size_t;
 
 using namespace std;
-
-enum gauss_result { None, Unique, Infinite };
 
 template<typename T>
 bool gauss_is_zero(const T& v)
@@ -38,15 +49,15 @@ bool gauss_compare_sel<long double>(const long double& a, const long double& b)
     { return abs(a) < abs(b); }
 
 template<typename T>
-pair<gauss_result, vector<T>> gaussian_elimination(vector<vector<T>>& a)
+vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count)
 {
     const size_t n = a.size();
     const size_t m = a[0].size() - 1;
 
-    vector<T> solution(m, 0);
+    KTL_DEBUG_ASSERT(all_of(a.begin(), a.end(), [&](const vector<T>& v) { return a[0].size() == v.size(); }));
 
     vector<size_t> where (m, SIZE_MAX);
-    for(size_t col=0, row=0; col < m and row < n; col++)
+    for(size_t col = 0, row = 0; col < m and row < n; col++)
     {
         size_t select = row;
         for(size_t i = row; i < n; i++)
@@ -56,9 +67,9 @@ pair<gauss_result, vector<T>> gaussian_elimination(vector<vector<T>>& a)
         if(gauss_is_zero(a[select][col]))
             continue;
 
-        for(size_t i = col; i <= m; i++)
-            swap(a[select][i], a[row][i]);
-
+        a[row].swap(a[select]);
+        if(row != select)
+            swap_count++;
         where[col] = row;
 
         for(size_t i=0; i<n; ++i)
@@ -72,17 +83,38 @@ pair<gauss_result, vector<T>> gaussian_elimination(vector<vector<T>>& a)
         }
         row++;
     }
+    return where;
+}
+
+template<typename T>
+vector<size_t> gaussian_elimination(vector<vector<T>>& a)
+{
+    size_t _ = 0;
+    return gaussian_elimination(a, _);
+}
+
+enum equation_system_status { None, Unique, Infinite };
+
+template<typename T>
+pair<equation_system_status, vector<T>> solve_system_of_linear_equations(vector<vector<T>> eq)
+{
+    const size_t n = eq.size();
+    const size_t m = eq[0].size() - 1;
+
+    auto where = gaussian_elimination(eq);
+
+    vector<T> solution(m, 0);
 
     for(size_t i = 0; i < m; i++)
         if(where[i] != SIZE_MAX)
-            solution[i] = a[where[i]][m] / a[where[i]][i];
+            solution[i] = eq[where[i]][m] / eq[where[i]][i];
 
     for(size_t i = 0; i < n; i++)
     {
         T sum = 0;
         for(size_t j = 0; j < m; j++)
-            sum += solution[j] * a[i][j];
-        if(not gauss_is_zero(sum - a[i][m]))
+            sum += solution[j] * eq[i][j];
+        if(not gauss_is_zero(sum - eq[i][m]))
             return {None, {}};
     }
 
@@ -91,6 +123,21 @@ pair<gauss_result, vector<T>> gaussian_elimination(vector<vector<T>>& a)
             return {Infinite, solution};
 
     return {Unique, solution};
+}
+
+template<typename T>
+T determinant(vector<vector<T>> a)
+{
+    KTL_DEBUG_ASSERT(a.size() == a[0].size());
+
+    size_t swap_count = 0;
+    auto where = gaussian_elimination(a, &swap_count);
+
+    T result = 1;
+    for(size_t i = 0; i < a.size(); i++)
+        result *= a[i][i];
+
+    return swap_count % 2 ? -result : result;
 }
 
 /*//$!$Driver
@@ -112,7 +159,7 @@ int main()
         cout << equations[i][m] << endl;
     }
 
-    auto response = gaussian_elimination(equations);
+    auto response = solve_system_of_linear_equations(equations);
     auto status = response.first;
     const auto& solution = response.second;
 

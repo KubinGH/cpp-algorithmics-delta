@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <tuple>
 #include "egcd.cpp"
+#include "../ktl_debug_mode.cpp"
 
 using std::int64_t; using std::uint64_t;
 using std::vector;
@@ -26,6 +27,7 @@ pair<uint64_t, uint64_t> crt(vector<pair<uint64_t, uint64_t>> congo)
         uint64_t a1, n1, a2, n2;
         tie(a1, n1) = congo.back(); congo.pop_back();
         tie(a2, n2) = congo.back(); congo.pop_back();
+        KTL_DEBUG_ASSERT(n1 != 0 and n2 != 0);
 
         auto r = egcd(n1, n2);
         uint64_t d = r.d, m = n1 / d * n2;

@@ -23,6 +23,8 @@ struct disjoint_set
     {
         if(nrank[v = find(v)] > nrank[u = find(u)])
             swap(u, v);
+        if(u == v)
+            return;
         parent[v] = u;
         if(nrank[u] == nrank[v])
             nrank[u]++;

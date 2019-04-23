@@ -76,4 +76,10 @@ struct bipartite_matching
         }
         return match;
     }
+
+    vector<size_t> operator() ()
+    {
+        auto colored = find_colored();
+        return operator() (colored);
+    }
 };

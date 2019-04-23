@@ -1,5 +1,20 @@
-// Segment trees with pretty flexible templates.
-// Operations are provided as functors.
+// Segment trees with flexible templates.
+// Required operations are provided as functors.
+
+// `segment_tree` - Interval get, point set:
+// * `T` - value type
+// * `ChildrenOp` - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
+//                  used for calculating parent value from children.
+// segment_tree_i - Interval get, interval mutate
+// * T - value type
+// * ChildrenOp - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
+//                used for calculating parent value from children
+// * MT - mutate type
+// * MutateOp - functor type, operator()(size_t, size_t, size_t, vector<T>, vector<MT>) and identity_element(MutateOp) defined,
+//              used for pulling down mutations from parent to children
+// * MergeOp - functor type, operator()(MT, MT) defined,
+//             used for merging two mutations
+// Note: these are not supposed to be optimal, but compiler optimizations should help make these good enough.
 
 // Last revision: December 2018
 
@@ -15,13 +30,6 @@ using std::size_t;
 using std::__lg;
 using __gnu_cxx::identity_element;
 
-// Segment tree
-// Interval get, point set
-/*
-T - value type
-ChildrenOp - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
-             used for calculating parent value from children.
-*/
 template<typename T, typename ChildrenOp>
 struct segment_tree
 {
@@ -50,20 +58,6 @@ struct segment_tree
         return result;
     }
 };
-
-
-// Segment tree
-// Interval get, interval mutate
-/*
-T - value type
-ChildrenOp - functor type, operator()(T, T) and identity_element(ChildrenOp) defined,
-             used for calculating parent value from children
-MT - mutate type
-MutateOp - functor type, operator()(size_t, size_t, size_t, vector<T>, vector<MT>) and identity_element(MutateOp) defined,
-           used for pulling down mutations from parent to children
-MergeOp - functor type, operator()(MT, MT) defined,
-          used for merging two mutations
-*/
 
 template<typename T, typename ChildrenOp,
          typename MT, typename MutateOp, typename MergeOp>

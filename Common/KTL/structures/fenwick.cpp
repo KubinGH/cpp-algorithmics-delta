@@ -1,6 +1,6 @@
 // Fenwick tree. Calculates prefix sums and allows for point changes.
 // Compact, 0-based implementation (albeit internals are 1-based)
-// lower_bound based on https://codeforces.com/blog/entry/61364
+// lower_bound based on https://codeforces.com/blog/entry/61364. Requires all implicit elements to be positive.
 // p -= fenwicks::lsb(p)  <=>  p &= p - 1
 // p += fenwicks::lsb(p)  <=>  p |= p - 1, p++
 // (the first has proven to be visibly faster)
