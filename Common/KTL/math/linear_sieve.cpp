@@ -1,4 +1,6 @@
 // Linear sieve for finding prime numbers
+// also computes the minimum prime factor array (M), which can be used for factorization
+// Can be extended to compute multiplicative functions
 // Complexity: O(n)
 // Last revision: March 2019
 

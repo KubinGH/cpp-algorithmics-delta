@@ -17,6 +17,7 @@ using std::vector; using std::complex;
 using std::size_t;
 using std::acos; using std::cos; using std::sin;
 using std::function;
+using std::swap;
 using __gnu_cxx::power; using std::__lg;
 
 namespace fft_base
@@ -37,17 +38,9 @@ namespace fft_base
         while(A.size() & (A.size()-1)) A.emplace_back(T(0));
         return A;
     }
-}
 
-template<typename T>
-struct real_fft
-{
-    using C = complex<T>;
-    static constexpr long double Q_PI = acos(-1.0L);
-    static C root_of_unity(size_t k) { return C(cos(2*Q_PI / k), sin(2*Q_PI / k)); }
-    static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
-
-    vector<C> call(vector<C> A, const function<C(size_t)>& w)
+    template<typename T>
+    vector<T> call(vector<T> A, function<T(size_t)> w)
     {
         const size_t n = A.size();
 
@@ -60,10 +53,10 @@ struct real_fft
 
         for(size_t block = 2; block <= n; block *= 2)
         {
-            C w_b = w(block);
+            T w_b = w(block);
             for(size_t i = 0; i < n; i += block)
             {
-                C t = 1;
+                T t = 1;
                 const size_t m = block / 2;
                 for(size_t j = 0; j < m; j++)
                 {
@@ -77,16 +70,25 @@ struct real_fft
 
         return A;
     }
+}
+
+template<typename T>
+struct real_fft
+{
+    using C = complex<T>;
+    static constexpr long double Q_PI = acos(-1.0L);
+    static C root_of_unity(size_t k) { return C(cos(2*Q_PI / k), sin(2*Q_PI / k)); }
+    static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
 
     template<typename Ti>
     vector<C> operator() (const vector<Ti>& iA)
     {
-        return call(fft_base::convert<C>(iA), root_of_unity);
+        return fft_base::call(fft_base::convert<C>(iA), function<C(size_t)>(root_of_unity));
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)
     {
-        auto A = call(fft_base::convert<C>(iY), inverse_root_of_unity);
+        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t)>(inverse_root_of_unity));
         for(size_t i = 0; i < A.size(); i++)
             A[i] /= A.size();
         return A;

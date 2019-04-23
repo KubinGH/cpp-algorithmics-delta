@@ -1,5 +1,5 @@
 // Bipartite matching via Turbo Matching algorithm.
-// Worst-case running time: O(|V|^2), but is a faster on average.
+// Worst-case running time: O(|V|^2), but is faster on average.
 // Alternative in O(|E|^3/2): Dinic's Algorithm via a Flow Network
 // Last revision: April 2019
 
@@ -19,6 +19,7 @@ struct bipartite_matching
     size_t n;
     vector<size_t> vis, match;
     size_t timepoint = 1;
+
     static constexpr size_t NONMATCHED = SIZE_MAX;
 
     bipartite_matching(const graph_t& _graph)

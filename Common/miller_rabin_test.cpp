@@ -5,8 +5,8 @@
 
 using namespace std;
 
-const size_t TEST_RANGE = 1 << 23;
-const size_t LOG_RANGE_LO = 1, LOG_RANGE_HI = 54, TESTS_PER_LOG = 50;
+const size_t TEST_RANGE = 1 << 24;
+const size_t LOG_RANGE_LO = 1, LOG_RANGE_HI = 54, TESTS_PER_LOG = 250;
 
 template<typename T>
 bool sqrt_is_prime(T n)

@@ -11,7 +11,10 @@
 #include <algorithm>
 #include "flow-graph.hpp"
 
-using namespace std;
+using std::fill; using std::make_pair; using std::min;
+using std::vector; using std::pair; using std::queue;
+using std::size_t;
+using std::numeric_limits;
 
 namespace edmonds_karp
 {

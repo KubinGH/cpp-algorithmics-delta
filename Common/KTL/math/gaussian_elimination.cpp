@@ -5,7 +5,6 @@
 // returns the vector `where` of indices of non-zero element row in given column.
 // solve_system_of_linear_equations(eq) returns solutions to the system of equations specified by the matrix `eq`.
 // determinant(a) returns the determinant of the matrix a.
-
 // Complexity: O(n^2 m), where n x m is the dimensions of the provided matrix (n rows, m columns).
 // Last revision: April 2019
 

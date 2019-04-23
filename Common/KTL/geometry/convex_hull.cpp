@@ -1,4 +1,5 @@
 // Convex hull via Graham Scan
+// Complexity: O(n log n)
 // Last revision: Beginning of 2019
 
 #pragma once

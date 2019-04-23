@@ -1,5 +1,6 @@
 // Ford-Fulkerson max flow method. Uses plain DFS to find the paths.
 // Largely similar to (and worse than) the Edmonds-Karp, which uses BFS.
+// Exists for demonstration purposes.
 // Complexity: O(f |E|), where f is the max flow.
 // Last revision: March 2019
 
@@ -13,6 +14,11 @@
 #include "flow-graph.hpp"
 
 using namespace std;
+
+using std::fill; using std::make_pair; using std::min;
+using std::vector; using std::pair; using std::stack;
+using std::size_t;
+using std::numeric_limits;
 
 namespace ford_fulkerson
 {

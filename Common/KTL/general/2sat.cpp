@@ -3,7 +3,7 @@
 // Clauses are provided in a 1-indexed form, and the negation is the
 // arithmetical negation.
 // add_or_clause(-1, 2) adds (!a_1 v a_2).
-
+// Complexity: O(n)
 // Last revision: April 2019
 
 #pragma once

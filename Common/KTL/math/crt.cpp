@@ -35,7 +35,7 @@ pair<uint64_t, uint64_t> crt(vector<pair<uint64_t, uint64_t>> congo)
         if(umod(a1 - a2, d))
             return {0, 0};
         n1 /= d; n2 /= d;
-        uint64_t b = (a1*m2%m*n2 + a2*m1%m*n1) % m;
+        uint64_t b = ((a1*m2)%m * n2 + (a2*m1)%m * n1) % m;
 
         congo.emplace_back(b, m);
     }

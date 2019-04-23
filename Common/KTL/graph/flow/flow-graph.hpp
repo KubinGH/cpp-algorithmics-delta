@@ -5,7 +5,9 @@
 #include <vector>
 #include <cstdint>
 
-using namespace std;
+using std::uint32_t;
+using std::size_t;
+using std::vector;
 
 namespace flow
 {
