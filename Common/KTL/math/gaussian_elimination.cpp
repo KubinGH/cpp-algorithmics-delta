@@ -72,7 +72,7 @@ vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count)
             swap_count++;
         where[col] = row;
 
-        for(size_t i=0; i<n; ++i)
+        for(size_t i = 0; i < n; i++)
         {
             if(i != row)
             {
