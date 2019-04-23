@@ -102,6 +102,7 @@ struct mint
     COMPARISON(>=)
     COMPARISON(==)
     COMPARISON(!=)
+    #undef COMPARISON
 };
 
 #define MINT_PARAM typename T, T _Mod, bool UseFermat, bool DoubleWordMultiply
