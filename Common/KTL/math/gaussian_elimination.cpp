@@ -1,10 +1,10 @@
 // Gaussian elimination.
-// Solves a system of linear equations. Transformations are done in-place on the provided 2D vector.
 // Should adapt easily with mints.
-// gaussian_elimination(a) performs the elimination on the matrix a in-place and
-// returns the vector `where` of indices of non-zero element row in given column.
-// solve_system_of_linear_equations(eq) returns solutions to the system of equations specified by the matrix `eq`.
-// determinant(a) returns the determinant of the matrix a.
+// - `gaussian_elimination(a)` performs the elimination on the matrix a in-place and
+//   returns the vector `where` of indices of non-zero element row in given column.
+// - `solve_system_of_linear_equations(eq)` returns solutions to the system of 
+//   equations specified by the matrix `eq`.
+// - `determinant(a)` returns the determinant of the matrix a.
 // Complexity: O(n^2 m), where n x m is the dimensions of the provided matrix (n rows, m columns).
 // Last revision: April 2019
 
@@ -119,7 +119,7 @@ pair<equation_system_status, vector<T>> solve_system_of_linear_equations(vector<
 
     for(size_t i = 0; i < m; i++)
         if(where[i] == SIZE_MAX)
-            return {Infinite, solution};
+            return {Infinite, {}};
 
     return {Unique, solution};
 }
@@ -130,7 +130,7 @@ T determinant(vector<vector<T>> a)
     KTL_DEBUG_ASSERT(a.size() == a[0].size());
 
     size_t swap_count = 0;
-    auto where = gaussian_elimination(a, &swap_count);
+    auto where = gaussian_elimination(a, swap_count);
 
     T result = 1;
     for(size_t i = 0; i < a.size(); i++)
