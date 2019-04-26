@@ -1,46 +1,45 @@
-// TLE?
 #include <bits/stdc++.h>
 
 using namespace std;
 
 struct bipartite_matching
 {
-    using graph_t = vector<vector<uint32_t>>;
+    using graph_t = vector<vector<size_t>>;
 
     const graph_t& graph;
-    uint32_t n;
-    vector<uint32_t> vis, match;
-    uint32_t timepoint = 1;
-    static constexpr uint32_t NONMATCHED = SIZE_MAX;
+    size_t n;
+    vector<bool> vis;
+    vector<size_t> match;
 
     bipartite_matching(const graph_t& _graph)
-        : graph(_graph), n(graph.size()), vis(n), match(n) {}
+        : graph(_graph), n(graph.size()), vis(n), match(n, SIZE_MAX) {}
 
-    void dfs_color(uint32_t u, vector<uint32_t>& out, bool c = true)
+    void dfs_color(size_t u, vector<size_t>& out, bool c = true)
     {
-        vis[u] = timepoint;
+        vis[u] = true;
         if(c) out.push_back(u);
         for(auto v : graph[u])
-            if(vis[v] < timepoint)
+            if(not vis[v])
                 dfs_color(v, out, not c);
     }
 
-    vector<uint32_t> find_colored()
+    vector<size_t> find_colored()
     {
-        vector<uint32_t> colored;
-        timepoint++;
-        for(uint32_t u = 0; u < n; u++)
-            if(vis[u] < timepoint)
+        vector<size_t> colored;
+        colored.reserve(n);
+        fill(vis.begin(), vis.end(), false);
+        for(size_t u = 0; u < n; u++)
+            if(not vis[u])
                 dfs_color(u, colored);
         return colored;
     }
 
-    bool dfs_match(uint32_t u)
+    bool dfs_match(size_t u)
     {
-        vis[u] = timepoint;
+        vis[u] = true;
         for(auto v : graph[u])
         {
-            if(match[v] == NONMATCHED)
+            if(match[v] == SIZE_MAX)
             {
                 match[u] = v; match[v] = u;
                 return true;
@@ -48,7 +47,7 @@ struct bipartite_matching
         }
         for(auto v : graph[u])
         {
-            if(vis[match[v]] < timepoint and dfs_match(match[v]))
+            if(not vis[match[v]] and dfs_match(match[v]))
             {
                 match[u] = v; match[v] = u;
                 return true;
@@ -57,37 +56,46 @@ struct bipartite_matching
         return false;
     }
 
-    vector<uint32_t> operator() (const vector<uint32_t>& colored)
+    vector<size_t> operator() (const vector<size_t>& colored)
     {
-        fill(vis.begin(), vis.end(), timepoint);
-        fill(match.begin(), match.end(), NONMATCHED);
-        for(auto u : colored)
+        fill(match.begin(), match.end(), SIZE_MAX);
+
+        bool any = true;
+        while(any)
         {
-            dfs_match(u);
-            timepoint++;
+            any = false;
+            fill(vis.begin(), vis.end(), false);
+            for(auto u : colored)
+                if(match[u] == SIZE_MAX and dfs_match(u))
+                    any = true;
         }
         return match;
+    }
+
+    vector<size_t> operator() ()
+    {
+        auto colored = find_colored();
+        return operator() (colored);
     }
 };
 
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    uint32_t n1, n2, m;
+    size_t n1, n2, m;
     cin >> n1 >> n2 >> m;
-    vector<vector<uint32_t>> graph(n1+n2);
-    for(uint32_t i = 0; i < m; i++)
+    vector<vector<size_t>> graph(n1+n2);
+    for(size_t i = 0; i < m; i++)
     {
-        uint32_t u, v;
+        size_t u, v;
         cin >> u >> v; u--; v--;
         graph[u].push_back(n1+v);
         graph[n1+v].push_back(u);
     }
-    auto matcher = bipartite_matching{graph};
-    auto match = matcher(matcher.find_colored());
-    uint32_t result = 0;
-    for(uint32_t u = 0; u < n1; u++)
-        if(match[u] != bipartite_matching::NONMATCHED)
+    auto match = bipartite_matching{graph}();
+    size_t result = 0;
+    for(size_t u = 0; u < n1; u++)
+        if(match[u] != SIZE_MAX)
             result++;
     cout << result;
 }

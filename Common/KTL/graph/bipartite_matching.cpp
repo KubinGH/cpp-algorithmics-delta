@@ -1,6 +1,5 @@
-// Bipartite matching via Turbo Matching algorithm.
-// Worst-case running time: O(|V|^2), but is faster on average.
-// Alternative in O(|E|^3/2): Dinic's Algorithm via a Flow Network
+// Bipartite matching via Hopcroft-Karp algorithm.
+// Worst-case running time: O(|E| sqrt(|V|)), but is faster on average.
 // Last revision: April 2019
 
 #pragma once
@@ -17,39 +16,38 @@ struct bipartite_matching
 
     const graph_t& graph;
     size_t n;
-    vector<size_t> vis, match;
-    size_t timepoint = 1;
-
-    static constexpr size_t NONMATCHED = SIZE_MAX;
+    vector<bool> vis;
+    vector<size_t> match;
 
     bipartite_matching(const graph_t& _graph)
-        : graph(_graph), n(graph.size()), vis(n), match(n) {}
+        : graph(_graph), n(graph.size()), vis(n), match(n, SIZE_MAX) {}
 
     void dfs_color(size_t u, vector<size_t>& out, bool c = true)
     {
-        vis[u] = timepoint;
+        vis[u] = true;
         if(c) out.push_back(u);
         for(auto v : graph[u])
-            if(vis[v] < timepoint)
+            if(not vis[v])
                 dfs_color(v, out, not c);
     }
 
     vector<size_t> find_colored()
     {
         vector<size_t> colored;
-        timepoint++;
+        colored.reserve(n);
+        fill(vis.begin(), vis.end(), false);
         for(size_t u = 0; u < n; u++)
-            if(vis[u] < timepoint)
+            if(not vis[u])
                 dfs_color(u, colored);
         return colored;
     }
 
     bool dfs_match(size_t u)
     {
-        vis[u] = timepoint;
+        vis[u] = true;
         for(auto v : graph[u])
         {
-            if(match[v] == NONMATCHED)
+            if(match[v] == SIZE_MAX)
             {
                 match[u] = v; match[v] = u;
                 return true;
@@ -57,7 +55,7 @@ struct bipartite_matching
         }
         for(auto v : graph[u])
         {
-            if(vis[match[v]] < timepoint and dfs_match(match[v]))
+            if(not vis[match[v]] and dfs_match(match[v]))
             {
                 match[u] = v; match[v] = u;
                 return true;
@@ -68,12 +66,16 @@ struct bipartite_matching
 
     vector<size_t> operator() (const vector<size_t>& colored)
     {
-        fill(vis.begin(), vis.end(), timepoint);
-        fill(match.begin(), match.end(), NONMATCHED);
-        for(auto u : colored)
+        fill(match.begin(), match.end(), SIZE_MAX);
+
+        bool any = true;
+        while(any)
         {
-            dfs_match(u);
-            timepoint++;
+            any = false;
+            fill(vis.begin(), vis.end(), false);
+            for(auto u : colored)
+                if(match[u] == SIZE_MAX and dfs_match(u))
+                    any = true;
         }
         return match;
     }
