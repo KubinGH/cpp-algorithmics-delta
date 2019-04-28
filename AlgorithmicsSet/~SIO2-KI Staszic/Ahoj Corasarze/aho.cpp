@@ -1,28 +1,6 @@
-// Aho-Corasick data structure.
-// Automaton-like structure built on a dictionary of patterns.
-// aho_corasicks contains useful implementation-related utilities
-//  `static_node` keeps the edges allocated immedatiely,
-//  `dynamic_node` uses a std::map.
-//  `partial_minus` is useful when remapping alphabets 
-// Basic example: 
-// `aho_corasick<char, aho_corasicks::static_node<26>, aho_corasicks::partial_minus<char, 'a'>>`
-// `ElementFix` must remap `T` to `size_t`.
-// `state` is a convenient interface. Refer to the example driver for usage.
-// When implementing caching or similar, use node::id member. All links lead to
-// members with smaller id.
-// Last revision: December 2018
+#include <bits/stdc++.h>
 
-#pragma once
-
-#include <array>
-#include <map>
-#include <queue>
-#include <tuple>
-#include <utility>
-#include <vector>
-
-using std::array; using std::vector; using std::map;
-using std::queue; using std::pair; using std::tie;
+using namespace std;
 
 namespace aho_corasicks
 {
@@ -150,3 +128,48 @@ struct aho_corasick
 };
 template<typename T, typename Node, typename ElementFix>
 ElementFix aho_corasick<T, Node, ElementFix>::fix;
+
+using my_aho_corasick = aho_corasick<
+    char,
+    aho_corasicks::static_node<26>,
+    aho_corasicks::partial_minus<char, 'a'>
+>;
+
+int main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(nullptr);
+
+    size_t n;
+    cin >> n;
+    vector<string> dict(n);
+    vector<pair<string::iterator, string::iterator>> dict_its(n);
+    for(size_t i = 0; i < n; i++)
+    {
+        cin >> dict[i];
+        dict_its[i] = {dict[i].begin(), dict[i].end()};
+    }
+    my_aho_corasick T(dict_its.begin(), dict_its.end());
+
+    vector<size_t> match_count(T.nodes.size());
+    for(size_t i = 2; i < T.nodes.size(); i++)
+    {
+        my_aho_corasick::state s = {&T, T.nodes_by_id[i]};
+        if(not s.matches())
+            s = s.next_match();
+        if(s.valid_match())
+            match_count[i] = match_count[s.next_match().node->id] + 1;
+    }
+
+    string S;
+    cin >> S;
+
+    auto curr = T.begin();
+    uint64_t result = 0;
+    for(char c : S)
+    {
+        curr = curr.advance(c);
+        result += match_count[curr.node->id];
+    }
+
+    cout << result;
+}

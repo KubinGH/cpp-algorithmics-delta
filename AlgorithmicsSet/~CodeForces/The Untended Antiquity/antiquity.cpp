@@ -17,65 +17,34 @@ struct fenwick_tree
             r += F[p], p -= lsb(p);
         return r;
     }
-    void delta(size_t p, T v)
+    void delta(T v, size_t p)
     {
         p++;
         while(p <= n)
             F[p] += v, p += lsb(p);
     }
-
-    T get(size_t a, size_t b) const
-        { return get_prefix(b+1) - get_prefix(a); }
-    T get(size_t p) const
-        { return get(p, p); }
-    void set(size_t p, T v)
-        { return delta(p, v - get(p)); }
-
-    size_t lower_bound(T v)
-    {
-        T s = 0; size_t p = 0;
-        for(size_t i = __lg(n)+1, q = (1u << __lg(n)); i --> 0; q /= 2)
-            if(p + q < n and s + F[p + q] < v)
-                s += F[p + q], p += q;
-        return p;
-    }
 };
-
-template<typename T, size_t DIM>
-struct dfenwick_tree;
 
 template<typename T>
-struct dfenwick_tree<T, 1>
+struct fenwick_tree_2d
 {
-    fenwick_tree<T> F;
-    dfenwick_tree(size_t n) : F(n) {}
-    T get_prefix(size_t p) const { return F.get_prefix(p); }
-    void delta(T v, size_t p) { return F.delta(p, v); }
-};
+    size_t h, w;
+    vector<fenwick_tree<T>> F;
+    fenwick_tree_2d(size_t _h, size_t _w) : h(_h), w(_w), F(h+1, fenwick_tree<T>(w+1)) {}
 
-template<typename T, size_t DIM>
-struct dfenwick_tree
-{
-    size_t n;
-    vector<dfenwick_tree<T, DIM - 1>> F;
-    template<typename... Args>
-    dfenwick_tree(size_t _n, Args... args) : n(_n), F(n+1, dfenwick_tree<T, DIM - 1>{args...}) {}
-
-    template<typename... Args>
-    T get_prefix(size_t p, Args... args) const
+    T get_prefix(size_t y, size_t x) const
     {
         T r = 0;
-        while(p)
-            r += F[p].get_prefix(args...), p -= fenwick_tree<T>::lsb(p);
+        while(y)
+            r += F[y].get_prefix(x), y -= fenwick_tree<T>::lsb(y);
         return r;
     }
 
-    template<typename... Args>
-    void delta(T v, size_t p, Args... args)
+    void delta(T v, size_t y, size_t x)
     {
-        p++;
-        while(p <= n)
-            F[p].delta(v, args...), p += fenwick_tree<T>::lsb(p);
+        y++;
+        while(y <= h)
+            F[y].delta(v, x), y += fenwick_tree<T>::lsb(y);
     }
 };
 
@@ -88,7 +57,7 @@ int main()
 
     vector<vector<uint64_t>> D(n, vector<uint64_t>(m));
 
-    dfenwick_tree<uint64_t, 2> T(n + 1, m + 1);
+    fenwick_tree_2d<uint64_t> T(n + 1, m + 1);
 
     auto get = [&](size_t r, size_t c) {
         return T.get_prefix(r + 1, c + 1);

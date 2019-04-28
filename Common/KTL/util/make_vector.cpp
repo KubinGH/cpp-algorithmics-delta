@@ -1,6 +1,6 @@
 // Making multidimensional vectors in a human-readable way
 // done during compile-time
-
+// Use like make_vector<T>(2, 3, 5) for indices [2][3][5]
 // Last revision: March 2019
 
 #pragma once

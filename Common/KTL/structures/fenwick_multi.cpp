@@ -50,3 +50,18 @@ struct dfenwick_tree
             F[p].delta(v, args...), p += fenwick_tree<T>::lsb(p);
     }
 };
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

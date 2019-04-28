@@ -81,23 +81,47 @@ struct bipartite_matching
 
 int main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(nullptr);
-    size_t n1, n2;
-    cin >> n1 >> n2;
-    vector<vector<size_t>> graph(n1+n2);
-    size_t u, v;
-    while(cin >> u >> v, u and v)
+    size_t n, m;
+    cin >> n >> m;
+    vector<vector<bool>> lock(n, vector<bool>(n));
+    for(size_t i = 0; i < m; i++)
     {
-        u--; v--;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
+        size_t x, y;
+        cin >> x >> y; x--; y--;
+        lock[x][y] = true;
     }
-    vector<size_t> colored(n1);
-    iota(colored.begin(), colored.end(), 0);
-    auto match = bipartite_matching{graph}(colored);
-    size_t result = n1 + n2;
-    for(size_t i = 0; i < n1; i++)
-        if(match[i] != SIZE_MAX)
-            result--;
-    cout << result << endl;
+
+    vector<vector<size_t>> graph(n * n);
+
+    auto conn = [&](size_t x1, size_t y1, size_t x2, size_t y2)
+    {
+        if(x1 >= n or y1 >= n or x2 >= n or y2 >= n or
+           lock[x1][y1] or lock[x2][y2])
+            return;
+        size_t i = x1 + y1*n, j = x2 + y2*n;
+        graph[i].push_back(j);
+        graph[j].push_back(i);
+    };
+
+    for(size_t y = 0; y < n; y++)
+        for(size_t x = 0; x < n; x++)
+    {
+        conn(x, y, x + 1, y - 2);
+        conn(x, y, x + 2, y - 1);
+        conn(x, y, x + 2, y + 1);
+        conn(x, y, x + 1, y + 2);
+    }
+
+    auto match = bipartite_matching{graph}();
+
+    size_t max_matching = 0;
+
+    for(size_t y = 0, i = 0; y < n; y++)
+        for(size_t x = 0; x < n; x++, i++)
+            if(not lock[x][y] and match[i] != SIZE_MAX)
+                max_matching++;
+
+    size_t max_independent_set = (n*n - m) - (max_matching /= 2);
+
+    cout << max_independent_set;
 }

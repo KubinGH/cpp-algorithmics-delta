@@ -1,35 +1,27 @@
 // Prefixoprefixes / Z Algorithm
-
+// Complexity: O(n)
 // Last revision: December 2018
 
 #pragma once
 
 #include <cstddef>
-#include <cstdint>
 #include <vector>
 
-using std::size_t; using std::uint32_t;
+using std::size_t;
 using std::vector;
 
 template<typename Iterator>
-vector<uint32_t> prefixoprefixes(Iterator S, size_t n)
+vector<size_t> prefixoprefixes(Iterator S, size_t n)
 {
-    vector<uint32_t> Z(n);
-    uint32_t L = 0, R = 0;
-    Z[0] = n;
-    for(uint32_t i = 1; i < n; i++)
+    vector<size_t> Z(n);
+    for(size_t i = 1, L = 0, R = 0; i < n; i++)
     {
-        if(i <= R and Z[i-L] < R-i+1)
-            Z[i] = Z[i-L];
-        else
-        {
-            L = i;
-            if(i > R) R = i;
-            while(R < n and S[R-L] == S[R])
-                R++;
-            R--;
-            Z[i] = R - L + 1;
-        }
+        if(i < R)
+            Z[i] = min(R - i, Z[i - L]);
+        while(i + Z[i] < n and S[Z[i]] == S[i + Z[i]])
+            Z[i]++;
+        if(i + Z[i] > R)
+            L = i, R = i + Z[i];
     }
     return Z;
 }
