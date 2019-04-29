@@ -13,6 +13,8 @@
 #include <vector>
 #include <cmath>
 
+#include "../ktl_debug_mode.cpp"
+
 using std::vector; using std::complex;
 using std::size_t;
 using std::acos; using std::cos; using std::sin;
@@ -42,6 +44,8 @@ namespace fft_base
     template<typename T>
     vector<T> call(vector<T> A, function<T(size_t)> w)
     {
+        KTL_DEBUG_ASSERT((A.size() & (A.size() - 1)) == 0);
+
         const size_t n = A.size();
 
         for(size_t i = 0; i < n; i++)

@@ -30,7 +30,7 @@ T discrete_logarithm(T a, T b, T m)
         if(b % g) return numeric_limits<T>::max();
         m /= g; b /= g;
         fix = mod_mul(fix, a / g, m);
-        ++shift;
+        shift++;
         if(b == fix) return shift;
     }
 

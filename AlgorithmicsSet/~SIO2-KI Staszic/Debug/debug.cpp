@@ -31,7 +31,7 @@ bool bug(vector<pair<int, int>> e)
 
 int main()
 {
-    ofstream out("gen.cpp");
+    ofstream out("gen-2.cpp");
     out << "#include <bits/stdc++.h>" << endl;
     out << "using namespace std;" << endl;
     out << "const char* solution[5] = {" << endl;
