@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "../util/gcc_bit_ext.cpp"
-#include "linear_sieve.cpp"
 #include "mod_multiplies.cpp"
 
 using std::size_t; using std::uintmax_t;

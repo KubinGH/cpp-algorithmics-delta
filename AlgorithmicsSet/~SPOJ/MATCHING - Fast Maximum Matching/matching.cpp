@@ -14,26 +14,6 @@ struct bipartite_matching
     bipartite_matching(const graph_t& _graph)
         : graph(_graph), n(graph.size()), vis(n), match(n, SIZE_MAX) {}
 
-    void dfs_color(size_t u, vector<size_t>& out, bool c = true)
-    {
-        vis[u] = true;
-        if(c) out.push_back(u);
-        for(auto v : graph[u])
-            if(not vis[v])
-                dfs_color(v, out, not c);
-    }
-
-    vector<size_t> find_colored()
-    {
-        vector<size_t> colored;
-        colored.reserve(n);
-        fill(vis.begin(), vis.end(), false);
-        for(size_t u = 0; u < n; u++)
-            if(not vis[u])
-                dfs_color(u, colored);
-        return colored;
-    }
-
     bool dfs_match(size_t u)
     {
         vis[u] = true;
@@ -56,7 +36,7 @@ struct bipartite_matching
         return false;
     }
 
-    vector<size_t> operator() (const vector<size_t>& colored)
+    vector<size_t> operator() ()
     {
         fill(match.begin(), match.end(), SIZE_MAX);
 
@@ -65,17 +45,11 @@ struct bipartite_matching
         {
             any = false;
             fill(vis.begin(), vis.end(), false);
-            for(auto u : colored)
+            for(size_t u = 0; u < n; u++)
                 if(match[u] == SIZE_MAX and dfs_match(u))
                     any = true;
         }
         return match;
-    }
-
-    vector<size_t> operator() ()
-    {
-        auto colored = find_colored();
-        return operator() (colored);
     }
 };
 
