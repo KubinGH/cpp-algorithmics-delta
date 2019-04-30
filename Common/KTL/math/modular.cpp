@@ -16,6 +16,7 @@
 #include <ext/numeric>
 #include <functional>
 #include <iostream>
+#include <cstdint>
 #include <limits>
 #include "mod_multiplies.cpp"
 #include "egcd.cpp"
@@ -61,15 +62,25 @@ struct mint
     template<typename Ti>
     mint(Ti raw_value)
     {
-        raw_value %= Mod();
+        raw_value %= Ti(Mod());
         if(raw_value < 0)
-            raw_value += Mod();
+            raw_value += Ti(Mod());
         value = raw_value;
     }
 
     mint operator- () const { return Mod() - value; }
     mint operator+ (const mint& other) const { return (value + other.value) % Mod(); }
     mint operator- (const mint& other) const { return *this + -other; }
+
+    #define EXPLICIT_CONVERSION(__T) \
+        explicit operator __T() const { return value; }
+    EXPLICIT_CONVERSION(std::int16_t)
+    EXPLICIT_CONVERSION(std::uint16_t)
+    EXPLICIT_CONVERSION(std::int32_t)
+    EXPLICIT_CONVERSION(std::uint32_t)
+    EXPLICIT_CONVERSION(std::int64_t)
+    EXPLICIT_CONVERSION(std::uint64_t)
+    #undef EXPLICIT_CONVERSION
 
     #define PARAM_ENABLE(__VAL, __NAME, __POST) \
     template<bool enabled = __VAL> \
@@ -94,6 +105,11 @@ struct mint
     INPLACE_ARITHMETIC(*=, *)
     INPLACE_ARITHMETIC(/=, /)
     #undef INPLACE_ARITHMETIC
+
+    mint& operator++ () { ++value; if(value == Mod()) value = 0; return *this; }
+    mint& operator-- () { if(value == 0) value = Mod; --value; return *this; }
+    mint operator++ (int) { auto c = *this; return ++c; }
+    mint operator-- (int) { auto c = *this; return --c; }
 
     #define COMPARISON(__OP) bool operator __OP (const mint& other) const { return this->value __OP other.value; }
     COMPARISON(<)

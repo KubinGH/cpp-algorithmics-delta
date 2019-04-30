@@ -30,6 +30,7 @@
 #include "math/miller_rabin.cpp"
 #include "math/modular.cpp"
 #include "math/pollard_rho.cpp"
+#include "math/poly.cpp"
 #include "math/primitive_root.cpp"
 #include "math/simpson.cpp"
 
@@ -52,6 +53,7 @@
 
 #include "util/chronohelper.cpp"
 #include "util/debug_macros.cpp"
+#include "util/extio.cpp"
 #include "util/fastio.cpp"
 #include "util/gcc_bit_ext.cpp"
 #include "util/make_vector.cpp"

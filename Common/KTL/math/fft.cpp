@@ -1,10 +1,13 @@
 // Fast Fourier Transform.
 // Implemented iteratively.
-// real_fft<T>::operator() returns the values of polynomial A evaluated in the powers of the root of unity.
-// real_fft<T>::operator[] returns the coefficients of a polynomial with given values in the powers of the root of unity.
+// fft<T>::operator() returns the values of polynomial A evaluated in the powers of the root of unity.
+// fft<T>::operator[] returns the coefficients of a polynomial with given values in the powers of the root of unity.
+// rfft is a simple rounding wrapper.
 // Complexity: O(n log n)
 // Last revision: April 2019
 // To do: use baby-step, giant-step to reduce the count of trigonometric operations.
+
+#pragma once
 
 #include <ext/numeric>
 #include <functional>
@@ -34,10 +37,10 @@ namespace fft_base
         return y;
     }
     template<typename T, typename Ti>
-    vector<T> convert(const vector<Ti>& iA)
+    vector<T> convert(const vector<Ti>& iA, size_t req = 0)
     {
         vector<T> A(iA.begin(), iA.end());
-        while(A.size() & (A.size()-1)) A.emplace_back(T(0));
+        while(A.size() < req or (A.size() & (A.size()-1))) A.emplace_back(T(0));
         return A;
     }
 
@@ -77,7 +80,7 @@ namespace fft_base
 }
 
 template<typename T>
-struct real_fft
+struct fft
 {
     using C = complex<T>;
     static constexpr long double Q_PI = acos(-1.0L);
@@ -85,9 +88,9 @@ struct real_fft
     static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
 
     template<typename Ti>
-    vector<C> operator() (const vector<Ti>& iA)
+    vector<C> operator() (const vector<Ti>& iA, size_t req = 0)
     {
-        return fft_base::call(fft_base::convert<C>(iA), function<C(size_t)>(root_of_unity));
+        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t)>(root_of_unity));
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)
@@ -99,3 +102,23 @@ struct real_fft
     }
 };
 
+template<typename T, typename Tf>
+struct rfft
+{
+    fft<Tf> transform;
+    using C = typename fft<Tf>::C;
+
+    vector<C> operator() (const vector<T>& A, size_t req = 0)
+    {
+        return transform(A, req);
+    }
+
+    vector<T> operator[] (const vector<C>& Y)
+    {
+        auto Ac = transform[Y];
+        vector<T> A(Ac.size());
+        for(size_t i = 0; i < Ac.size(); i++)
+            A[i] = T(round(Ac[i].real()));
+        return A;
+    }
+};
