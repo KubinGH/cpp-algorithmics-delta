@@ -1,5 +1,5 @@
 // Pollard's rho algorithm for finding factors.
-// Complexity: O(n ^ 0.25 log n)
+// Complexity: O(n^0.25 log n)
 // Note: use the factorize_int function for actual factorization.
 // Since it checks primes up to L = BRUTE_FACTOR_LIMIT before running
 // Pollard's rho, at most log_L(n) runs will be executed.

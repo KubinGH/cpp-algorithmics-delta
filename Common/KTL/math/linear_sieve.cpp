@@ -8,12 +8,15 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <utility>
 #include <vector>
 #include "../ktl_debug_mode.cpp"
 
-using std::__lg; using std::vector; using std::size_t;
+using std::size_t;
+using std::__lg;
+using std::pair; using std::vector;
 
-vector<size_t> linear_sieve(size_t n)
+pair<vector<size_t>, vector<size_t>> linear_sieve_dual(size_t n)
 {
     KTL_DEBUG_ASSERT(n > 0);
     vector<size_t> P, M(n);
@@ -25,5 +28,10 @@ vector<size_t> linear_sieve(size_t n)
         for(size_t i = 0; i < P.size() and x * P[i] < n and P[i] <= M[x]; i++)
             M[x * P[i]] = P[i];
     }
-    return P;
+    return {P, M};
+}
+
+vector<size_t> linear_sieve(size_t n)
+{
+    return linear_sieve_dual(n).first;
 }

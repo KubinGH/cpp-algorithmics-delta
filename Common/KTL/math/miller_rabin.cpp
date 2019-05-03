@@ -13,7 +13,9 @@
 #include "mod_multiplies.cpp"
 
 using std::size_t; using std::uintmax_t;
+using std::vector;
 using __gnu_cxx::power;
+
 
 template<typename T>
 bool miller_rabin_test(T n, const vector<uintmax_t>& W)
