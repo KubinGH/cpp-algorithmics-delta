@@ -29,6 +29,7 @@
 * Python
   * eksperymentowanie, bruty, testowanie
   * numpy
+* Multithreading i algorytmy rozproszone
 - Heavy-Light Decomposition
 - Centroidy
 * Zastosowania wielomianów
