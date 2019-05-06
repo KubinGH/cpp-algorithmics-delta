@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
-#include "KTL/math/miller_rabin.cpp"
-#include "KTL/util/debug_macros.cpp"
+#include "ktl/math/miller_rabin.cpp"
+#include "ktl/util/debug_macros.cpp"
 
 using namespace std;
 
@@ -33,8 +33,7 @@ int main()
     {
         if(i % 1000000 == 0)
         {
-            cdbg("\r");
-            cdbgx(note(i) << flush);
+            debug("\r" << note(i) << flush);
         }
         if(is_prime(i) != not sieve[i])
         {
@@ -43,15 +42,13 @@ int main()
             abort();
         }
     }
-    cdbg("\r");
-    cdbgx("i = " << TEST_RANGE - 1 << endl);
+    debug("\r" << "i = " << TEST_RANGE - 1 << endl);
     cout << ms() << "ms" << endl;
 
     mt19937_64 gen(start.time_since_epoch().count());
     for(size_t g = LOG_RANGE_LO; g < LOG_RANGE_HI; g++)
     {
-        cdbg("\r");
-        cdbgx(note(g) << flush);
+        debug("\r" << note(g) << flush);
         for(size_t i = 0; i < TESTS_PER_LOG; i++)
         {
             uint64_t n = uniform_int_distribution<uint64_t>{1ull << g, (1ull << (g+1)) - 1}(gen);
@@ -63,6 +60,6 @@ int main()
             }
         }
     }
-    cdbg(endl);
+    debug(endl);
     cout << ms() << "ms" << endl;
 }
