@@ -5,7 +5,6 @@
 #pragma once
 
 #include <algorithm>
-
 #include "vec2d.cpp"
 
 using std::min; using std::max;

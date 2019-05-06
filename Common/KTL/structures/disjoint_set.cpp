@@ -4,9 +4,11 @@
 
 #pragma once
 
-#include <cstddef>
-#include <vector>
 #include <algorithm>
+#include <cstddef>
+#include <numeric>
+#include <vector>
+
 using std::size_t; using std::vector;
 using std::iota; using std::swap;
 

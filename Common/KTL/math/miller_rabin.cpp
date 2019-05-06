@@ -1,6 +1,11 @@
 // Miller Rabin primality test.
-// Bases taken from http://miller-rabin.appspot.com/ - those should be pretty good.
+// Bases in is_prime taken from http://miller-rabin.appspot.com/ - those should be pretty good.
 // Complexity: O(log n) per witness.
+// miller_rabin_witness - returns true if n = 2^r * d is a probable prime with witness a
+// miller_rabin_test - returns true if n is a prime with witnesses W
+// is_prime - preferable method for checking primality
+// miller_rabin_witness and miller_rabin_test are internals and probably shouldn't
+// be used explicitly.
 // Last revision: Beginning of 2019
 
 #pragma once
@@ -8,7 +13,6 @@
 #include <ext/numeric>
 #include <cstddef>
 #include <vector>
-
 #include "../util/gcc_bit_ext.cpp"
 #include "mod_multiplies.cpp"
 

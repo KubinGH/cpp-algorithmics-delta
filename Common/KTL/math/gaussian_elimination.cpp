@@ -2,7 +2,7 @@
 // Should adapt easily with mints.
 // - `gaussian_elimination(a)` performs the elimination on the matrix a in-place and
 //   returns the vector `where` of indices of non-zero element row in given column.
-// - `solve_system_of_linear_equations(eq)` returns solutions to the system of 
+// - `solve_system_of_linear_equations(eq)` returns solutions to the system of
 //   equations specified by the matrix `eq`.
 // - `determinant(a)` returns the determinant of the matrix a.
 // Complexity: O(n^2 m), where n x m is the dimensions of the provided matrix (n rows, m columns).
@@ -14,7 +14,6 @@
 #include <vector>
 #include <cstddef>
 #include <cstdint>
-
 #include "../ktl_debug_mode.cpp"
 #ifdef _KTL_DEBUG
 #include <algorithm>

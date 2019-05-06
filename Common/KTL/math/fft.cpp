@@ -15,7 +15,6 @@
 #include <complex>
 #include <vector>
 #include <cmath>
-
 #include "../ktl_debug_mode.cpp"
 
 using std::vector; using std::complex;

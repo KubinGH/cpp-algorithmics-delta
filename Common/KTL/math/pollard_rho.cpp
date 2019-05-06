@@ -11,7 +11,6 @@
 
 #include <algorithm>
 #include <vector>
-
 #include "linear_sieve.cpp"
 #include "mod_multiplies.cpp"
 #include "miller_rabin.cpp"

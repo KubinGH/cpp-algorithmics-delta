@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <type_traits>
 #include <iostream>
+
 #ifdef _WIN32
 #define getchar_unlocked getchar
 #define putchar_unlocked putchar

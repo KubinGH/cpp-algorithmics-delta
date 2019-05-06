@@ -6,7 +6,6 @@
 
 #include <vector>
 #include <cstdint>
-
 #include "vec2d.cpp"
 
 using std::vector; using std::int64_t;
