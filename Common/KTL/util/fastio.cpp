@@ -72,7 +72,7 @@ struct unlocked_cout
     operator<< (T x)
     {
         if(x < 0)
-            cout << '-', x = -x;
+            putchar_unlocked('-'), x = -x;
         return *this << (make_unsigned<T>)x;
     }
 } ucout;
