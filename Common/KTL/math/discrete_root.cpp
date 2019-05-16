@@ -27,9 +27,9 @@ discrete_root_result<T> discrete_root(T a, T k, T m)
     KTL_DEBUG_ASSERT(m != 0);
     mod_multiplies<T> Zm(m);
     auto g = primitive_root(m);
-    if(g == -1u) return {};
+    if(g == numeric_limits<T>::max()) return {};
     auto y = discrete_logarithm(power(g, k, Zm), a, m);
-    if(y == -1u) return {};
+    if(y == numeric_limits<T>::max()) return {};
     auto t = totient_from_factorization(m);
     return {power(g, y, Zm), g, y, Zm(t, egcd(__gcd(k, t), m).x)};
 }

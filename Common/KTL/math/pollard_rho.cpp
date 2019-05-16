@@ -64,8 +64,12 @@ vector<T> factorize_int(T n)
 {
     vector<T> result;
     for(auto p : __prime_cache_fact)
+    {
+        if(p > n)
+            break;
         while(n % p == 0)
             n /= p, result.push_back(p);
+    }
     rho_pollard_factorize(n, back_inserter(result));
     sort(result.begin(), result.end());
     return result;

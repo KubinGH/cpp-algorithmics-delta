@@ -1,28 +1,12 @@
-// Aho-Corasick data structure.
-// Automaton-like structure built on a dictionary of patterns.
-// aho_corasicks contains useful implementation-related utilities
-//  `static_node` keeps the edges allocated immedatiely,
-//  `dynamic_node` uses a std::map.
-//  `partial_minus` is useful when remapping alphabets 
-// Basic example: 
-// `aho_corasick<char, aho_corasicks::static_node<26>, aho_corasicks::partial_minus<char, 'a'>>`
-// `ElementFix` must remap `T` to `size_t`.
-// `state` is a convenient interface. Refer to the example driver for usage.
-// When implementing caching or similar, use node::id member. All links lead to
-// members with smaller id.
-// Last revision: December 2018
+#include <bits/stdc++.h>
+#include <ext/numeric>
+#include <ext/functional>
 
-#pragma once
+using namespace std;
+using __gnu_cxx::power;
+using __gnu_cxx::identity;
 
-#include <array>
-#include <map>
-#include <queue>
-#include <tuple>
-#include <utility>
-#include <vector>
-
-using std::array; using std::vector; using std::map;
-using std::queue; using std::pair; using std::tie;
+// begin include <ktl/text/aho_corasick.cpp>
 
 namespace aho_corasicks
 {
@@ -151,3 +135,94 @@ struct aho_corasick
 };
 template<typename T, typename Node, typename ElementFix>
 ElementFix aho_corasick<T, Node, ElementFix>::fix;
+
+// end include <ktl/text/aho_corasick.cpp>
+
+const uint64_t MOD = 1e9 + 7;
+
+struct matrix
+{
+    size_t n;
+    vector<uint64_t> A;
+    bool is_identity = false;
+    matrix(size_t _n) : n(_n), A(n*n) {}
+    uint64_t& operator() (size_t i, size_t j) { return A[i*n + j]; }
+    const uint64_t& operator() (size_t i, size_t j) const { return A[i*n + j]; }
+};
+matrix identity_element(multiplies<matrix>) { matrix m(0); m.is_identity = true; return m; }
+
+matrix operator* (const matrix& a, const matrix& b)
+{
+    if(a.is_identity) return b;
+    if(b.is_identity) return a;
+    const size_t n = a.n, g = n - 1;
+    matrix c(n);
+    fill(c.A.begin(), c.A.end(), 0);
+    for(size_t i = 0; i < n; i++)
+        for(size_t j = 0; j < n; j++)
+            for(size_t k = 0; k < n; k++)
+    {
+        c(i, j) += a(i, k)*b(k, j);
+        if((g - k) % 16 == 0)
+            c(i, j) %= MOD;
+    }
+    return c;
+}
+
+int main()
+{
+    size_t n, m;
+    cin >> n >> m;
+
+    vector<string> dict(m);
+    vector<pair<string::iterator, string::iterator>> iters;
+    for(size_t i = 0; i < m; i++)
+    {
+        cin >> dict[i];
+        iters.emplace_back(dict[i].begin(), dict[i].end());
+    }
+
+    using my_aho_corasick = aho_corasick<
+        char, aho_corasicks::dynamic_node<char>, identity<char>
+    >;
+    my_aho_corasick A(iters.begin(), iters.end());
+
+    const size_t k = A.nodes.size() - 1;
+
+    auto has_match = [](const my_aho_corasick::state& c) {
+        return c.matches() or c.next_match().valid_match();
+    };
+
+    matrix G(k+1);
+    vector<bool> vis(k);
+    queue<size_t> Q;
+    Q.push(0);
+    vis[0] = true;
+    while(not Q.empty())
+    {
+        size_t i = Q.front();
+        Q.pop();
+        my_aho_corasick::state c = {&A, A.nodes_by_id[i + 1]};
+        for(char v = 'a'; v <= 'z'; v++)
+        {
+            auto x = c.advance(v);
+            size_t j = x.node->id - 1;
+            if(has_match(x))
+                G(i, k)++;
+            else
+                G(i, j)++;
+            if(not vis[j])
+                vis[j] = true, Q.push(j);
+        }
+    }
+    G(k, k) += 'z'-'a'+1;
+
+    matrix P = power(G, n);
+
+    uint64_t result = 0;
+
+    for(size_t i = 0; i < k; i++)
+        result += P(0, i), result %= MOD;
+
+    cout << result;
+}
