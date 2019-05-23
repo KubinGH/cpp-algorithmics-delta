@@ -16,6 +16,7 @@
   * dynamiczna, statyczna, na stosie
   * -O2, -march, -tune, pragma
   * -fsanitize, warningi
+  * cache procesora, zmienne tymczasowe, rekurencja
 * C++: Szablony
 * Policy Based Data Structures
 * Magiczne modulowanie | # Hashe
@@ -24,7 +25,13 @@
   * Miller-Rabin
   * Rho Pollarda
   * Binarne GCD
-* Eliminacja Gaussa
+  * Trik z pierwiastkiem sześciennym
+* Macierze
+  * Operacje na macierzach
+  * Liniowe ciągi rekurencyjne
+  * Zliczanie ścieżek
+  * Eliminacja Gaussa
+  * Drzewo przedziałowe macierzy
 * Simpson
 * Python
   * eksperymentowanie, bruty, testowanie

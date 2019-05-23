@@ -44,8 +44,9 @@ struct segment_tree
     void set(size_t i, T value)
     {
         i += w;
-        values[i] = value; i /= 2;
-        while(i) values[i] = F(values[2*i], values[2*i+1]), i /= 2;
+        values[i] = value;
+        while(i > 1)
+            i /= 2, values[i] = F(values[2*i], values[2*i+1]);
     }
     T get(size_t getL, size_t getR)
     {
@@ -57,6 +58,7 @@ struct segment_tree
         }
         return result;
     }
+    T get() { return values[1]; }
 };
 
 template<typename T, typename ChildrenOp,
@@ -94,6 +96,7 @@ struct segment_tree_i
         }
     }
     T get(size_t getL, size_t getR) { return get(1, 0, w-1, getL, getR); }
+    T get() { return get(0, w-1); }
     void mut(size_t i, size_t nodeL, size_t nodeR, size_t getL, size_t getR, MT value)
     {
         pull(i, nodeL, nodeR);
