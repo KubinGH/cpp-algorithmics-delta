@@ -33,6 +33,7 @@ struct matrix
     T& operator() (size_t i, size_t j) { return A[w*i + j]; }
     const T& operator() (size_t i, size_t j) const { return A[w*i + j]; }
 };
+
 template<typename T>
 struct multiplies<matrix<T>>
 {
@@ -75,7 +76,7 @@ struct matrix_minsum_multiplies
 };
 template<typename T>
 matrix<T> identity_element(matrix_minsum_multiplies<T>) { return matrix<T>(); }
-#include <iostream>
+
 template<typename T, T Mod>
 struct matrix_mod_multiplies
 {

@@ -1,0 +1,1185 @@
+{% extends 'base.html' %}
+{% block mathjax_preamble %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["[a11y]/accessibility-menu.js"],
+    'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+      undefinedFamily: "serif",
+      mtextFontInherit: true,
+    },
+    TeX: {
+  "Macros": {},
+  "equationNumbers": {},
+  "extensions": [
+    "AMSmath.js",
+    "AMSsymbols.js",
+    "noErrors.js",
+    "noUndefined.js"
+  ]
+},
+    showMathMenu: true
+  });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+    <style>.emoji {
+  max-width: 1em !important;
+}
+del {
+  text-decoration: none;
+  position: relative;
+}
+del::after {
+  border-bottom: 1px solid black;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+ul.contains-task-list li.task-list-item {
+  position: relative;
+  list-style-type: none;
+}
+ul.contains-task-list li.task-list-item input.task-list-item-checkbox {
+  position: absolute;
+  transform: translateX(-100%);
+  width: 30px;
+}
+span.critic.comment {
+  position: relative;
+}
+span.critic.comment::before {
+  content: '\1f4ac';
+  position: initial;
+}
+span.critic.comment > span {
+  display: none;
+}
+span.critic.comment:hover > span {
+  display: initial;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid;
+  border-radius: 5px;
+  max-height: 4em;
+  overflow: auto;
+}
+span.critic.comment:focus > span {
+  display: initial;
+  text-decoration: underline;
+  position: initial;
+  top: auto;
+  left: auto;
+  border: initial;
+  border-radius: initial;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: transparent;
+}
+
+body {
+  overflow: initial !important;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  line-height: 1.6;
+  word-wrap: break-word;
+  padding: 30px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+}
+body > *:first-child {
+  margin-top: 0 !important;
+}
+body > *:last-child {
+  margin-bottom: 0 !important;
+}
+body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+body .absent {
+  color: #c00;
+}
+body .anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+body .anchor:focus {
+  outline: none;
+}
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+body h1 .octicon-link,
+body h2 .octicon-link,
+body h3 .octicon-link,
+body h4 .octicon-link,
+body h5 .octicon-link,
+body h6 .octicon-link {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+body h1:hover .anchor,
+body h2:hover .anchor,
+body h3:hover .anchor,
+body h4:hover .anchor,
+body h5:hover .anchor,
+body h6:hover .anchor {
+  padding-left: 8px;
+  margin-left: -30px;
+  text-decoration: none;
+}
+body h1:hover .anchor .octicon-link,
+body h2:hover .anchor .octicon-link,
+body h3:hover .anchor .octicon-link,
+body h4:hover .anchor .octicon-link,
+body h5:hover .anchor .octicon-link,
+body h6:hover .anchor .octicon-link {
+  display: inline-block;
+}
+body h1 tt,
+body h2 tt,
+body h3 tt,
+body h4 tt,
+body h5 tt,
+body h6 tt,
+body h1 code,
+body h2 code,
+body h3 code,
+body h4 code,
+body h5 code,
+body h6 code {
+  font-size: inherit;
+}
+body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+body h1 .anchor {
+  line-height: 1;
+}
+body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+body h2 .anchor {
+  line-height: 1;
+}
+body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+body h3 .anchor {
+  line-height: 1.2;
+}
+body h4 {
+  font-size: 1.25em;
+}
+body h4 .anchor {
+  line-height: 1.2;
+}
+body h5 {
+  font-size: 1em;
+}
+body h5 .anchor {
+  line-height: 1.1;
+}
+body h6 {
+  font-size: 1em;
+  color: #777;
+}
+body h6 .anchor {
+  line-height: 1.1;
+}
+body p,
+body blockquote,
+body ul,
+body ol,
+body dl,
+body table,
+body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+body ul,
+body ol {
+  padding-left: 2em;
+}
+body ul.no-list,
+body ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+body ul ul,
+body ul ol,
+body ol ol,
+body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+body li > p {
+  margin-top: 16px;
+}
+body dl {
+  padding: 0;
+}
+body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+body blockquote > :first-child {
+  margin-top: 0;
+}
+body blockquote > :last-child {
+  margin-bottom: 0;
+}
+body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+body table th {
+  font-weight: bold;
+}
+body table th,
+body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body .emoji {
+  max-width: none;
+}
+body span.frame {
+  display: block;
+  overflow: hidden;
+}
+body span.frame > span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+body span.frame span img {
+  display: block;
+  float: left;
+}
+body span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: #333;
+}
+body span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+body span.align-center > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center;
+}
+body span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+body span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+body span.align-right > span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right;
+}
+body span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+body span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden;
+}
+body span.float-left span {
+  margin: 13px 0 0;
+}
+body span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden;
+}
+body span.float-right > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right;
+}
+body code,
+body tt {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 3px;
+}
+body code:before,
+body tt:before,
+body code:after,
+body tt:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+body code br,
+body tt br {
+  display: none;
+}
+body del code {
+  text-decoration: inherit;
+}
+body pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+body .highlight {
+  margin-bottom: 16px;
+}
+body .highlight pre,
+body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+body pre {
+  word-wrap: normal;
+}
+body pre code,
+body pre tt {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+body pre code:before,
+body pre tt:before,
+body pre code:after,
+body pre tt:after {
+  content: normal;
+}
+body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+span.critic.comment > span {
+  background-color: #fff;
+}
+a {
+  color: #337ab7;
+}
+
+.bracket-matcher .region {
+  border-bottom: 1px dotted lime;
+  position: absolute;
+}
+.line-number.bracket-matcher.bracket-matcher {
+  color: #abb2bf;
+  background-color: #3a3f4b;
+}
+
+.spell-check-misspelling .region {
+  border-bottom: 2px dotted rgba(255, 51, 51, 0.75);
+}
+.spell-check-corrections {
+  width: 25em !important;
+}
+
+pre.editor-colors {
+  background-color: #282c34;
+  color: #abb2bf;
+}
+pre.editor-colors .line.cursor-line {
+  background-color: rgba(153, 187, 255, 0.04);
+}
+pre.editor-colors .invisible {
+  color: #abb2bf;
+}
+pre.editor-colors .cursor {
+  border-left: 2px solid #528bff;
+}
+pre.editor-colors .selection .region {
+  background-color: #3e4451;
+}
+pre.editor-colors .bracket-matcher .region {
+  border-bottom: 1px solid #528bff;
+  box-sizing: border-box;
+}
+pre.editor-colors .invisible-character {
+  color: rgba(171, 178, 191, 0.15);
+}
+pre.editor-colors .indent-guide {
+  color: rgba(171, 178, 191, 0.15);
+}
+pre.editor-colors .wrap-guide {
+  background-color: rgba(171, 178, 191, 0.15);
+}
+pre.editor-colors .find-result .region.region.region,
+pre.editor-colors .current-result .region.region.region {
+  border-radius: 2px;
+  background-color: rgba(82, 139, 255, 0.24);
+  transition: border-color 0.4s;
+}
+pre.editor-colors .find-result .region.region.region {
+  border: 2px solid transparent;
+}
+pre.editor-colors .current-result .region.region.region {
+  border: 2px solid #528bff;
+  transition-duration: .1s;
+}
+pre.editor-colors .gutter .line-number {
+  color: #636d83;
+  -webkit-font-smoothing: antialiased;
+}
+pre.editor-colors .gutter .line-number.cursor-line {
+  color: #abb2bf;
+  background-color: #3a3f4b;
+}
+pre.editor-colors .gutter .line-number.cursor-line-no-selection {
+  background-color: transparent;
+}
+pre.editor-colors .gutter .line-number .icon-right {
+  color: #abb2bf;
+}
+pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed.git-line-removed::before {
+  bottom: -3px;
+}
+pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 25px;
+  border-bottom: 1px dotted rgba(224, 82, 82, 0.5);
+  pointer-events: none;
+}
+pre.editor-colors .gutter .line-number.folded,
+pre.editor-colors .gutter .line-number:after,
+pre.editor-colors .fold-marker:after {
+  color: #abb2bf;
+}
+.syntax--comment {
+  color: #5c6370;
+  font-style: italic;
+}
+.syntax--comment .syntax--markup.syntax--link {
+  color: #5c6370;
+}
+.syntax--entity.syntax--name.syntax--type {
+  color: #e5c07b;
+}
+.syntax--entity.syntax--other.syntax--inherited-class {
+  color: #98c379;
+}
+.syntax--keyword {
+  color: #c678dd;
+}
+.syntax--keyword.syntax--control {
+  color: #c678dd;
+}
+.syntax--keyword.syntax--operator {
+  color: #abb2bf;
+}
+.syntax--keyword.syntax--other.syntax--special-method {
+  color: #61afef;
+}
+.syntax--keyword.syntax--other.syntax--unit {
+  color: #d19a66;
+}
+.syntax--storage {
+  color: #c678dd;
+}
+.syntax--storage.syntax--type.syntax--annotation,
+.syntax--storage.syntax--type.syntax--primitive {
+  color: #c678dd;
+}
+.syntax--storage.syntax--modifier.syntax--package,
+.syntax--storage.syntax--modifier.syntax--import {
+  color: #abb2bf;
+}
+.syntax--constant {
+  color: #d19a66;
+}
+.syntax--constant.syntax--variable {
+  color: #d19a66;
+}
+.syntax--constant.syntax--character.syntax--escape {
+  color: #56b6c2;
+}
+.syntax--constant.syntax--numeric {
+  color: #d19a66;
+}
+.syntax--constant.syntax--other.syntax--color {
+  color: #56b6c2;
+}
+.syntax--constant.syntax--other.syntax--symbol {
+  color: #56b6c2;
+}
+.syntax--variable {
+  color: #e06c75;
+}
+.syntax--variable.syntax--interpolation {
+  color: #be5046;
+}
+.syntax--variable.syntax--parameter {
+  color: #abb2bf;
+}
+.syntax--string {
+  color: #98c379;
+}
+.syntax--string > .syntax--source,
+.syntax--string .syntax--embedded {
+  color: #abb2bf;
+}
+.syntax--string.syntax--regexp {
+  color: #56b6c2;
+}
+.syntax--string.syntax--regexp .syntax--source.syntax--ruby.syntax--embedded {
+  color: #e5c07b;
+}
+.syntax--string.syntax--other.syntax--link {
+  color: #e06c75;
+}
+.syntax--punctuation.syntax--definition.syntax--comment {
+  color: #5c6370;
+}
+.syntax--punctuation.syntax--definition.syntax--method-parameters,
+.syntax--punctuation.syntax--definition.syntax--function-parameters,
+.syntax--punctuation.syntax--definition.syntax--parameters,
+.syntax--punctuation.syntax--definition.syntax--separator,
+.syntax--punctuation.syntax--definition.syntax--seperator,
+.syntax--punctuation.syntax--definition.syntax--array {
+  color: #abb2bf;
+}
+.syntax--punctuation.syntax--definition.syntax--heading,
+.syntax--punctuation.syntax--definition.syntax--identity {
+  color: #61afef;
+}
+.syntax--punctuation.syntax--definition.syntax--bold {
+  color: #e5c07b;
+  font-weight: bold;
+}
+.syntax--punctuation.syntax--definition.syntax--italic {
+  color: #c678dd;
+  font-style: italic;
+}
+.syntax--punctuation.syntax--section.syntax--embedded {
+  color: #be5046;
+}
+.syntax--punctuation.syntax--section.syntax--method,
+.syntax--punctuation.syntax--section.syntax--class,
+.syntax--punctuation.syntax--section.syntax--inner-class {
+  color: #abb2bf;
+}
+.syntax--support.syntax--class {
+  color: #e5c07b;
+}
+.syntax--support.syntax--type {
+  color: #56b6c2;
+}
+.syntax--support.syntax--function {
+  color: #56b6c2;
+}
+.syntax--support.syntax--function.syntax--any-method {
+  color: #61afef;
+}
+.syntax--entity.syntax--name.syntax--function {
+  color: #61afef;
+}
+.syntax--entity.syntax--name.syntax--class,
+.syntax--entity.syntax--name.syntax--type.syntax--class {
+  color: #e5c07b;
+}
+.syntax--entity.syntax--name.syntax--section {
+  color: #61afef;
+}
+.syntax--entity.syntax--name.syntax--tag {
+  color: #e06c75;
+}
+.syntax--entity.syntax--other.syntax--attribute-name {
+  color: #d19a66;
+}
+.syntax--entity.syntax--other.syntax--attribute-name.syntax--id {
+  color: #61afef;
+}
+.syntax--meta.syntax--class {
+  color: #e5c07b;
+}
+.syntax--meta.syntax--class.syntax--body {
+  color: #abb2bf;
+}
+.syntax--meta.syntax--method-call,
+.syntax--meta.syntax--method {
+  color: #abb2bf;
+}
+.syntax--meta.syntax--definition.syntax--variable {
+  color: #e06c75;
+}
+.syntax--meta.syntax--link {
+  color: #d19a66;
+}
+.syntax--meta.syntax--require {
+  color: #61afef;
+}
+.syntax--meta.syntax--selector {
+  color: #c678dd;
+}
+.syntax--meta.syntax--separator {
+  color: #abb2bf;
+}
+.syntax--meta.syntax--tag {
+  color: #abb2bf;
+}
+.syntax--underline {
+  text-decoration: underline;
+}
+.syntax--none {
+  color: #abb2bf;
+}
+.syntax--invalid.syntax--deprecated {
+  color: #523d14 !important;
+  background-color: #e0c285 !important;
+}
+.syntax--invalid.syntax--illegal {
+  color: white !important;
+  background-color: #e05252 !important;
+}
+.syntax--markup.syntax--bold {
+  color: #d19a66;
+  font-weight: bold;
+}
+.syntax--markup.syntax--changed {
+  color: #c678dd;
+}
+.syntax--markup.syntax--deleted {
+  color: #e06c75;
+}
+.syntax--markup.syntax--italic {
+  color: #c678dd;
+  font-style: italic;
+}
+.syntax--markup.syntax--heading {
+  color: #e06c75;
+}
+.syntax--markup.syntax--heading .syntax--punctuation.syntax--definition.syntax--heading {
+  color: #61afef;
+}
+.syntax--markup.syntax--link {
+  color: #56b6c2;
+}
+.syntax--markup.syntax--inserted {
+  color: #98c379;
+}
+.syntax--markup.syntax--quote {
+  color: #d19a66;
+}
+.syntax--markup.syntax--raw {
+  color: #98c379;
+}
+.syntax--source.syntax--c .syntax--keyword.syntax--operator {
+  color: #c678dd;
+}
+.syntax--source.syntax--cpp .syntax--keyword.syntax--operator {
+  color: #c678dd;
+}
+.syntax--source.syntax--cs .syntax--keyword.syntax--operator {
+  color: #c678dd;
+}
+.syntax--source.syntax--css .syntax--property-name,
+.syntax--source.syntax--css .syntax--property-value {
+  color: #828997;
+}
+.syntax--source.syntax--css .syntax--property-name.syntax--support,
+.syntax--source.syntax--css .syntax--property-value.syntax--support {
+  color: #abb2bf;
+}
+.syntax--source.syntax--elixir .syntax--source.syntax--embedded.syntax--source {
+  color: #abb2bf;
+}
+.syntax--source.syntax--elixir .syntax--constant.syntax--language,
+.syntax--source.syntax--elixir .syntax--constant.syntax--numeric,
+.syntax--source.syntax--elixir .syntax--constant.syntax--definition {
+  color: #61afef;
+}
+.syntax--source.syntax--elixir .syntax--variable.syntax--definition,
+.syntax--source.syntax--elixir .syntax--variable.syntax--anonymous {
+  color: #c678dd;
+}
+.syntax--source.syntax--elixir .syntax--parameter.syntax--variable.syntax--function {
+  color: #d19a66;
+  font-style: italic;
+}
+.syntax--source.syntax--elixir .syntax--quoted {
+  color: #98c379;
+}
+.syntax--source.syntax--elixir .syntax--keyword.syntax--special-method,
+.syntax--source.syntax--elixir .syntax--embedded.syntax--section,
+.syntax--source.syntax--elixir .syntax--embedded.syntax--source.syntax--empty {
+  color: #e06c75;
+}
+.syntax--source.syntax--elixir .syntax--readwrite.syntax--module .syntax--punctuation {
+  color: #e06c75;
+}
+.syntax--source.syntax--elixir .syntax--regexp.syntax--section,
+.syntax--source.syntax--elixir .syntax--regexp.syntax--string {
+  color: #be5046;
+}
+.syntax--source.syntax--elixir .syntax--separator,
+.syntax--source.syntax--elixir .syntax--keyword.syntax--operator {
+  color: #d19a66;
+}
+.syntax--source.syntax--elixir .syntax--variable.syntax--constant {
+  color: #e5c07b;
+}
+.syntax--source.syntax--elixir .syntax--array,
+.syntax--source.syntax--elixir .syntax--scope,
+.syntax--source.syntax--elixir .syntax--section {
+  color: #828997;
+}
+.syntax--source.syntax--gfm .syntax--markup {
+  -webkit-font-smoothing: auto;
+}
+.syntax--source.syntax--gfm .syntax--link .syntax--entity {
+  color: #61afef;
+}
+.syntax--source.syntax--go .syntax--storage.syntax--type.syntax--string {
+  color: #c678dd;
+}
+.syntax--source.syntax--ini .syntax--keyword.syntax--other.syntax--definition.syntax--ini {
+  color: #e06c75;
+}
+.syntax--source.syntax--java .syntax--storage.syntax--modifier.syntax--import {
+  color: #e5c07b;
+}
+.syntax--source.syntax--java .syntax--storage.syntax--type {
+  color: #e5c07b;
+}
+.syntax--source.syntax--java .syntax--keyword.syntax--operator.syntax--instanceof {
+  color: #c678dd;
+}
+.syntax--source.syntax--java-properties .syntax--meta.syntax--key-pair {
+  color: #e06c75;
+}
+.syntax--source.syntax--java-properties .syntax--meta.syntax--key-pair > .syntax--punctuation {
+  color: #abb2bf;
+}
+.syntax--source.syntax--js .syntax--keyword.syntax--operator {
+  color: #56b6c2;
+}
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--delete,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--in,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--of,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--instanceof,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--new,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--typeof,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--void {
+  color: #c678dd;
+}
+.syntax--source.syntax--ts .syntax--keyword.syntax--operator {
+  color: #56b6c2;
+}
+.syntax--source.syntax--flow .syntax--keyword.syntax--operator {
+  color: #56b6c2;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--json {
+  color: #e06c75;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation.syntax--string {
+  color: #e06c75;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation {
+  color: #98c379;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--constant.syntax--language.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--constant.syntax--language.syntax--json {
+  color: #56b6c2;
+}
+.syntax--ng.syntax--interpolation {
+  color: #e06c75;
+}
+.syntax--ng.syntax--interpolation.syntax--begin,
+.syntax--ng.syntax--interpolation.syntax--end {
+  color: #61afef;
+}
+.syntax--ng.syntax--interpolation .syntax--function {
+  color: #e06c75;
+}
+.syntax--ng.syntax--interpolation .syntax--function.syntax--begin,
+.syntax--ng.syntax--interpolation .syntax--function.syntax--end {
+  color: #61afef;
+}
+.syntax--ng.syntax--interpolation .syntax--bool {
+  color: #d19a66;
+}
+.syntax--ng.syntax--interpolation .syntax--bracket {
+  color: #abb2bf;
+}
+.syntax--ng.syntax--pipe,
+.syntax--ng.syntax--operator {
+  color: #abb2bf;
+}
+.syntax--ng.syntax--tag {
+  color: #56b6c2;
+}
+.syntax--ng.syntax--attribute-with-value .syntax--attribute-name {
+  color: #e5c07b;
+}
+.syntax--ng.syntax--attribute-with-value .syntax--string {
+  color: #c678dd;
+}
+.syntax--ng.syntax--attribute-with-value .syntax--string.syntax--begin,
+.syntax--ng.syntax--attribute-with-value .syntax--string.syntax--end {
+  color: #abb2bf;
+}
+.syntax--source.syntax--ruby .syntax--constant.syntax--other.syntax--symbol > .syntax--punctuation {
+  color: inherit;
+}
+.syntax--source.syntax--php .syntax--class.syntax--bracket {
+  color: #abb2bf;
+}
+.syntax--source.syntax--python .syntax--keyword.syntax--operator.syntax--logical.syntax--python {
+  color: #c678dd;
+}
+.syntax--source.syntax--python .syntax--variable.syntax--parameter {
+  color: #d19a66;
+}
+
+.sb-table.linter {
+  font-family: 'DejaVu Sans Mono';
+}
+</style>
+
+{% endblock %}
+{% block content %}
+    <h1 id="the-plan">The Plan</h1>
+<h2 id="wprowadzenie">Wprowadzenie</h2>
+<p>Czego szukamy?</p>
+<ul>
+<li>Rozwiązania problemów o wielu możliwych rozwiązaniach, z których chcemy wybrać optymalne
+<ul>
+<li>Genetyka - najdłuższy wspólny podciąg</li>
+<li>Logistyka - problem komiwojażera</li>
+</ul>
+</li>
+<li>Kombinatoryka</li>
+<li>Teoria gier - szukanie strategii wygrywającej</li>
+</ul>
+<p>Jakie są problemy?</p>
+<ul>
+<li>Możliwych kombinacji może być bardzo dużo</li>
+<li>Trudno wygenerować możliwe rozwiązania</li>
+<li>Nie ma dobrego sposobu na opisanie problemu bądź sensowną implementację</li>
+</ul>
+<p>Z czego skorzystamy:</p>
+<ul>
+<li>Obserwacja: Problemy często się powtarzają i się pokrywają</li>
+<li>Rozwiązanie problemu zależy od tego jak rozwiązaliśmy <em>podproblemy</em></li>
+</ul>
+<h2 id="przyk%C5%82ad-problemu---zadanie-podci%C4%85g-jasia">Przykład problemu - Zadanie Podciąg Jasia</h2>
+<p>Mamy ciąg liczb <span class="math inline-math"><script type="math/tex">a = (a_1, a_2, ..., a_n)</script></span>. Chcemy wybrać taki podciąg złożony z <span class="math inline-math"><script type="math/tex">a_{i_1}, a_{i_2}, ..., a_{i_k}</script></span>, z następującym ograniczeniem: w podciągu nie mogą występować sąsiednie elementy:</p>
+<span class="math display-math"><script type="math/tex; mode=display">i_1 + 1 < i_2 \\
+i_2 + 1 < i_3 \\
+...
+</script></span>
+<p>Należy podać maksymalną sumę podciągu.</p>
+<ul>
+<li>Przykład: <strong>10</strong> 1 1 <strong>10</strong>. Rozwiązanie to 20.</li>
+<li>Inny przykład: -2 <strong>2</strong> -1 3 <strong>5</strong>. Rozwiązanie to 7.</li>
+</ul>
+<p>Co robić?</p>
+<ul>
+<li>Proste rozwiązanie: sprawdzić wszystkie podciągi <span class="math inline-math"><script type="math/tex">O(2^n)</script></span></li>
+<li>O wiele lepsze: <strong>Programowanie dynamiczne</strong></li>
+</ul>
+<h3 id="rozwi%C4%85zanie-przyk%C5%82adu">Rozwiązanie przykładu</h3>
+<p>Przypuśćmy teraz, że znamy już rozwiązanie dla każdego prefiksu <span class="math inline-math"><script type="math/tex">a</script></span> poza całym ciągiem <span class="math inline-math"><script type="math/tex">a</script></span>.</p>
+<p>Wprowadźmy oznaczenie, że <span class="math inline-math"><script type="math/tex">\mathcal{F}(p)</script></span> oznacza rozwiązanie (czyli maksymalną sumę) dla ciągu <span class="math inline-math"><script type="math/tex">a_1, a_2, ..., a_p</script></span>.
+W szczególności znamy wartości <span class="math inline-math"><script type="math/tex">\mathcal{F}(1), \mathcal{F}(2), ..., \mathcal{F}(n - 1)</script></span>.</p>
+<p>Jak może wyglądać <span class="math inline-math"><script type="math/tex">\mathcal{F}(n)</script></span>? Są dwie możliwości: może albo zawierać <span class="math inline-math"><script type="math/tex">a_n</script></span>, albo go nie zawierać.</p>
+<ol>
+<li>Jeżeli zawiera, to dodajemy do wyniku <span class="math inline-math"><script type="math/tex">a_n</script></span> i odrzucamy <span class="math inline-math"><script type="math/tex">a_{n-1}</script></span>. Reszta rozwiązania może się składać z dowolnych pozostałych <span class="math inline-math"><script type="math/tex">n - 2</script></span> elementów. Tak się składa, że znamy tę wartość - jest to <span class="math inline-math"><script type="math/tex">\mathcal{F}(n - 2)</script></span>. Otrzymujemy <span class="math inline-math"><script type="math/tex">\mathcal{F}(n - 2) + a_n</script></span>.</li>
+<li>Jeżeli go nie zawiera, to przypadek jest prostszy: rozwiązanie składa się z pierwszych <span class="math inline-math"><script type="math/tex">n - 1</script></span> elementów, czyli maksymalna suma jest równa <span class="math inline-math"><script type="math/tex">\mathcal{F}(n - 1)</script></span>.</li>
+</ol>
+<p>Tym samym otrzymujemy wzór na <span class="math inline-math"><script type="math/tex">\mathcal{F}(n)</script></span>:</p>
+<span class="math display-math"><script type="math/tex; mode=display">\mathcal{F}(n) = \texttt{max}(\mathcal{F}(n-1), \mathcal{F}(n-2) + a_n)
+</script></span>
+<h3 id="rozszerzenie">Rozszerzenie</h3>
+<p>W ten sposób znaleźliśmy sposób na rozszerzenie rozwiązania z <span class="math inline-math"><script type="math/tex">a_1, a_2, ..., a_p</script></span> do <span class="math inline-math"><script type="math/tex">a_1, a_2, ..., a_{p+1}</script></span>. Ponieważ wyniki zawsze są optymalne, możemy w ten sposób policzyć wszystkie wartości <span class="math inline-math"><script type="math/tex">\mathcal{F}</script></span>.</p>
+<h3 id="troch%C4%99-terminologii%2C-kt%C3%B3ra-si%C4%99-przyda">Trochę terminologii, która się przyda</h3>
+<p><strong>Stan</strong> to pewien podproblem, który wybraliśmy sobie do rozwiązania. W tym wypadku są to prefiksy <span class="math inline-math"><script type="math/tex">a</script></span>, ale nic nie szkodzi aby były to np. sufiksy. Stan przechowuje pewną&nbsp;wartość, tutaj jest to optymalna suma podciągu.</p>
+<p><strong>Przejścia</strong> to wzory które odwołują się do mniejszych podproblemów, które zawierają się w rozpatrywanym problemie. Chcemy w nich rozpatrzyć wszystkie możliwe sposoby, na jakie może powstać rozwiązania. Stany muszą być tak dobrane, aby istniały odpowiednie przejścia.</p>
+<p><em>Trudność</em>: wymyślić takie stany i przejścia, które rozpatrzą wszystkie możliwości i tym samym poprawnie znajdą wynik.</p>
+<h3 id="%C5%82a%C5%84cuchy">Łańcuchy</h3>
+<p>Powiemy, że <span class="math inline-math"><script type="math/tex">A</script></span> jest zależne od <span class="math inline-math"><script type="math/tex">B</script></span> jeżeli można wybrać takie przejścia, że można dojść ze stanu <span class="math inline-math"><script type="math/tex">B</script></span> do <span class="math inline-math"><script type="math/tex">A</script></span> (przejście z <span class="math inline-math"><script type="math/tex">B</script></span> do <span class="math inline-math"><script type="math/tex">A</script></span> tzn. wartość <span class="math inline-math"><script type="math/tex">B</script></span> pojawia się&nbsp;we wzorze na wartość <span class="math inline-math"><script type="math/tex">A</script></span>).</p>
+<p><strong>Zależności</strong> w dynamiku są o tyle ważne, że musi istnieć&nbsp;uporządkowanie topologiczne stanów: to znaczy takie, że nie ma dwóch takich stanów <span class="math inline-math"><script type="math/tex">A</script></span> i <span class="math inline-math"><script type="math/tex">B</script></span>, że <span class="math inline-math"><script type="math/tex">A</script></span> jest zależne od <span class="math inline-math"><script type="math/tex">B</script></span> i <span class="math inline-math"><script type="math/tex">B</script></span> występuje później w uporządkowaniu niż <span class="math inline-math"><script type="math/tex">A</script></span>.</p>
+<p>Innymi słowy, nie może być cyklicznej zależności. (Nawiasem mówiąc, to znaczy że graf przejść i stanów jest acykliczny)</p>
+<p>W tym przykładowym zadaniu graf zależności wygląda mniej więcej o tak:</p>
+<p><center><img src="/static/pages/sheets/dp-basics/jas-chain.png" alt="Łańcuch w Podciągu Jasia"></center></p>
+<h3 id="implementacja">Implementacja</h3>
+<p>Na początek:</p>
+<ol>
+<li>Trzeba pamiętać o przypadkach brzegowych. Zwykle wystarczy poszukać, kiedy wymyślone przez nas wzory nie działają. W tym wypadku jest tak dla <span class="math inline-math"><script type="math/tex">\mathcal{F}(1)</script></span> i <span class="math inline-math"><script type="math/tex">\mathcal{F}(2)</script></span>, bo odwołują się do <span class="math inline-math"><script type="math/tex">\mathcal{F}(-1)</script></span> i <span class="math inline-math"><script type="math/tex">\mathcal{F}(0)</script></span>. Nasze przypadki brzegowe można rozwiązać np. tak:</li>
+</ol>
+<span class="math display-math"><script type="math/tex; mode=display">\mathcal{F}(1) = \texttt{max}(0, a_1) \\
+\mathcal{F}(2) = \texttt{max}(0, a_1, a_2)
+</script></span>
+<ol start="2">
+<li>Należy znaleźć odpowiednie uporządkowanie na podstawie zależności, które mamy. Zwykle uporządkowanie będzie się narzucać (w zadaniu jest bardzo łatwo, wystarczy odwiedzać kolejno stany <span class="math inline-math"><script type="math/tex">\mathcal{F}(1), \mathcal{F}(2), ..., \mathcal{F}(n)</script></span>).</li>
+</ol>
+<p>A teraz do praktyki:</p>
+<h4 id="rekurencja">Rekurencja</h4>
+<p>Najłatwiej jest podejść rekurencyjnie i bezpośrednio wykorzystać&nbsp;wzory. Nie musimy wtedy dbać o kolejność odwiedzanych stanów.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">F</span>(n):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">if</span> n <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--constant syntax--language">1</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--keyword syntax--control">return</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--constant syntax--language">0</span>, A[<span class="syntax--constant syntax--language">1</span>])</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span> <span class="syntax--keyword syntax--control">if</span> n <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--constant syntax--language">2</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--keyword syntax--control">return</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--constant syntax--language">0</span>, A[<span class="syntax--constant syntax--language">1</span>], A[<span class="syntax--constant syntax--language">2</span>])</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--keyword syntax--control">return</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--entity syntax--name syntax--function">F</span>(n <span class="syntax--keyword syntax--operator">-</span> <span class="syntax--constant syntax--language">1</span>), <span class="syntax--entity syntax--name syntax--function">F</span>(n <span class="syntax--keyword syntax--operator">-</span> <span class="syntax--constant syntax--language">2</span>) <span class="syntax--keyword syntax--operator">+</span> A[n])</span></span></pre>
+<p>Niestety, w ten sposób rozwiązanie jest wykładnicze (jaka jest jego złożoność?). Wystarczy jednak lekko ulepszyć podejście.</p>
+<h4 id="tabulacja">Tabulacja</h4>
+<p>Zapiszemy kolejne wartości funkcji w tablicy i odwiedzimy i wypełnimy kolejne jej komórki w odpowiedniej kolejności.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python">F[<span class="syntax--constant syntax--language">1</span>] <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--constant syntax--language">0</span>, A[<span class="syntax--constant syntax--language">1</span>])</span></span>
+<span class=""><span class="syntax--source syntax--python">F[<span class="syntax--constant syntax--language">2</span>] <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--constant syntax--language">0</span>, A[<span class="syntax--constant syntax--language">1</span>], A[<span class="syntax--constant syntax--language">2</span>])</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">for</span> i <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--language">3</span>, <span class="syntax--constant syntax--language">4</span>, ..., n:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>F[i] <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">max</span>(F[i <span class="syntax--keyword syntax--operator">-</span> <span class="syntax--constant syntax--language">1</span>], F[i <span class="syntax--keyword syntax--operator">-</span> <span class="syntax--constant syntax--language">2</span>] <span class="syntax--keyword syntax--operator">+</span> A[n])</span></span></pre>
+<h4 id="utrzymywanie-tylko-koniecznych-stan%C3%B3w">Utrzymywanie tylko koniecznych stanów</h4>
+<p>Technika ta zmniejszy zużycie pamięci. Zauważmy, że <span class="math inline-math"><script type="math/tex">\mathcal{F}(n)</script></span> potrzebne jest nam do policzenia jedynie <span class="math inline-math"><script type="math/tex">\mathcal{F}(n + 1)</script></span> i <span class="math inline-math"><script type="math/tex">\mathcal{F}(n + 2)</script></span>. Możemy się go pozbyć po 2 iteracjach. W tym zadaniu możemy to jeszcze bardziej uprościć i trzymać 3 zmienne, które będą oznaczać&nbsp;obecne <span class="math inline-math"><script type="math/tex">\mathcal{F}(i - 2), \mathcal{F}(i - 1), \mathcal{F}(i)</script></span>.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python">a <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--constant syntax--language">0</span>, A[<span class="syntax--constant syntax--language">1</span>])        <span class="syntax--comment syntax--line"># F(i - 2)</span></span></span>
+<span class=""><span class="syntax--source syntax--python">b <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">max</span>(<span class="syntax--constant syntax--language">0</span>, A[<span class="syntax--constant syntax--language">1</span>], A[<span class="syntax--constant syntax--language">2</span>])  <span class="syntax--comment syntax--line"># F(i - 1)</span></span></span>
+<span class=""><span class="syntax--source syntax--python">c <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--language">0</span>                   <span class="syntax--comment syntax--line"># F(i)</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">for</span> i <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--language">3</span>, <span class="syntax--constant syntax--language">4</span>, ..., n:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>c <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">max</span>(a, b <span class="syntax--keyword syntax--operator">+</span> A[i])</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>a <span class="syntax--keyword syntax--operator">=</span> b</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>b <span class="syntax--keyword syntax--operator">=</span> c</span></span></pre>
+<p>Rozwiązania oczywiście zakładają <span class="math inline-math"><script type="math/tex">n \ge 2</script></span> – wystarczy dopisać obsługę przypadków brzegowych.</p>
+<h2 id="podsumowanie---schemat-dzia%C5%82ania">Podsumowanie - schemat działania</h2>
+<ol>
+<li>Znajdź&nbsp;<strong>podproblemy</strong>. W jaki sposób można opisać wszystkie przypadki? Jak opisać je rekurencyjnie? (przypadek składa się z pewnego fragmentu plus mniejszych przypadków)</li>
+<li>Wybierz <strong>stany</strong> i przechowywane przez nie wartości, oraz</li>
+<li>Wybierz <strong>przejścia</strong>, tak, żeby było dobrze.</li>
+<li>Dobierz <strong>uporządkowanie</strong>, kolejność odwiedzanych stanów.</li>
+<li>Wypisz <strong>przypadki krańcowe</strong>, dla których nie działają wzory.</li>
+<li>Zwróć <strong>wynik</strong> dla stanu, który opisuje cały problem.</li>
+</ol>
+<p>Techniczne:</p>
+<ol>
+<li>Podliczenie złożoności obliczeniowej, zarówno pamięciowej i czasowej
+<ul>
+<li>Jeżeli czasowa jest za duża, rozważ inne stany i przejścia bądź użyj odpowiedniej struktury danych, poszukaj, które stany są niepotrzebne, etc. (jest dużo sposobów)</li>
+<li>Jeżeli pamięciowa jest za duża, sprawdź, czy da się utrzymywać mniej stanów w pamięci.</li>
+</ul>
+</li>
+<li>Wybranie sposobu implementacji:
+<ul>
+<li>Rekurencja (z odpowiednim usprawnieniem – <em>memoizacja</em>).</li>
+<li>Tabulacja
+<ul>
+<li>z góry na dół <em>(top-down)</em>: stany odwołują się niżej, prościej</li>
+<li>z dołu na górę <em>(bottom-up)</em>: stany aktualizują stany zależne,
+czasami lepiej</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="klasyki">Klasyki</h2>
+<p>Rozważymy teraz kilka klasycznych problemów:</p>
+<ul>
+<li>problem plecakowy</li>
+<li>problem wydawania reszty</li>
+<li>najdłuższy wspólny podciąg</li>
+</ul>
+<h3 id="problem-plecakowy-(knapsack-problem)">Problem plecakowy (Knapsack problem)</h3>
+<p>Mamy <span class="math inline-math"><script type="math/tex">n</script></span> przedmiotów opisanych wagami <span class="math inline-math"><script type="math/tex">w_i</script></span> oraz wartościami <span class="math inline-math"><script type="math/tex">v_i</script></span>. Dany jest nam do dyspozycji plecak, który może pomieścić przedmioty o sumarycznej wadze <span class="math inline-math"><script type="math/tex">W</script></span>. Jaką maksymalną sumaryczną wartość przedmiotów możemy uzyskać?</p>
+<ol>
+<li><strong>Podproblemy</strong>: problem składa się z dwóch ważnych cech: pojemności plecaka i przedmiotów. Trzeba nadać jakąś kolejność przedmiotom.</li>
+<li><strong>Stan</strong>: Niech stanem będzie <span class="math inline-math"><script type="math/tex">K(w, p)</script></span>, gdzie <span class="math inline-math"><script type="math/tex">w</script></span> to obecna waga przedmiotów w plecaku a <span class="math inline-math"><script type="math/tex">p</script></span> to ilość rozpatrzonych przedmiotów. Wartość stanu to maksymalna wartość przedmiotów o wadze <span class="math inline-math"><script type="math/tex">w</script></span>.</li>
+<li><strong>Przejścia</strong>: Możemy wziąć <span class="math inline-math"><script type="math/tex">p</script></span>-ty przedmiot, albo tego nie zrobić. Mamy więc <span class="math inline-math"><script type="math/tex">K(w, p) = \texttt{max}(K(w - w_i, p - 1) + v_i, K(w, p - 1))</script></span>
+<em>Strażnik</em> (sentinel): Możemy przyjąć że dla <span class="math inline-math"><script type="math/tex">w < 0</script></span> jest <span class="math inline-math"><script type="math/tex">K(w, p) = -\infty</script></span>.</li>
+<li><strong>Uporządkowanie</strong>: Dosyć intuicyjne: rosnące wartości <span class="math inline-math"><script type="math/tex">w</script></span>, a tam rosnące wartości <span class="math inline-math"><script type="math/tex">p</script></span>, bądź na odwrót.</li>
+<li><strong>Przypadki krańcowe</strong>: Najlepiej dodać strażnika, że <span class="math inline-math"><script type="math/tex">K(w, 0) = 0</script></span>.</li>
+<li><strong>Wynik</strong>: <span class="math inline-math"><script type="math/tex">\texttt{max}_{w \le W}(K(w, n))</script></span></li>
+</ol>
+<p>Złożoność: <span class="math inline-math"><script type="math/tex">O(nW)</script></span>.</p>
+<h3 id="problem-wydawania-reszty">Problem wydawania reszty</h3>
+<p>Mamy <span class="math inline-math"><script type="math/tex">n</script></span> nominałów o wartościach <span class="math inline-math"><script type="math/tex">x_i</script></span> i chcemy nimi wydać wartość <span class="math inline-math"><script type="math/tex">Y</script></span>. Nominałów można używać dowolnie wiele razy. Chcemy użyć minimalnej liczby nominałów.</p>
+<ol>
+<li><strong>Podproblemy</strong>: Liczy się dotychczas wydana kwota i rozpatrzone nominały.</li>
+<li><strong>Stan</strong>: <span class="math inline-math"><script type="math/tex">R(y, p)</script></span> – minimalna liczba nominałów spośród pierwszych <span class="math inline-math"><script type="math/tex">p</script></span>, aby otrzymać wartość <span class="math inline-math"><script type="math/tex">y</script></span>.</li>
+<li><strong>Przejścia</strong>: <span class="math inline-math"><script type="math/tex">R(y, p) = min(R(y - x_i, p) + 1, R(y, p - 1))</script></span>.</li>
+<li><strong>Uporządkowanie</strong>: Tak jak problem plecakowy.</li>
+<li><strong>Przypadki krańcowe</strong>: Tak jak problem plecakowy – strażnik jest dobrym pomysłem.</li>
+<li><strong>Wynik</strong>: <span class="math inline-math"><script type="math/tex">R(Y, n)</script></span>.</li>
+</ol>
+<p>Złożoność: <span class="math inline-math"><script type="math/tex">O(nY)</script></span>.</p>
+<h3 id="najd%C5%82u%C5%BCszy-wsp%C3%B3lny-podci%C4%85g-(longest-common-subsequence)">Najdłuższy wspólny podciąg (Longest Common Subsequence)</h3>
+<blockquote>
+<p>Przez <strong>podciąg</strong> ciągu <span class="math inline-math"><script type="math/tex">a = (a_1, a_2, ..., a_n)</script></span> definiujemy taki ciąg <span class="math inline-math"><script type="math/tex">b = (b_1, b_2, ..., b_k)</script></span>, że istnieje taki ciąg indeksów <span class="math inline-math"><script type="math/tex">p_1 < p_2 < ... < p_k</script></span>, że dla każdego <span class="math inline-math"><script type="math/tex">1 \le i \le k</script></span> zachodzi <span class="math inline-math"><script type="math/tex">b_i = a_{p_i}</script></span>.</p>
+</blockquote>
+<p>Mając dane dwa ciągi, <span class="math inline-math"><script type="math/tex">a</script></span> i <span class="math inline-math"><script type="math/tex">b</script></span>, znajdź długość jak najdłuższego ciągu <span class="math inline-math"><script type="math/tex">c</script></span>, że <span class="math inline-math"><script type="math/tex">c</script></span> jest podciągiem <span class="math inline-math"><script type="math/tex">a</script></span> oraz <span class="math inline-math"><script type="math/tex">b</script></span> jednocześnie. <span class="math inline-math"><script type="math/tex">c</script></span> o maksymalnej długości nazywany jest najdłuższym wspólnym podciągiem - LCS.</p>
+<ol>
+<li><strong>Podproblemy</strong>: Prefiksy obu ciągów.</li>
+<li><strong>Stan</strong>: <span class="math inline-math"><script type="math/tex">L(p, q)</script></span> - długość LCS dla <span class="math inline-math"><script type="math/tex">a' = (a_1, a_2, ..., a_p)</script></span> oraz <span class="math inline-math"><script type="math/tex">b' = (b_1, b_2, ..., b_q)</script></span>.</li>
+<li><strong>Przejścia</strong>: Dwa przypadki: albo <span class="math inline-math"><script type="math/tex">a_p</script></span> i <span class="math inline-math"><script type="math/tex">b_q</script></span> są w LCS, albo nie. Jeżeli tak, to dodajemy 1 do wyniku i skracamy oba prefiksy. W innym wypadku możemy przejść do dowolnej prefiksu.
+<span class="math inline-math"><script type="math/tex">L(p, q) = \texttt{max}(L(p-1, q-1)+1\texttt{ if }a_p=b_q,L(p-1,q),L(p,q-1))</script></span></li>
+<li><strong>Uporządkowanie</strong>: <span class="math inline-math"><script type="math/tex">(1, 1), (1, 2), ..., (1, |b|), (2, 1), (2, 2), ...</script></span></li>
+<li><strong>Przypadki krańcowe</strong>: Jeżeli jeden z ciągów jest pusty, to LCS jest pusty.</li>
+<li><strong>Wynik</strong>: <span class="math inline-math"><script type="math/tex">L(|a|, |b|)</script></span></li>
+</ol>
+<p>Złożoność: <span class="math inline-math"><script type="math/tex">O(|a| \cdot |b|)</script></span></p>
+<h4 id="odtwarzanie-wyniku">Odtwarzanie wyniku</h4>
+<p>A co jeżeli chcemy odtworzyć wynik? (W wypadku LCS: Jak odzyskać ciąg <span class="math inline-math"><script type="math/tex">c</script></span>?)</p>
+<p>Przejścia symbolizują decyzje podejmowane przy budowie wyniku. Wystarczy więc przechowywać dodatkową tablicę, która utrzymuje optymalną decyzję. Remisy mogą być roztrzygane dowolnie (różne sposoby pozwalają na wygenerowanie wszystkich możliwych rozwiązań).</p>
+<p>Przykładowo dla LCS: niech <span class="math inline-math"><script type="math/tex">\mathcal{B}</script></span> symbolizuje wybór.</p>
+<ul>
+<li><span class="math inline-math"><script type="math/tex">\mathcal{B}(p, q) = \texttt{TAKE}\text{, jeżeli optymalne jest } L(p-1,q-1)+1</script></span></li>
+<li><span class="math inline-math"><script type="math/tex">\mathcal{B}(p, q) = \texttt{CUT_A}\text{, jeżeli optymalne jest } L(p-1,q)</script></span></li>
+<li><span class="math inline-math"><script type="math/tex">\mathcal{B}(p, q) = \texttt{CUT_B}\text{, jeżeli optymalne jest } L(p,q-1)</script></span></li>
+</ul>
+<p>A w kodzie LCS wyglądać to będzie mniej więcej tak:</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python">p, q <span class="syntax--keyword syntax--operator">=</span> n, m</span></span>
+<span class=""><span class="syntax--source syntax--python">c <span class="syntax--keyword syntax--operator">=</span> []</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">while</span> (p, q) <span class="syntax--keyword syntax--operator">!=</span> (<span class="syntax--constant syntax--language">0</span>, <span class="syntax--constant syntax--language">0</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">if</span> <span class="syntax--entity syntax--name syntax--function">B</span>(p, q) <span class="syntax--keyword syntax--operator">==</span> TAKE:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>c <span class="syntax--keyword syntax--operator">+=</span> a[p] <span class="syntax--comment syntax--line"># == b[q]</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>p <span class="syntax--keyword syntax--operator">-=</span> <span class="syntax--constant syntax--language">1</span>; q <span class="syntax--keyword syntax--operator">-=</span> <span class="syntax--constant syntax--language">1</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span> <span class="syntax--keyword syntax--control">if</span> <span class="syntax--entity syntax--name syntax--function">B</span>(p, q) <span class="syntax--keyword syntax--operator">==</span> CUT_A:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>p <span class="syntax--keyword syntax--operator">-=</span> <span class="syntax--constant syntax--language">1</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span> <span class="syntax--keyword syntax--control">if</span> <span class="syntax--entity syntax--name syntax--function">B</span>(p, q) <span class="syntax--keyword syntax--operator">==</span> CUT_B:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>q <span class="syntax--keyword syntax--operator">-=</span> <span class="syntax--constant syntax--language">1</span></span></span>
+<span class=""><span class="syntax--source syntax--python">c.<span class="syntax--entity syntax--name syntax--function">reverse</span>()</span></span></pre>
+<p>W ten sposób odtworzymy znaki od końca - gdy dojdziemy do stanu <span class="math inline-math"><script type="math/tex">(0, 0)</script></span>, kończymy działanie i odwracamy ciąg <span class="math inline-math"><script type="math/tex">c</script></span>.</p>
+<p>Taka technika często nazywana jest <em>backtracking</em>, czyli podążanie za swoimi śladami.</p>
+<p>Warto zauważyć, że gdy używamy backtrackingu problematyczne może być ograniczanie zużycia pamięci.</p>
+<h3 id="d%C5%82ugo%C5%9B%C4%87-cyklu-collatza">Długość cyklu Collatza</h3>
+<p>Prosty (i mniej klasyczny) problem na którym można dobrze zobrazować działanie memoizacji to problem znalezienia długości ciągu Collatza.</p>
+<p>Zaczynamy od pewnej liczby całkowitej <span class="math inline-math"><script type="math/tex">c_0</script></span>. Jeżeli jest parzysta, to <span class="math inline-math"><script type="math/tex">c_1 = \frac{c_0}{2}</script></span>. W przeciwnym wypadku <span class="math inline-math"><script type="math/tex">c_1 = 3c_0 + 1</script></span>. Postępujemy analogicznie z <span class="math inline-math"><script type="math/tex">(c_1, c_2, ...)</script></span>. Długość cyklu Collatza to najmniejsze <span class="math inline-math"><script type="math/tex">i</script></span> dla którego <span class="math inline-math"><script type="math/tex">c_i = 1</script></span>. Nawiasem mówiąc, hipoteza Collatza mówi, że takie <span class="math inline-math"><script type="math/tex">i</script></span> istnieje dla każdego <span class="math inline-math"><script type="math/tex">c_0</script></span>.</p>
+<p>Oznaczmy długość ciągu Collatza dla <span class="math inline-math"><script type="math/tex">c_0 = n</script></span> jako <span class="math inline-math"><script type="math/tex">C(n)</script></span>.</p>
+<p>Powiedzmy że chcemy policzyć maksymalne <span class="math inline-math"><script type="math/tex">C(n)</script></span> spośród liczb od <span class="math inline-math"><script type="math/tex">1</script></span> do <span class="math inline-math"><script type="math/tex">n</script></span>.</p>
+<p>Moglibyśmy dla każdej z nich iteracyjnie liczyć&nbsp;<span class="math inline-math"><script type="math/tex">C</script></span>, ale zamiast tego możemy skorzystać z następującego podejścia (memoizacji):</p>
+<p>Zauważmy, że <span class="math inline-math"><script type="math/tex">C(1) = 0</script></span> oraz <span class="math inline-math"><script type="math/tex">C(n) = C(n_1) + 1</script></span> (gdzie <span class="math inline-math"><script type="math/tex">n_1</script></span> to następna liczba w ciągu Collatza po <span class="math inline-math"><script type="math/tex">n</script></span>). Tak więc licząc pewne <span class="math inline-math"><script type="math/tex">C(n)</script></span> możemy zapisywać jakie liczby już odwiedziliśmy i policzyliśmy dla nich <span class="math inline-math"><script type="math/tex">C</script></span> - jeżeli potem do nich trafimy, możemy odczytać wartość i od razu ją zwrócić, zamiast liczyć ją ponownie.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--comment syntax--line"># lim to pewna eksperymentalnie wyznaczona wartość</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--comment syntax--line">#  - maksymalna wartość, jakiej równy będzie n</span></span></span>
+<span class=""><span class="syntax--source syntax--python">vis <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">array</span>(lim, <span class="syntax--constant syntax--language">False</span>)</span></span>
+<span class=""><span class="syntax--source syntax--python">memo <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">array</span>(lim, <span class="syntax--constant syntax--language">0</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">C</span>(n):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">if</span> n <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--constant syntax--language">1</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--keyword syntax--control">return</span> <span class="syntax--constant syntax--language">0</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span> <span class="syntax--keyword syntax--control">if</span> vis[n]:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--keyword syntax--control">return</span> memo[n]</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>vis[n] <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--language">True</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>memo[n] <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">C</span>(n <span class="syntax--keyword syntax--operator">//</span> <span class="syntax--constant syntax--language">2</span> <span class="syntax--keyword syntax--control">if</span> n <span class="syntax--keyword syntax--operator">%</span> <span class="syntax--constant syntax--language">2</span> <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--constant syntax--language">0</span> <span class="syntax--keyword syntax--control">else</span> <span class="syntax--constant syntax--language">3</span><span class="syntax--keyword syntax--operator">*</span>n <span class="syntax--keyword syntax--operator">+</span> <span class="syntax--constant syntax--language">1</span>) <span class="syntax--keyword syntax--operator">+</span> <span class="syntax--constant syntax--language">1</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--keyword syntax--control">return</span> memo[n]</span></span></pre>
+<p>Najlepiej zamiast tablicy skorzystać&nbsp;ze struktury rodzaju mapy/słownika (np. <code style="font-family: &quot;DejaVu Sans Mono&quot;, &quot;Noto Mono&quot;, monospace;">std::map</code> w C++) – wtedy nie musimy przewidywać, ile pamięci potrzebujemy.</p>
+<p>Memoizacja jest tutaj dobrym wyborem, bo trudno przewidzieć w jakiej kolejności należy przejść bo liczbach, aby uporządkowanie było poprawne – ciąg Collatza jest bardzo chaotyczny, na zmianę rośnie i maleje.</p>
+
+{% endblock %}
