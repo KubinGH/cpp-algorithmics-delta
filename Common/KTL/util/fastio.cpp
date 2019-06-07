@@ -10,7 +10,9 @@
 #define putchar_unlocked putchar
 #endif
 
-using namespace std;
+using std::is_integral; using std::is_unsigned; using std::is_signed;
+using std::make_unsigned;
+using std::enable_if;
 
 struct unlocked_cin
 {
@@ -50,29 +52,36 @@ struct unlocked_cin
 
 struct unlocked_cout
 {
+    unlocked_cout& operator<< (const char* c)
+    {
+        puts(c);
+        return *this;
+    }
     unlocked_cout& operator<< (char x)
     {
         putchar_unlocked(x);
         return *this;
     }
     template<typename T>
-    typename enable_if<is_integral<T>::value && is_unsigned<T>::value, unlocked_cin&>::type
+    typename enable_if<is_integral<T>::value && is_unsigned<T>::value, unlocked_cout&>::type
     operator<< (T x)
     {
         static char buffer[64];
-        size_t i;
-        for(i = 0; x; i++)
-            buffer[i] = (x % 10) + '0', x /= 10;
+        size_t i = 0;
+        if(not x)
+            buffer[i++] = '0';
+        while(x)
+            buffer[i++] = (x % 10) + '0', x /= 10;
         for(; i --> 0; )
             putchar_unlocked(buffer[i]);
         return *this;
     }
     template<typename T>
-    typename enable_if<is_integral<T>::value && is_signed<T>::value, unlocked_cin&>::type
+    typename enable_if<is_integral<T>::value && is_signed<T>::value, unlocked_cout&>::type
     operator<< (T x)
     {
         if(x < 0)
             putchar_unlocked('-'), x = -x;
-        return *this << (make_unsigned<T>)x;
+        return *this << static_cast<typename make_unsigned<T>::type>(x);
     }
 } ucout;

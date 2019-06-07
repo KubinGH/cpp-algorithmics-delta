@@ -9,10 +9,11 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <tuple> 
 
 using std::size_t;
 using std::vector; using std::reverse;
-using std::pair;
+using std::pair; using std::tie;
 
 struct kosaraju
 {
@@ -65,8 +66,7 @@ struct kosaraju
     }
 
     // Construct a SCC graph.
-    pair<vector<size_t>, graph_t>
-    make_scc_graph(const vector<vector<size_t>>& scc, const vector<size_t>& scc_idx)
+    graph_t make_scc_graph(const vector<vector<size_t>>& scc, const vector<size_t>& scc_idx)
     {
         fill(vis.begin(), vis.end(), false);
         graph_t scc_graph(scc.size());
@@ -84,6 +84,14 @@ struct kosaraju
             for(auto e : scc_graph[i])
                 vis[e] = false;
         }
-        return {scc_idx, scc_graph};
+        return scc_graph;
+    }
+    
+    graph_t make_scc_graph()
+    {
+        vector<vector<size_t>> scc;
+        vector<size_t> scc_idx;
+        tie(scc, scc_idx) = operator() ();
+        return make_scc_graph(scc, scc_idx);
     }
 };

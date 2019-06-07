@@ -1,14 +1,17 @@
-﻿* Sparse table
-* Operacje bitowe i bitsety
-* Fenwick | < Operacje bitowe i bitsety
+﻿* Operacje bitowe i bitsety
+* Fenwick < Operacje bitowe i bitsety
 * Wyszukiwanie ternarne, równoległe wyszukiwanie binarne
-* Digit DP
+* Niestandardowe DP
+  * Digit DP
+  - Sum-Over-Subsets DP
+  * Convex Hull Trick
+  * Knuth, Divide & Conquer
 * Pierwiastki
-* Kopiec randomizowany
-- Algorytmy randomizowane | < Kopiec randomizowany
+- Algorytmy randomizowane & Kopiec randomizowany
 * Wavelet
 * Aho-Corasick | # Tekstówki
-* KMR | < Sparse table | # Hashe | # Tekstówki
+* Sparse Table & KMR | # Hashe | # Tekstówki
+  - > Tablica sufiksowa
 * Efektywna implementacja i niestandardowa biblioteka standardowa
   * range-for, auto, makra, lambdy, etc.
   * std::stable_partition, std::merge, std::reverse, std::set_union, etc.

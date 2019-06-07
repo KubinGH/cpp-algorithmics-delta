@@ -33,6 +33,7 @@ struct cdbg_t
     template<typename T>
     cdbg_t& operator<< (const T& o)
     {
+        (void)o;
 #ifdef KTL_DEBUG_MACROS
         debug(o);
 #endif
@@ -40,6 +41,7 @@ struct cdbg_t
     }
     cdbg_t& operator<< (ostream& (*pf)(ostream&))
     {
+        (void)pf;
 #ifdef KTL_DEBUG_MACROS
         debug(pf);
 #endif
