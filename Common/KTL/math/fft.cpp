@@ -82,8 +82,8 @@ template<typename T>
 struct fft
 {
     using C = complex<T>;
-    static constexpr long double Q_PI = acos(-1.0L);
-    static C root_of_unity(size_t k) { return C(cos(2*Q_PI / k), sin(2*Q_PI / k)); }
+    static constexpr long double TAU = 2 * acos(-1.0L);
+    static C root_of_unity(size_t k) { return C(cos(TAU / k), sin(TAU / k)); }
     static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
 
     template<typename Ti>

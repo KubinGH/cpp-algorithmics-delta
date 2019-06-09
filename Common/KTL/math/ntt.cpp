@@ -21,7 +21,7 @@ struct ntt
     vector<C> operator() (const vector<Ti>& iA, size_t req = 0)
     {
         KTL_DEBUG_ASSERT(iA.size() <= RootPw);
-        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t)>(root_of_unity));
+        return fft_base::call(fft_base::convert<C>(iA, req, 0), function<C(size_t)>(root_of_unity));
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)

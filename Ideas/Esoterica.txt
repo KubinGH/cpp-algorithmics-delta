@@ -35,7 +35,6 @@
   * Zliczanie ścieżek
   * Eliminacja Gaussa
   * Drzewo przedziałowe macierzy
-* Simpson
 * Python
   * eksperymentowanie, bruty, testowanie
   * numpy
@@ -43,7 +42,10 @@
 - Heavy-Light Decomposition
 - Centroidy
 * Zastosowania wielomianów
-  - tekstowe
+  * tekstowe
+    * ograniczona ilość mismatchy
+    * wildcardy
+    * log sigma
   * trik do pseudo-plecaka na parach/trójkach elementów
   * interpolacja zamiast wzorków (wielomiany Lagrange'a albo numpy)
   * sploty
@@ -52,3 +54,9 @@
   * Number Theoretic Transform
 * Przepływy/skojarzenia
 - BST
+
+
+Krótkie:
+* Simpson
+* Boruvka
+- Algorytmy skalujące
