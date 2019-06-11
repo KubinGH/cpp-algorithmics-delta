@@ -118,7 +118,7 @@ pair<equation_system_status, vector<T>> solve_system_of_linear_equations(vector<
 
     for(size_t i = 0; i < m; i++)
         if(where[i] == SIZE_MAX)
-            return {Infinite, {}};
+            return {Infinite, solution};
 
     return {Unique, solution};
 }

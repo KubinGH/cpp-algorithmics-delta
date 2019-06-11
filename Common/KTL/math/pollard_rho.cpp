@@ -9,15 +9,19 @@
 
 #pragma once
 
+#include <functional>
 #include <algorithm>
+#include <cstddef>
 #include <vector>
 #include "linear_sieve.cpp"
 #include "mod_multiplies.cpp"
 #include "miller_rabin.cpp"
 
 using std::multiplies;
+using std::function;
 using std::vector;
 using std::__lg; using std::__gcd;
+using std::size_t;
 
 constexpr size_t BRUTE_FACTOR_LIMIT = 1 << 10;
 
@@ -76,19 +80,45 @@ vector<T> factorize_int(T n)
 }
 
 template<typename T>
+vector<pair<T, size_t>> _pair_compress(const vector<T>& v)
+{
+    vector<pair<T, size_t>> out;
+    out.emplace_back(v[0], 0);
+    for(auto x : v)
+    {
+        if(out.back().first != x)
+            out.emplace_back(x, 0);
+        out.back().second++;
+    }
+    return out;
+}
+
+template<typename T>
 vector<T> divisors(T n)
 {
-    const auto F = factorize_int(n);
+    const auto F = _pair_compress(factorize_int(n));
     vector<T> D;
-    for(size_t i = 0; i < (size_t(1) << F.size()); i++)
-    {
-        T d = 1;
-        for(size_t k = 0; k < F.size(); k++)
-            if(i & (size_t(1) << k))
-                d *= F[k];
-        D.push_back(d);
-    }
+    function<void(size_t, size_t, T)> gen = [&](size_t i, size_t k, T d) {
+        if(i == F.size())
+            D.push_back(d);
+        else
+        {
+            if(k < F[i].second)
+                gen(i, k + 1, d * F[i].first);
+            gen(i + 1, 0, d);
+        }
+    };
+    gen(0, 0, 1);
     sort(D.begin(), D.end());
-    D.erase(unique(D.begin(), D.end()), D.end());
     return D;
+}
+
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    unsigned long x = 36;
+    for(auto d : divisors(x))
+        cout << d << endl;
 }
