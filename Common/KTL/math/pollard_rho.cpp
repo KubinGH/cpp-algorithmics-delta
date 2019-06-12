@@ -94,6 +94,26 @@ vector<pair<T, size_t>> _pair_compress(const vector<T>& v)
 }
 
 template<typename T>
+vector<T> divisors(const vector<T>& P)
+{
+    const auto F = _pair_compress(P);
+    vector<T> D;
+    function<void(size_t, size_t, T)> gen = [&](size_t i, size_t k, T d) {
+        if(i == F.size())
+            D.push_back(d);
+        else
+        {
+            if(k < F[i].second)
+                gen(i, k + 1, d * F[i].first);
+            gen(i + 1, 0, d);
+        }
+    };
+    gen(0, 0, 1);
+    sort(D.begin(), D.end());
+    return D;
+}
+
+template<typename T>
 vector<T> divisors(T n)
 {
     const auto F = _pair_compress(factorize_int(n));
@@ -111,14 +131,4 @@ vector<T> divisors(T n)
     gen(0, 0, 1);
     sort(D.begin(), D.end());
     return D;
-}
-
-
-#include <iostream>
-using namespace std;
-int main()
-{
-    unsigned long x = 36;
-    for(auto d : divisors(x))
-        cout << d << endl;
 }
