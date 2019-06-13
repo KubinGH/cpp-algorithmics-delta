@@ -51,8 +51,8 @@ namespace minzaw {
     answered.resize(2*N+1);
     for(int i=1; i<=N; i++) {
       int x, y;
-      //cin >> x >> y;
       x = i; y = i + N;
+      cin >> x >> y;
       type[x] = type[y] = i;
     }
     Solve(N);

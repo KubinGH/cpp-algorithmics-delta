@@ -1,7 +1,5 @@
 #include "minerals.h"
 #include <bits/stdc++.h>
-//#include <ktl/util/extio.cpp>
-//#include <ktl/util/debug_macros.cpp>
 
 using namespace std;
 
@@ -32,8 +30,6 @@ void answer(size_t a, size_t b)
 
 void divida_et_impera(size_t rangeL, size_t rangeR, const vector<size_t>& against, bool range_in_set)
 {
-    //cdbg << "[" << rangeL << ", " << rangeR << "), " << against << endl;
-
     const size_t m = rangeR - rangeL;
 
     if(m == 1)
@@ -51,7 +47,7 @@ void divida_et_impera(size_t rangeL, size_t rangeR, const vector<size_t>& agains
         return;
     }
 
-    const size_t k = max(1l, lround((range_in_set ? 0.6667 : 1 - 0.6667) * m));
+    const size_t k = max(1l, lround((range_in_set ? 0.66667 : 0.33333) * m));
     const size_t k1 = m - k, rangeM = rangeL + k;
 
     vector<size_t> againstL, againstR;
@@ -83,21 +79,19 @@ void Solve(int N)
             X.push_back(i);
         else
             Y.push_back(i);
-    for(size_t i = 0; i < n; i++)
-        toggle(i);
 
     mt19937 gen(1337);
     shuffle(X.begin(), X.end(), gen);
     shuffle(Y.begin(), Y.end(), gen);
-
-    //cdbg << "X: " << X << endl;
-    //cdbg << "Y: " << Y << endl;
 
     E.resize(2 * n);
     copy(X.begin(), X.end(), E.begin());
     copy(Y.begin(), Y.end(), E.begin() + n);
 
     __translate = true;
+
+    for(size_t i = 0; i < n; i++)
+        toggle(i);
 
     divida_et_impera(0, n, range(n, 2*n), false);
 }
