@@ -31,10 +31,10 @@ struct poly_multiplies
     }
 };
 
-template<typename V, typename Multiplies>
+template<typename V, typename Transform>
 struct polynomial
 {
-    static Multiplies mul;
+    static poly_multiplies<V, Transform> mul;
     vector<V> P;
 
     polynomial() {}
@@ -80,10 +80,10 @@ struct polynomial
         return polynomial(mul(P, other.P));
     }
 };
-template<typename V, typename Multiplies>
-Multiplies polynomial<V, Multiplies>::mul;
+template<typename V, typename Transform>
+poly_multiplies<V, Transform> polynomial<V, Transform>::mul;
 
-/*
+
 #include <bits/stdc++.h>
 #include "../util/extio.cpp"
 #include "fft.cpp"
@@ -101,6 +101,7 @@ void print_poly(const Poly& P, size_t trim = 16)
     cout << endl;
 }
 
+/*
 int main()
 {
     mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -110,12 +111,14 @@ int main()
 
     vector<long> Pc(n + 1), Qc(m + 1);
     for(size_t i = 0; i <= n; i++)
-        Pc[i] = uniform_int_distribution<long>{lo, hi}(gen);
+        cin >> Pc[i];
+        //Pc[i] = uniform_int_distribution<long>{lo, hi}(gen);
     for(size_t i = 0; i <= m; i++)
-        Qc[i] = uniform_int_distribution<long>{lo, hi}(gen);
+        cin >> Qc[i];
+        //Qc[i] = uniform_int_distribution<long>{lo, hi}(gen);
 
-    polynomial<long, poly_multiplies<long, rfft<long, double>>> Pf(Pc), Qf(Qc);
-    polynomial<long, poly_multiplies<long, ntt_alpha>> Pn(Pc), Qn(Qc);
+    polynomial<long, rfft<long, double>> Pf(Pc), Qf(Qc);
+    polynomial<long, ntt_alpha> Pn(Pc), Qn(Qc);
 
     print_poly(Pf);
     print_poly(Qf);

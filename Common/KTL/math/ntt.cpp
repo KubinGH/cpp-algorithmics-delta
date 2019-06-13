@@ -14,20 +14,20 @@ template<typename T, T Mod, T Root, size_t RootPw>
 struct ntt
 {
     using C = mint<T, Mod>;
-    static C root_of_unity(size_t k) { return power(C(Root), RootPw / k); }
-    static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
+    static C root_of_unity(size_t k, size_t l) { return power(C(Root), RootPw / k * l); }
+    static C inverse_root_of_unity(size_t k, size_t l) { return T(1) / root_of_unity(k, l); }
 
     template<typename Ti>
     vector<C> operator() (const vector<Ti>& iA, size_t req = 0)
     {
         KTL_DEBUG_ASSERT(iA.size() <= RootPw);
-        return fft_base::call(fft_base::convert<C>(iA, req, 0), function<C(size_t)>(root_of_unity));
+        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t, size_t)>(root_of_unity));
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)
     {
         KTL_DEBUG_ASSERT(iY.size() <= RootPw);
-        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t)>(inverse_root_of_unity));
+        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t, size_t)>(inverse_root_of_unity));
         for(size_t i = 0; i < A.size(); i++)
             A[i] /= A.size();
         return A;

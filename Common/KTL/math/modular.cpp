@@ -59,6 +59,8 @@ struct mint
     T value;
 
     mint() : value(0) {}
+
+    mint(const mint& o) { value = o.value; }
     template<typename Ti>
     mint(Ti raw_value)
     {
@@ -119,6 +121,8 @@ struct mint
     COMPARISON(==)
     COMPARISON(!=)
     #undef COMPARISON
+
+    bool operator! () const { return not value; }
 };
 
 #define MINT_PARAM typename T, T _Mod, bool UseFermat, bool DoubleWordMultiply

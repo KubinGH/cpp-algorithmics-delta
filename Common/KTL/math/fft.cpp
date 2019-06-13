@@ -44,7 +44,7 @@ namespace fft_base
     }
 
     template<typename T>
-    vector<T> call(vector<T> A, function<T(size_t)> w)
+    vector<T> call(vector<T> A, function<T(size_t, size_t)> w, size_t recalc = 0)
     {
         KTL_DEBUG_ASSERT((A.size() & (A.size() - 1)) == 0);
 
@@ -59,7 +59,7 @@ namespace fft_base
 
         for(size_t block = 2; block <= n; block *= 2)
         {
-            T w_b = w(block);
+            T w_b = w(block, 1);
             for(size_t i = 0; i < n; i += block)
             {
                 T t = 1;
@@ -69,7 +69,10 @@ namespace fft_base
                     auto u = A[i+j], v = A[i+j+m] * t;
                     A[i+j]   = u + v;
                     A[i+j+m] = u - v;
-                    t *= w_b;
+                    if(recalc and j % recalc == 0)
+                        t = w(block, j + 1);
+                    else
+                        t *= w_b;
                 }
             }
         }
@@ -78,33 +81,33 @@ namespace fft_base
     }
 }
 
-template<typename T>
+template<typename T, size_t Recalc = 16>
 struct fft
 {
     using C = complex<T>;
     static constexpr long double TAU = 2 * acos(-1.0L);
-    static C root_of_unity(size_t k) { return C(cos(TAU / k), sin(TAU / k)); }
-    static C inverse_root_of_unity(size_t k) { return T(1) / root_of_unity(k); }
+    static C root_of_unity(size_t k, size_t l) { return C(cos(TAU * l / k), sin(TAU * l / k)); }
+    static C inverse_root_of_unity(size_t k, size_t l) { return T(1) / root_of_unity(k, l); }
 
     template<typename Ti>
     vector<C> operator() (const vector<Ti>& iA, size_t req = 0)
     {
-        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t)>(root_of_unity));
+        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t, size_t)>(root_of_unity), Recalc);
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)
     {
-        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t)>(inverse_root_of_unity));
+        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t, size_t)>(inverse_root_of_unity), Recalc);
         for(size_t i = 0; i < A.size(); i++)
             A[i] /= A.size();
         return A;
     }
 };
 
-template<typename T, typename Tf>
+template<typename T, typename Tf, size_t Recalc = 16>
 struct rfft
 {
-    fft<Tf> transform;
+    fft<Tf, Recalc> transform;
     using C = typename fft<Tf>::C;
 
     vector<C> operator() (const vector<T>& A, size_t req = 0)
