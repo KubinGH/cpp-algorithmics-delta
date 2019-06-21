@@ -55,11 +55,8 @@ bool miller_rabin_test(T n, const vector<uintmax_t>& W)
     return true;
 }
 
-template<typename T>
-bool is_prime(T n);
 
-template<>
-bool is_prime<uint32_t>(uint32_t n)
+bool is_prime(uint32_t n)
 {
     if(n < 341531)
         return miller_rabin_test(n, {9345883071009581737ull});
@@ -69,8 +66,7 @@ bool is_prime<uint32_t>(uint32_t n)
         return miller_rabin_test(n, {2, 7, 61});
 }
 
-template<>
-bool is_prime<uint64_t>(uint64_t n)
+bool is_prime(uint64_t n)
 {
     if(n < ((uint64_t)1 << 31))
         return is_prime((uint32_t)n);
