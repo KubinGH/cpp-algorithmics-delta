@@ -19,35 +19,61 @@ struct bits_generator
 
 #ifdef XHOVA
 string __M;
-uint32_t query(const vector<bool>& S)
+int query(const vector<bool>& S)
 {
-    uint32_t r = 0;
-    //cerr << "? ";
-    for(uint32_t i = 0; i < S.size(); i++)
+    size_t r = 0;
+    cerr << "? ";
+    for(size_t i = 0; i < S.size(); i++)
     {
-        //cerr << S[i];
+        cerr << S[i];
         if(__M[i] - '0' == S[i])
             r++;
     }
-    //cerr << endl;
-    //cout << "= " << r << endl;
+    cerr << endl;
+    cerr << "= " << r << endl;
     return r == S.size() ? 2 : (r == S.size()/2);
 }
 #else
-uint32_t query(const vector<bool>& S)
+int query(const vector<bool>& S)
 {
     for(bool o : S)
         cout << o;
     cout << endl;
-    uint32_t r;
+    size_t r;
     cin >> r;
     return r == S.size() ? 2 : (r == S.size()/2);
 }
 #endif
 
+struct disjoint_set
+{
+    size_t n;
+    vector<size_t> parent, nrank;
+    disjoint_set(size_t _n) : n(_n)
+    {
+        parent.resize(n); nrank.resize(n);
+        iota(parent.begin(), parent.end(), 0);
+    }
+    void unite(size_t u, size_t v)
+    {
+        if(nrank[v = find(v)] > nrank[u = find(u)])
+            swap(u, v);
+        if(u == v)
+            return;
+        parent[v] = u;
+        if(nrank[u] == nrank[v])
+            nrank[u]++;
+    }
+    size_t find(size_t u)
+    {
+        return parent[u] == u ? u : parent[u] = find(parent[u]);
+    }
+};
+
 int main()
 {
-    uint32_t n;
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+    size_t n;
 #ifdef XHOVA
     //cin >> __M;
     cin >> n;
@@ -59,23 +85,45 @@ int main()
     bit.gen.seed(time(0));
     vector<bool> S(n);
 
-    uint32_t c0 = 0, c1 = 0;
-    for(uint32_t i = 0; i < n/2+250; i++)
+    while(true)
     {
-        for(uint32_t i = 1; i < n; i++)
+        for(size_t i = 1; i < n; i++)
             S[i] = bit();
-        uint32_t r = query(S);
+        auto r = query(S);
         if(r == 1)
-            c0++;
+            break;
+        else if(r == 2)
+            return 0;
     }
-    S[0] = 1;
-    for(uint32_t i = 0; i < n/2+250; i++)
+
+    disjoint_set dset(n);
+    S[0] = not S[0];
+    for(size_t i = 1; i < n; i++)
     {
-        for(uint32_t i = 1; i < n; i++)
-            S[i] = bit();
-        uint32_t r = query(S);
-        if(r == 1)
-            c1++;
+        S[i] = not S[i];
+        auto r = query(S);
+        if(r == 2)
+            return 0;
+        else if(r == 0)
+            dset.unite(0, i);
+        S[i] = not S[i];
     }
-    cout << c0 << " " << c1 << endl;
+    S[0] = not S[0];
+
+    auto Z1 = S;
+    for(size_t i = 0; i < n; i++)
+        if(dset.find(i) == dset.find(0))
+            Z1[i] = not Z1[i];
+
+    if(query(Z1) == 2)
+        return 0;
+
+    auto Z2 = Z1;
+    for(size_t i = 0; i < n; i++)
+        Z2[i] = not Z2[i];
+
+    if(query(Z2) == 2)
+        return 0;
+
+    abort();
 }
