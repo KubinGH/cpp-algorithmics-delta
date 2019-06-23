@@ -7,7 +7,7 @@
   * Convex Hull Trick
   * Knuth, Divide & Conquer
 * Pierwiastki
-- Algorytmy randomizowane & Kopiec randomizowany
+* Algorytmy randomizowane & Kopiec randomizowany
 * Wavelet
 * Aho-Corasick | # Tekstówki
 * Sparse Table & KMR | # Hashe | # Tekstówki

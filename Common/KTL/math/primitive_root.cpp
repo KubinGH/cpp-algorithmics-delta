@@ -14,7 +14,7 @@
 #include <random>
 #include <cstddef>
 #include <algorithm>
-#include "pollard_rho.cpp"
+#include "factorization.cpp"
 #include "mod_multiplies.cpp"
 #include "../ktl_debug_mode.cpp"
 
