@@ -35,5 +35,5 @@ int main()
         assert(n == m);
         i++;
     }
-    cout << fixed << setprecision(2) << (i / 3.) << " factorizations per second" << endl;
+    cout << fixed << setprecision(2) << (i / 5.) << " factorizations per second" << endl;
 }
