@@ -1,14 +1,14 @@
-﻿* Operacje bitowe i bitsety
-* Fenwick < Operacje bitowe i bitsety
-* Wyszukiwanie ternarne, równoległe wyszukiwanie binarne
+﻿+ Operacje bitowe i bitsety
++ Fenwick < Operacje bitowe i bitsety
++ Wyszukiwanie ternarne, równoległe wyszukiwanie binarne
 * Niestandardowe DP
   * Digit DP
   - Sum-Over-Subsets DP
   * Convex Hull Trick
   * Knuth, Divide & Conquer
 * Pierwiastki
-* Algorytmy randomizowane & Kopiec randomizowany
-* Wavelet
++ Algorytmy randomizowane & Kopiec randomizowany
++ Wavelet
 * Aho-Corasick | # Tekstówki
 * Sparse Table & KMR | # Hashe | # Tekstówki
   - > Tablica sufiksowa
@@ -60,3 +60,4 @@ Krótkie:
 * Simpson
 * Boruvka
 - Algorytmy skalujące
+* Mniejszy-większy
