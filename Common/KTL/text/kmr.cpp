@@ -1,63 +1,87 @@
-// Knuth Miller Rabin - base substrings dictonary
-// Works, but is unbearably slow
-
-// Last revision: October 2018
-
-#pragma once
-
-#include <cstddef>
-#include <vector>
-#include <cstdint>
-#include <utility>
-#include <map>
-#include <unordered_map>
+#include <algorithm>
 #include <iterator>
+#include <cstddef>
+#include <utility>
+#include <numeric>
+#include <vector>
 
 using std::size_t;
 using std::vector; using std::pair;
-using std::uint32_t; using std::uint64_t;
-using std::unordered_map; using std::map;
-using std::iterator_traits;
+using std::iota; using std::copy; using std::sort;
+using std::iterator_traits; using std::back_inserter;
+using std::__lg;
 
-struct knuth_miller_rosenberg
+struct karp_miller_rosenberg
 {
-    struct hash_2size
-    {
-        size_t operator() (const pair<size_t, size_t>& p) const
-        {
-            return 313*31*17*13*11*
-                   ((uint64_t(p.first<<16) * uint64_t(p.second)) % ((1llu<<31)-1));
-        }
-    };
     size_t n;
-    vector<vector<size_t>> A;
-    template<typename Iterator, typename T = typename iterator_traits<Iterator>::value_type>
-    knuth_miller_rosenberg(Iterator first, Iterator last)
+    vector<vector<size_t>> T;
+
+    template<typename Iterator>
+    karp_miller_rosenberg(Iterator first, Iterator last)
     {
-        n = distance(first, last);
-        A.emplace_back(n);
-        map<T, size_t> elems; size_t g = 0;
-        for(size_t i = 0; first != last; first++, i++)
-            A[0][i] = (elems.find(*first) == elems.end() ? elems[*first] = g++ : elems[*first]);
-        unordered_map<pair<size_t, size_t>, size_t, hash_2size> dict;
-        dict.reserve(4*n);
-        for(size_t i = 1; (1u << i) <= n; i++)
+        T.push_back(compressed(first, last));
+        n = T[0].size();
+
+        vector<vector<size_t>> buckets(n);
+        for(size_t k = 1; (1u << k) <= n; k++)
         {
-            dict.clear();
-            size_t h = 0;
-            A.emplace_back(n - (1u << i) + 1);
-            for(size_t j = 0; j + (1 << i) <= n; j++)
+            const size_t p = 1 << k, q = p >> 1, m = n - p + 1;
+            vector<size_t> run(m);
+            iota(run.begin(), run.end(), 0);
+
+            auto bucketify = [&]() {
+                run.clear();
+                for(size_t v = 0; v < n; v++)
+                {
+                    for(const auto& w : buckets[v])
+                        run.push_back(w);
+                    buckets[v].clear();
+                }
+            };
+            for(size_t i : run)
+                buckets[T[k-1][i + q]].push_back(i);
+            bucketify();
+            for(size_t i : run)
+                buckets[T[k-1][i]].push_back(i);
+            bucketify();
+
+            T.emplace_back(m);
+            for(size_t i = 0, f = 0; i < m; i++)
             {
-                pair<size_t, size_t> p = {A[i-1][j], A[i-1][j + (1u << (i-1))]};
-                if(dict.find(p) == dict.end())
-                    dict[p] = h++;
-                A[i][j] = dict[p];
+                if(i and T[k-1][run[i-1]] == T[k-1][run[i]]
+                     and T[k-1][run[i-1] + q] == T[k-1][run[i] + q])
+                    f++;
+                T[k][run[i]] = i - f;
             }
         }
     }
-    pair<size_t, size_t> operator() (size_t a, size_t b)
+
+
+    pair<size_t, size_t> operator() (size_t i, size_t j) const
     {
-        size_t p = __lg(b - a + 1);
-        return {A[p][a], A[p][b + 1 - (1 << p)]};
+        const size_t d = j - i, e = __lg(d);
+        return {T[e][i], T[e][j - (1 << e)]};
+    }
+
+
+    template<typename Iterator, typename V = typename iterator_traits<Iterator>::value_type>
+    static vector<size_t> compressed(Iterator first, Iterator last)
+    {
+        const size_t n = distance(first, last);
+
+        vector<pair<V, size_t>> values; values.reserve(n);
+        for(size_t i = 0; i < n; i++, ++first)
+            values.emplace_back(*first, i);
+        sort(values.begin(), values.end());
+
+        vector<size_t> result(n);
+        for(size_t i = 0, f = 0; i < n; i++)
+        {
+            if(i and values[i].first == values[i-1].first)
+                f++;
+            result[values[i].second] = i - f;
+        }
+
+        return result;
     }
 };

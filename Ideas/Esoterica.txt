@@ -10,8 +10,8 @@
 + Algorytmy randomizowane & Kopiec randomizowany
 + Wavelet
 * Aho-Corasick | # Tekstówki
-* Sparse Table & KMR | # Hashe | # Tekstówki
-  - > Tablica sufiksowa
++ Sparse Table 
+* KMR i Tablica sufiksowa | # Tekstówki
 * Efektywna implementacja i niestandardowa biblioteka standardowa
   * range-for, auto, makra, lambdy, etc.
   * std::stable_partition, std::merge, std::reverse, std::set_union, etc.
@@ -21,8 +21,8 @@
   * -fsanitize, warningi
   * cache procesora, zmienne tymczasowe, rekurencja
 * C++: Szablony
-* Policy Based Data Structures
-* Magiczne modulowanie | # Hashe
+^ Policy Based Data Structures
+^ Magiczne modulowanie | # Hashe
 * Mobius i inne funkcje multiplikatywne
 * Algorytmy teorioliczbowe
   * Miller-Rabin
