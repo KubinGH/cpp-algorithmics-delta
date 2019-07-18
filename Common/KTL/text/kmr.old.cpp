@@ -1,4 +1,4 @@
-// Knuth Miller Rabin - base substrings dictonary
+// Karp Miller Rosenberg - base substrings dictonary
 // Works, but is unbearably slow
 
 // Last revision: October 2018

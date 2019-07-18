@@ -5,9 +5,13 @@
   * Digit DP
   - Sum-Over-Subsets DP
   * Convex Hull Trick
+    * Li-Chao Tree
   * Knuth, Divide & Conquer
 * Pierwiastki
-+ Algorytmy randomizowane & Kopiec randomizowany
++ Algorytmy randomizowane
+    * Kopiec randomizowany
+    * Skiplista
+    * Hashmapy
 + Wavelet
 * Aho-Corasick | # Tekstówki
 + Sparse Table 

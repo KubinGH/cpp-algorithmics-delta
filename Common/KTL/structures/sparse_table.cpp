@@ -41,7 +41,7 @@ struct sparse_table
     }
     T operator() (size_t a, size_t b)
     {
-        size_t p = __lg(b - a + 1);
-        return F(A[p][a], A[p][b + 1 - (1 << p)]);
+        size_t p = __lg(b - a);
+        return F(A[p][a], A[p][b - (1 << p)]);
     }
 };

@@ -1,3 +1,9 @@
+// Karp Miller Rosenberg
+// allows to compute a perfect identifier id(s) for each substring,
+// such that id(a) = id(b) <=> a = b
+// This version also retains the property that id(a) < id(b) <=> a < b
+// (lexicographical comparison)
+
 #include <algorithm>
 #include <iterator>
 #include <cstddef>
