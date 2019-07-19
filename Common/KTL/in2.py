@@ -52,27 +52,17 @@ def resolve_internal(filename, included, ipaths, level=0, encoding=None):
 
 
 if __name__ == "__main__":
-    sys.argv.append("in.cpp")
-    sys.argv.append("in.ii.cpp")
-    sys.argv.append('#include <(ktl\/.*?)>')
-    sys.argv.append("-e")
-    sys.argv.append('"utf-8"')
-    sys.argv.append('-p')
-    sys.argv.append('~/Documents/KTL')
     parser = argparse.ArgumentParser(prog="in2", description="Include Inliner")
 
     parser.add_argument("infile", help="Input file")
     parser.add_argument("outfile", help="Output file")
-    parser.add_argument("pattern", help="Only includes matching the pattern are inlined")
+    parser.add_argument("pattern", help="Regular expression matching includes to inline. Group 0 should yield the filename.")
 
-    parser.add_argument("-v", "--verbose", action="store_true", help="Controls logging")
     parser.add_argument("-e", "--encoding", default=None, help="Encoding to open and save files in")
     parser.add_argument("-p", "--ipaths", help="Path to look for includes in", nargs="*")
     parser.add_argument("-n", "--nointernal", action="store_true", help="Disrespect internal includes (enclosed in \"\")")
 
     args = parser.parse_args()
-
-    print(args)
 
     infile = Path(args.infile)
     outfile = Path(args.outfile)
