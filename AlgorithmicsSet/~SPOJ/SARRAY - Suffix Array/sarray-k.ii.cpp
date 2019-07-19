@@ -1,10 +1,6 @@
-// Karp Miller Rosenberg
-// allows to compute a perfect identifier id(s) for each substring,
-// such that id(a) = id(b) <=> a = b
-// This version also retains the property that id(a) < id(b) <=> a < b
-// (lexicographical comparison)
+#include <bits/stdc++.h>
 
-#pragma once
+// -*- ktl/text/kmr.cpp -*-
 
 #include <functional>
 #include <algorithm>
@@ -81,3 +77,52 @@ struct karp_miller_rosenberg
         return {take0(e, i), take1(e, j - (1 << e))};
     }
 };
+
+// -$- ktl/text/kmr.cpp -$-
+
+// -*- ktl/text/suffix_array.cpp -*-
+
+#include <algorithm>
+#include <iterator>
+#include <utility>
+#include <limits>
+#include <vector>
+
+using std::sort; using std::copy;
+using std::vector; using std::pair;
+using std::iterator_traits; using std::back_inserter;
+using std::numeric_limits;
+
+vector<size_t> suffix_array(const karp_miller_rosenberg& kmr)
+{
+    const size_t n = kmr.n;
+    vector<pair<pair<size_t, size_t>, size_t>> keys(n);
+    for(size_t i = 0; i < n; i++)
+        keys[i] = {kmr(i, i + n), i};
+    sort(keys.begin(), keys.end());
+    vector<size_t> result(n);
+    for(size_t i = 0; i < n; i++)
+        result[i] = keys[i].second;
+    return result;
+}
+
+template<typename Iterator, typename T = typename iterator_traits<Iterator>::value_type>
+vector<size_t> suffix_array(Iterator first, Iterator last)
+{
+    karp_miller_rosenberg kmr(first, last);
+    return suffix_array(kmr);
+}
+
+// -$- ktl/text/suffix_array.cpp -$-
+
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+    string S;
+    cin >> S;
+    for(auto x : suffix_array(S.begin(), S.end()))
+        cout << x << "\n";
+}

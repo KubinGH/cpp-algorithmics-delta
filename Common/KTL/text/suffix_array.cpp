@@ -18,7 +18,7 @@ using std::numeric_limits;
 
 vector<size_t> suffix_array(const karp_miller_rosenberg& kmr)
 {
-    const size_t n = kmr.n / 2;
+    const size_t n = kmr.n;
     vector<pair<pair<size_t, size_t>, size_t>> keys(n);
     for(size_t i = 0; i < n; i++)
         keys[i] = {kmr(i, i + n), i};
@@ -30,16 +30,8 @@ vector<size_t> suffix_array(const karp_miller_rosenberg& kmr)
 }
 
 template<typename Iterator, typename T = typename iterator_traits<Iterator>::value_type>
-vector<size_t> suffix_array(Iterator first, Iterator last, T leaf = numeric_limits<T>::min())
+vector<size_t> suffix_array(Iterator first, Iterator last)
 {
-    const size_t n = distance(first, last);
-    vector<T> buf;
-    buf.reserve(2*n);
-    copy(first, last, back_inserter(buf));
-    for(size_t i = 0; i < n; i++)
-        buf.emplace_back(leaf);
-
-    karp_miller_rosenberg kmr(buf.begin(), buf.end());
-
+    karp_miller_rosenberg kmr(first, last);
     return suffix_array(kmr);
 }
