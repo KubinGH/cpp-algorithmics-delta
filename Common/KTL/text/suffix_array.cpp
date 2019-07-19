@@ -1,3 +1,9 @@
+// Computes Suffix Array using KMR, in complexity O([kmr] + n log n).
+// The KMR must be implemented so that id(a) < id(b) <=> a < b
+// (identifier comparison is the same as lexicographical comparison)
+
+#pragma once
+
 #include <algorithm>
 #include <iterator>
 #include <utility>

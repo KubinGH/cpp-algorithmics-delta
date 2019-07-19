@@ -4,6 +4,8 @@
 // This version also retains the property that id(a) < id(b) <=> a < b
 // (lexicographical comparison)
 
+#pragma once
+
 #include <algorithm>
 #include <iterator>
 #include <cstddef>

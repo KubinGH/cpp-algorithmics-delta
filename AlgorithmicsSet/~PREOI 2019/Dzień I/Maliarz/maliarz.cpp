@@ -23,6 +23,7 @@ int main()
     cell a = {0, 0}, b = {0, 0};
     Y[0]--; X[0]--;
     uint32_t result = 1;
+    bool ok = true;
     for(uint32_t i = 0; i < 2*(n - 1); i++)
     {
         cell c = a, d = b;
@@ -40,8 +41,8 @@ int main()
             result *= 2, result %= MOD;
         if(a == c or b == d)
         {
-            cout << 0;
-            return 0;
+            ok = false;
+            break;
         }
         if(c == d)
             X[c.x]--, Y[c.y]--;
@@ -49,9 +50,9 @@ int main()
             X[c.x]--, Y[c.y]--, X[d.x]--, Y[d.y]--;
         a = c; b = d;
     }
-    bool ok = true;
-    for(uint32_t i = 0; i < n; i++)
+    if(ok) for(uint32_t i = 0; i < n; i++)
         if(X[i] or Y[i])
             ok = false;
+    //cout << (ok ? "YES" : "NO") << endl;
     cout << (ok ? result : 0);
 }
