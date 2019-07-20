@@ -50,20 +50,7 @@ def resolve_internal(filename, included, ipaths, level=0, encoding=None):
     included.append(filename)
     return out
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(prog="in2", description="Include Inliner")
-
-    parser.add_argument("infile", help="Input file")
-    parser.add_argument("outfile", help="Output file")
-    parser.add_argument("pattern", help="Regular expression matching includes to inline. Group 0 should yield the filename.")
-
-    parser.add_argument("-e", "--encoding", default=None, help="Encoding to open and save files in")
-    parser.add_argument("-p", "--ipaths", help="Path to look for includes in", nargs="*")
-    parser.add_argument("-n", "--nointernal", action="store_true", help="Disrespect internal includes (enclosed in \"\")")
-
-    args = parser.parse_args()
-
+def main(args):
     infile = Path(args.infile)
     outfile = Path(args.outfile)
 
@@ -99,3 +86,19 @@ if __name__ == "__main__":
         f.write(recontent)
 
     print("Done!")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="in2", description="Include Inliner")
+
+    parser.add_argument("infile", help="Input file")
+    parser.add_argument("outfile", help="Output file")
+    parser.add_argument("pattern", help="Regular expression matching includes to inline. Group 0 should yield the filename.")
+
+    parser.add_argument("-e", "--encoding", default=None, help="Encoding to open and save files in")
+    parser.add_argument("-p", "--ipaths", help="Path to look for includes in", nargs="*")
+    parser.add_argument("-n", "--nointernal", action="store_true", help="Disrespect internal includes (enclosed in \"\")")
+
+    args = parser.parse_args()
+
+    main(args)
