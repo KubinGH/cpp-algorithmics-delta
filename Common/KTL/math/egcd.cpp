@@ -5,6 +5,7 @@
 //   y' = y - k (a / gcd(a, b))
 //   ax' + by' = p*gcd(a, b)
 // Complexity: O(log ab), since a successful modulo operation must reduce the number at least twice.
+
 // Last revision: March 2019
 
 #pragma once

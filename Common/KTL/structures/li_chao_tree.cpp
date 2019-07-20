@@ -14,6 +14,7 @@
 //   and default constructor returning f(x) = +oo (or -oo if negated)
 // mirror_ox mirrors everything around the X axis internally, so that the
 //  maximum is kept instead of minimum.
+
 // Last revision: June 2019
 
 

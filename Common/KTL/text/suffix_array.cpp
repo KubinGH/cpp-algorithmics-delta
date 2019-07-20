@@ -2,6 +2,8 @@
 // The KMR must be implemented so that id(a) < id(b) <=> a < b
 // (identifier comparison is the same as lexicographical comparison)
 
+// Last revision: July 2019
+
 #pragma once
 
 #include <algorithm>
@@ -27,11 +29,4 @@ vector<size_t> suffix_array(const karp_miller_rosenberg& kmr)
     for(size_t i = 0; i < n; i++)
         result[i] = keys[i].second;
     return result;
-}
-
-template<typename Iterator, typename T = typename iterator_traits<Iterator>::value_type>
-vector<size_t> suffix_array(Iterator first, Iterator last)
-{
-    karp_miller_rosenberg kmr(first, last);
-    return suffix_array(kmr);
 }

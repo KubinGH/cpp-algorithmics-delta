@@ -6,6 +6,7 @@
 // Contains modifications that allow the routine to solve cases when gcd(a, m) ≠ 1.
 //  (namely the shift, fix variables). Hint: ax ≡ ay (mod m) <=> x ≡ y (mod m/gcd(a, m))
 // Complexity: O(sqrt(m))
+
 // Last revision: April 2019
 
 #include <bits/stdc++.h>

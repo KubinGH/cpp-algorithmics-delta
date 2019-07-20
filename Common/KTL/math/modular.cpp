@@ -9,6 +9,7 @@
 // `DoubleWordMultiply` - do multiplication on variables twice the size of T. Refers to `mod_multiplies.cpp`.
 // Note: when facing operator-related compiler errors, cast everything to the mint type.
 // _KTL_DEBUG enables coprimality checks when trying to compute the modular inverse.
+
 // Last revision: April 2019
 
 #pragma once

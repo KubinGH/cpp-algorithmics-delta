@@ -9,6 +9,8 @@
 // the solution is coprime to m (generator powers are coprime)
 // Complexity: primitive root + discrete logarithm
 
+// Last revision: April 2019
+
 #pragma once
 
 #include <algorithm>

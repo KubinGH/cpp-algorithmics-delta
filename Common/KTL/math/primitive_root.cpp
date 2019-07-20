@@ -8,7 +8,7 @@
 // Complexity: O(F(n) + t * log^2 n),
 //             where F is the time taken to factorize an integer, and t is the number of tries.
 //             The number of tries is low on average.
-//
+// Last revision: April 2019
 
 #include <limits>
 #include <random>

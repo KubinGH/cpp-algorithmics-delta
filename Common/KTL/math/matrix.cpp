@@ -1,3 +1,8 @@
+// Mathematical matrices. Multiplication
+// and optimized modulo multiplication is implemented.
+
+// Last revision: May 2019
+
 #pragma once
 
 #include <algorithm>

@@ -3,7 +3,8 @@
 // Will probably fail for moduli larger than ~2^63, but this is mostly enough.
 // Moduli larger than 2^63 can't be achieved with russian peasant method either,
 // so 128-bit integers would have to be implemented anyways.
-// Last revision: Beginning of 2019
+
+// Last revision: April 2019
 
 #pragma once
 

@@ -2,6 +2,7 @@
 // uses the exact same implementation as FFT, except the type is mint<T> instead of complex<T>.
 // The root of unity with a given power must be provided, as well as the modulus.
 // Complexity: O(n log n) with a considerable constant factor, because of the modulo operations.
+
 // Last revision: April 2019
 
 #pragma once

@@ -1,3 +1,7 @@
+// Basic polynomial operations
+
+// Last revision: June 2019
+
 #pragma once
 
 #include <vector>

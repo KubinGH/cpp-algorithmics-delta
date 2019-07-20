@@ -2,6 +2,7 @@
 // Solves systems of congruences. Works for non-coprime moduli.
 // Provide congruences as pairs [x |= first (mod second)],
 // returns {0, 0} if there is no solution.
+
 // Last Revision: April 2019
 
 #pragma once

@@ -3,6 +3,10 @@
 // such that id(a) = id(b) <=> a = b
 // This version also retains the property that id(a) < id(b) <=> a < b
 // (lexicographical comparison)
+// take1 is a guarded read of T, returning 0 in case of out-of-bounds
+// take0 is the unguarded version, used for consistency
+
+// Last revision: July 2019
 
 #pragma once
 
