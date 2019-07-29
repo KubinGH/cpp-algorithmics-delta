@@ -36,8 +36,8 @@ struct karp_miller_rosenberg
 
         auto push_compressed = [&](function<bool(size_t)> prev_same) {
             T.emplace_back(n);
-            for(size_t i = 0, f = -1; i < n; i++)
-                T.back()[run[i]] = i - (i and prev_same(i) ? ++f : f);
+            for(size_t i = 0, f = 1; i < n; i++)
+                T.back()[run[i]] = (i and not prev_same(i) ? ++f : f);
         };
 
         iota(run.begin(), run.end(), 0);
