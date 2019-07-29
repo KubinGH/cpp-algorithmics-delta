@@ -25,7 +25,7 @@ constexpr size_t SMALL_PRIMES_LIMIT = 1 << 10;
 const auto __prime_cache_small = linear_sieve(SMALL_PRIMES_LIMIT);
 
 template<typename T>
-bool miller_rabin_witness(T n, T d, size_t r, T a)
+bool miller_rabin_compositeness_witness(T n, T d, size_t r, T a)
 {
     mod_multiplies<T> Zn(n);
     T x = power(a, d, Zn);
@@ -53,7 +53,7 @@ bool miller_rabin_test(T n, const vector<uintmax_t>& W)
         T a = a1 % n;
         if(not a)
             continue;
-        if(not miller_rabin_witness(n, d, r, a))
+        if(not miller_rabin_compositeness_witness(n, d, r, a))
             return false;
     }
     return true;
@@ -74,9 +74,7 @@ bool is_prime(uint32_t n)
 
 bool is_prime(uint64_t n)
 {
-    if(n < SMALL_PRIMES_LIMIT)
-        return n == 2 or n == 3 or n == 5 or binary_search(__prime_cache_small.begin(), __prime_cache_small.end(), (size_t)n);
-    else if(n < ((uint64_t)1 << 31))
+    if(n < ((uint64_t)1 << 31))
         return is_prime((uint32_t)n);
     else if(n < 55245642489451ull)
         return miller_rabin_test(n, {2, 141889084524735ull, 1199124725622454117ull, 11096072698276303650ull});

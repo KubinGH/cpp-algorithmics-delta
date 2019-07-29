@@ -1,18 +1,22 @@
 // Prefixoprefixes / Z Algorithm
 // Complexity: O(n)
-// Last revision: December 2018
+
+// Last revision: July 2019
 
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <vector>
 
 using std::size_t;
 using std::vector;
+using std::min;
 
-template<typename Iterator>
-vector<size_t> prefixoprefixes(Iterator S, size_t n)
+template<typename RandomAccessIterator>
+vector<size_t> prefixoprefixes(RandomAccessIterator S, RandomAccessIterator last)
 {
+    const size_t n = distance(S, last);
     vector<size_t> Z(n);
     for(size_t i = 1, L = 0, R = 0; i < n; i++)
     {

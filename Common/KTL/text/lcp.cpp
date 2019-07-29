@@ -6,6 +6,8 @@
 //  get_lcp(sarray[i], sarray[j]) = min(lcp[i:j])
 // => get_lcp(i, j) = min(lcp[rank(i):rank(j)])
 
+// Last revision: July 2019
+
 #pragma once
 
 #include <algorithm>

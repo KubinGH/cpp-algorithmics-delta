@@ -2,6 +2,20 @@
 // (e.g. Mersenne prime modulo, overflow modulo)
 // Also template-based double hashes.
 
+// Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33, 2^31 - 1
+/*
+Examples:
+rolling_hash<uint64_t, 31, const_modulus<uint64_t, uint64_t(1e9+33)>
+    H(S.begin(), S.end(), -('a' - 1));
+rolling_hash<uint64_t, 1e9+7, mersenne_modulus<uint64_t, 31>
+    G(A.begin(), A.end());
+
+rolling_hash_pair<
+    rolling_hash<uint64_t, uint64_t(1e6+11), identity>,
+    rolling_hash<uint64_t, uint64_t(1e6+13), mersenne_modulus<uint64_t, 31>>
+>
+*/
+
 // Last revision: March 2019
 
 #pragma once
@@ -16,7 +30,6 @@
 using std::size_t; using std::uint32_t; using std::pair;
 using std::vector; using std::result_of; using std::numeric_limits;
 
-// Mods: 1e9+7, 1e9+11, 1e9+21, 1e9+33, 2^31 - 1
 
 template<typename T, T Base, typename ModuloOperation>
 struct rolling_hash
@@ -89,17 +102,3 @@ struct rolling_hash_pair
     bool equals(size_t a, size_t b, size_t c, size_t d)
         { return H.equals(a, b, c, d) and G.equals(a, b, c, d); }
 };
-
-
-/*
-Examples:
-rolling_hash<uint64_t, 31, const_modulus<uint64_t, uint64_t(1e9+33)>
-    H(S.begin(), S.end(), -('a' - 1));
-rolling_hash<uint64_t, 1e9+7, mersenne_modulus<uint64_t, 31>
-    G(A.begin(), A.end());
-
-rolling_hash_pair<
-    rolling_hash<uint64_t, uint64_t(1e6+11), identity>,
-    rolling_hash<uint64_t, uint64_t(1e6+13), mersenne_modulus<uint64_t, 31>>
->
-*/

@@ -14,6 +14,7 @@
 #include <vector>
 #include <cstddef>
 #include <cstdint>
+#include <utility>
 #include "../ktl_debug_mode.cpp"
 #ifdef _KTL_DEBUG
 #include <algorithm>
@@ -21,10 +22,8 @@ using std::all_of;
 #endif
 
 using std::abs;
-using std::vector;
+using std::vector; using std::pair;
 using std::size_t;
-
-using namespace std;
 
 template<typename T>
 bool gauss_is_zero(const T& v)

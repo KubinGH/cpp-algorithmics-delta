@@ -2,29 +2,33 @@
 // Returns a vector of both odd and even palindromes
 // (in a spliced manner: odd/even/odd/even...)
 
-// Last revision: Middle of 2018
+// Last revision: July 2019
 
 #pragma once
 
 #include <algorithm>
+#include <iterator>
 #include <cstddef>
+#include <limits>
 #include <string>
 #include <vector>
 
 using std::vector; using std::string; using std::size_t;
 using std::min;
+using std::iterator_traits; using std::numeric_limits;
 
-vector<size_t> manacher(const string& So, char leaf = '#')
+template<typename Iterator, typename T = typename iterator_traits<Iterator>::value_type>
+vector<size_t> manacher(Iterator first, Iterator last, T leaf = numeric_limits<T>::max())
 {
-    size_t n = So.size();
-    vector<char> S(2*n+1);
-    for(size_t i = 0; i < n; i++)
-        S[2*i] = leaf, S[2*i+1] = So[i];
+    size_t n = distance(first, last);
+    vector<T> S(2*n+1);
+    for(size_t i = 0; i < n; i++, ++first)
+        S[2*i] = leaf, S[2*i+1] = *first;
     S[2*n] = leaf;
     n = 2*n + 1;
     vector<size_t> R(n);
     size_t m = 0;
-    for(size_t i = 1; i < n; i++)
+    for(size_t i = 1; i+1 < n; i++)
     {
         if(i < 2*m and i < m+R[m])
             R[i] = min(R[2*m - i], m+R[m] - i);
@@ -35,5 +39,6 @@ vector<size_t> manacher(const string& So, char leaf = '#')
     }
     for(size_t i = 0; i < n; i++)
         R[i] = (R[i]+1) / 2;
+    R.erase(R.begin()); R.pop_back();
     return R;
 }
