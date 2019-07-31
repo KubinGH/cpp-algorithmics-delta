@@ -4,8 +4,10 @@
 #pragma once
 
 #include <cstdint>
+#include <tuple>
 
 using std::int64_t;
+
 
 struct vec2d { int64_t x, y; };
 vec2d operator+ (vec2d a, vec2d b) { return {a.x+b.x, a.y+b.y}; }

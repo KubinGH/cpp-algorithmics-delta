@@ -1,13 +1,15 @@
 #pragma once
 
+#include <type_traits>
 #include <iostream>
 #include <utility>
-#include <vector>
-#include <set>
-#include <map>
+#include <string>
 
 using std::ostream; using std::istream;
 using std::cout; using std::cin;
+using std::string;
+using std::is_same;
+using std::enable_if;
 
 template<typename T>
 T sread(istream& in)
@@ -36,5 +38,8 @@ ostream& _print_container_imp (ostream& out, const Container& c)
     return out << "}";
 }
 
-template<typename Container, typename _Iterator = typename Container::iterator>
+template<
+    typename Container, typename = typename Container::iterator,
+    typename = typename enable_if<!is_same<Container, string>::value>::type
+>
 ostream& operator<< (ostream& out, const Container& c) { return _print_container_imp(out, c); }

@@ -3,6 +3,7 @@
 #include <iostream>
 
 using std::cerr;
+using std::flush;
 using std::endl;
 using std::ostream;
 
@@ -19,7 +20,7 @@ using std::ostream;
 #define short_pos "[" << __LINE__ << "]"
 #define long_pos "[<" << __PRETTY_FUNCTION__ << ">::" << __LINE__ << "]"
 #ifdef KTL_DEBUG_MACROS
-#define debug(...)  cerr << KTL_CDBG_COLOR_INIT << __VA_ARGS__ << KTL_CDBG_COLOR_DEINIT
+#define debug(...)  cerr << KTL_CDBG_COLOR_INIT << __VA_ARGS__ << KTL_CDBG_COLOR_DEINIT << flush
 #define debugx(...) cerr << KTL_CDBG_COLOR_INIT << short_pos << ": " << __VA_ARGS__ << KTL_CDBG_COLOR_DEINIT << endl
 #define debugX(...) cerr << KTL_CDBG_COLOR_INIT <<  long_pos << ": " << __VA_ARGS__ << KTL_CDBG_COLOR_DEINIT << endl
 #else

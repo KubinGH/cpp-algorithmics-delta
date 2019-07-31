@@ -16,3 +16,6 @@
 [KI] Radio - iloczyn skalarny wektorów
 [Staszic] (Kółko Olimpijskie 2018/19) Ustawianie hasła - automat też jest grafem
 [WWI 2018] Kubek - rozwiązywanie rekurencji liniowych (https://brilliant.org/wiki/linear-recurrence-relations/)
+[Hackerrank] Selective Additions - równoległy binary search
+[Kattis] Palindromes - nikt nie spodziewał się wavelet tree!
+[Kattis] A+B Problem - fixed count knapsack (FFT)
