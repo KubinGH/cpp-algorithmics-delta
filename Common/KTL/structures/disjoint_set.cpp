@@ -21,15 +21,16 @@ struct disjoint_set
         parent.resize(n); nrank.resize(n);
         iota(parent.begin(), parent.end(), 0);
     }
-    void unite(size_t u, size_t v)
+    bool unite(size_t u, size_t v)
     {
         if(nrank[v = find(v)] > nrank[u = find(u)])
             swap(u, v);
         if(u == v)
-            return;
+            return false;
         parent[v] = u;
         if(nrank[u] == nrank[v])
             nrank[u]++;
+        return true;
     }
     size_t find(size_t u)
     {

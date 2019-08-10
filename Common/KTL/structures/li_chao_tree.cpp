@@ -17,18 +17,19 @@
 
 // Last revision: June 2019
 
+#pragma once
 
 #include <type_traits>
 #include <algorithm>
 #include <memory>
 #include <limits>
 
-using std::unique_ptr; using std::make_unique;
+using std::unique_ptr;
 using std::swap; using std::__lg;
 using std::numeric_limits;
 using std::is_integral;
 
-template<typename Value, typename Arg, typename Fun>
+template<typename Arg, typename Value, typename Fun>
 struct li_chao_tree
 {
     const Arg rangeL, rangeR, eps;
@@ -41,13 +42,13 @@ struct li_chao_tree
         li_chao_node* get_left_child()
         {
             if(not left_child)
-                left_child = make_unique<li_chao_node>();
+                left_child = unique_ptr<li_chao_node>(new li_chao_node);
             return left_child.get();
         }
         li_chao_node* get_right_child()
         {
             if(not right_child)
-                right_child = make_unique<li_chao_node>();
+                right_child = unique_ptr<li_chao_node>(new li_chao_node);
             return right_child.get();
         }
         void insert(Fun fun, Arg left, Arg right, Arg eps)
@@ -112,5 +113,5 @@ struct li_chao_line
     li_chao_line operator- () const { return {-slope, -constant}; }
 };
 
-template<typename T, typename A = T>
-using line_li_chao_tree = li_chao_tree<T, A, li_chao_line<A>>;
+template<typename A, typename T = A>
+using line_li_chao_tree = li_chao_tree<A, T, li_chao_line<T>>;
