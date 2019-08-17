@@ -27,7 +27,7 @@ struct matrix
     bool is_identity = false;
     matrix() : h(0), w(0), is_identity(true) {}
     matrix(size_t _w, size_t _h) : h(_h), w(_w), A(w*h) {}
-    matrix(const vector<vector<T>>& a) : h(a[0].size()), w(a.size()), A(w*h)
+    matrix(const vector<vector<T>>& a) : w(a[0].size()), h(a.size()), A(w*h)
     {
         KTL_DEBUG_ASSERT(all_of(a.begin(), a.end(), [&](const vector<T>& v) { return v.size() == a[0].size(); }));
         size_t i = 0;
@@ -39,25 +39,28 @@ struct matrix
     const T& operator() (size_t i, size_t j) const { return A[w*i + j]; }
 };
 
-template<typename T>
-struct multiplies<matrix<T>>
+namespace std
 {
-    matrix<T> operator() (const matrix<T>& A, const matrix<T>& B)
+    template<typename T>
+    struct multiplies<matrix<T>>
     {
-        if(A.is_identity) return B;
-        if(B.is_identity) return A;
-        KTL_DEBUG_ASSERT(A.w == B.h);
-        const size_t d = A.w;
-        matrix<T> C(B.w, A.h);
-        for(size_t i = 0; i < C.h; i++)
-            for(size_t j = 0; j < C.w; j++)
-                for(size_t k = 0; k < d; k++)
-                    C(i, j) += A(i, k) * B(k, j);
-        return C;
-    }
-};
-template<typename T>
-matrix<T> identity_element(multiplies<matrix<T>>) { return matrix<T>(); }
+        matrix<T> operator() (const matrix<T>& A, const matrix<T>& B)
+        {
+            if(A.is_identity) return B;
+            if(B.is_identity) return A;
+            KTL_DEBUG_ASSERT(A.w == B.h);
+            const size_t d = A.w;
+            matrix<T> C(B.w, A.h);
+            for(size_t i = 0; i < C.h; i++)
+                for(size_t j = 0; j < C.w; j++)
+                    for(size_t k = 0; k < d; k++)
+                        C(i, j) += A(i, k) * B(k, j);
+            return C;
+        }
+    };
+    template<typename T>
+    matrix<T> identity_element(multiplies<matrix<T>>) { return matrix<T>(); }
+}
 template<typename T>
 struct matrix_minsum_multiplies
 {

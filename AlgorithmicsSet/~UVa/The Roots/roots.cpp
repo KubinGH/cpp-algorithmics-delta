@@ -194,9 +194,10 @@ int main()
         }
 
         sort(roots.begin(), roots.end());
+
         cout << "Equation " << No++ << ": ";
         for(auto r : roots)
-            cout << r << " ";
+            cout << r << (nul(r - roots.back()) ? "" : " ");
         cout << '\n';
     }
 }
