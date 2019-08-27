@@ -50,7 +50,7 @@ struct fenwick_tree
     {
         T s = 0; size_t p = 0;
         for(size_t i = __lg(n)+1, q = (1u << __lg(n)); i --> 0; q /= 2)
-            if(p + q < n and s + F[p + q] < v)
+            if(p + q <= n and s + F[p + q] < v)
                 s += F[p + q], p += q;
         return p;
     }

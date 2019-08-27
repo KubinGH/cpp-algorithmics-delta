@@ -31,6 +31,8 @@ ostream& operator<< (ostream& out, const std::pair<_1, _2>& p)
 template<typename Container>
 ostream& _print_container_imp (ostream& out, const Container& c)
 {
+    if(c.begin() == c.end())
+        return out << "{}";
     auto it = c.begin();
     out << "{" << *it;
     while(++it != c.end())

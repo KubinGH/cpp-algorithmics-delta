@@ -17,17 +17,23 @@ using std::enable_if;
 
 struct unlocked_cin
 {
+    char _whitespace_skip()
+    {
+        char lchar;
+        while(isspace(lchar = getchar_unlocked())) {}
+        return lchar;
+    }
     unlocked_cin& operator>> (char& x)
     {
-        x = getchar_unlocked();
+        x = _whitespace_skip();
         return *this;
     }
     template<typename T>
     typename enable_if<is_integral<T>::value && is_unsigned<T>::value, unlocked_cin&>::type
     operator>> (T& x)
     {
-        char lchar; x = 0;
-        while(isspace(lchar = getchar_unlocked())) {}
+        x = 0;
+        char lchar = _whitespace_skip(); 
         do {
             x *= 10, x += lchar - '0';
         } while(isdigit(lchar = getchar_unlocked()));
@@ -37,9 +43,9 @@ struct unlocked_cin
     typename enable_if<is_integral<T>::value && is_signed<T>::value, unlocked_cin&>::type
     operator>> (T& x)
     {
-        bool s = false; x = 0;
-        char lchar;
-        while(isspace(lchar = getchar_unlocked())) {}
+        bool s = false; 
+        x = 0;
+        char lchar = _whitespace_skip();
         if(lchar == '-')
             s = true;
         else

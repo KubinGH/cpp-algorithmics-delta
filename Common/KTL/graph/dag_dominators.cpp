@@ -46,7 +46,7 @@ vector<size_t> src_topological(const graph_t& graph, size_t source)
 pair<vector<size_t>, vector<size_t>> dag_dominators(const graph_t& graph, size_t root)
 {
     const size_t n = graph.size();
-    vector<size_t> idom(n, -1u), id_depth(n, 0);
+    vector<size_t> idom(n, SIZE_MAX), id_depth(n, 0);
     vector<vector<size_t>> id_jump(n);
 
     auto lca = [&](size_t u, size_t v) {
@@ -56,7 +56,7 @@ pair<vector<size_t>, vector<size_t>> dag_dominators(const graph_t& graph, size_t
                 v = id_jump[v][k];
         if(u == v) return v;
         for(size_t k = id_jump[v].size(); k --> 0; )
-            if(id_jump[u][k] != id_jump[v][k])
+            if(k < id_jump[u].size() and id_jump[u][k] != id_jump[v][k])
                 u = id_jump[u][k], v = id_jump[v][k];
         return id_jump[u][0];
     };
@@ -71,10 +71,7 @@ pair<vector<size_t>, vector<size_t>> dag_dominators(const graph_t& graph, size_t
     for(size_t u : T)
     {
         if(ingraph[u].empty())
-        {
-            idom[u] = -1u;
             continue;
-        }
         size_t a = ingraph[u][0];
         for(size_t v : ingraph[u])
             a = lca(a, v);
