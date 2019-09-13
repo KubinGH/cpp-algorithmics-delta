@@ -41,6 +41,13 @@ struct segment_tree
         w = 1 << __lg(2*n-1);
         values.resize(2*w, identity_element(F));
     }
+    template<typename Iterator>
+    segment_tree(Iterator first, Iterator last, ChildrenOp f = {}) : segment_tree(distance(first, last), f)
+    {
+        copy(first, last, values.begin() + w);
+        for(size_t i = w; i --> 1; )
+            values[i] = F(values[2*i], values[2*i+1]);
+    }
     void set(size_t i, T value)
     {
         i += w;
@@ -48,7 +55,7 @@ struct segment_tree
         while(i > 1)
             i /= 2, values[i] = F(values[2*i], values[2*i+1]);
     }
-    T get(size_t getL, size_t getR)
+    T get(size_t getL, size_t getR) const
     {
         T result = identity_element(F);
         for(getL += w, getR += w+1; getL < getR; getL /= 2, getR /= 2)
@@ -58,7 +65,7 @@ struct segment_tree
         }
         return result;
     }
-    T get() { return values[1]; }
+    T get() const { return values[1]; }
 };
 
 template<typename T, typename ChildrenOp,

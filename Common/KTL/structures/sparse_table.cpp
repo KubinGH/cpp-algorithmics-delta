@@ -24,14 +24,13 @@ struct sparse_table
     BinaryOperation F;
     size_t n;
     vector<vector<T>> A;
-    template<typename Iterator, typename TransformOperation = _identity>
-    sparse_table(Iterator first, Iterator last, BinaryOperation f = {},
-                 TransformOperation t = {}) : F(f)
+    template<typename Iterator>
+    sparse_table(Iterator first, Iterator last, BinaryOperation f = {}) : F(f)
     {
         n = distance(first, last);
         A.emplace_back(distance(first, last));
         for(size_t i = 0; first != last; first++, i++)
-            A[0][i] = t(*first);
+            A[0][i] = *first;
         for(size_t i = 1; (1u << i) <= n; i++)
         {
             A.emplace_back(n - (1u << i) + 1);
@@ -39,7 +38,7 @@ struct sparse_table
                 A[i][j] = F(A[i-1][j], A[i-1][j + (1u << (i-1))]);
         }
     }
-    T operator() (size_t a, size_t b)
+    T operator() (size_t a, size_t b) const
     {
         size_t p = __lg(b - a);
         return F(A[p][a], A[p][b - (1 << p)]);
