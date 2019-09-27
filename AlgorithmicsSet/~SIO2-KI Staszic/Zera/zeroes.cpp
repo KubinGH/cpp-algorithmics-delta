@@ -2,68 +2,63 @@
 
 using namespace std;
 
-template<typename T, size_t D>
-struct vector_tag
+array<int, 2> diplus(const array<int, 2>& a, const array<int, 2>& b)
 {
-    using type = vector<typename vector_tag<T, D - 1>::type>;
-};
-
-template<typename T>
-struct vector_tag<T, 0>
-{
-    using type = T;
-};
-
-template<typename T>
-vector<T> make_vector(size_t n)
-{
-    return vector<T>(n);
-}
-
-template<
-    typename T, typename... Args,
-    typename Result = typename vector_tag<T, sizeof...(Args) + 1>::type
->
-Result make_vector(size_t n, Args... args)
-{
-    return Result(n, make_vector<T>(args...));
+    return {min(a[0]+b[0], (1<<28)), min(a[1]+b[1], (1<<28))};
 }
 
 int main()
 {
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+
     size_t n, m;
     cin >> n >> m;
 
-    auto V = make_vector<int>(n+1, m+1, 16, 16, 2);
-    auto Z = make_vector<bool>(n, m);
-    auto A = make_vector<array<int, 2>>(n, m);
+    array<array<int, 2>, 2048> C;
+    C[0] = {1<<28, 1<<28};
+    C[1] = {0, 0};
+    for(size_t i = 1; i < 2048; i++)
+    {
+        if(2*i < 2048) C[2*i] = {C[i][0] + 1, C[i][1]};
+        if(5*i < 2048) C[5*i] = {C[i][0], C[i][1] + 1};
+    }
 
+    vector<vector<array<int, 2>>> A(n, vector<array<int, 2>>(m));
+
+    bool zero = false;
     for(size_t i = 0; i < n; i++)
         for(size_t j = 0; j < m; j++)
     {
         int x;
         cin >> x;
         x = abs(x);
-        if(not x) Z[i][j] = true;
-        while(x % 2 == 0) x /= 2, A[i][j][0]++;
-        while(x % 5 == 0) x /= 5, A[i][j][1]++;
+        A[i][j] = C[x];
+        if(not x) zero = true;
     }
 
-    for(size_t i = 0; i <= n; i++)
-        for(size_t j = 0; j <= m; j++)
-            for(size_t d = 0; d < 16; d++)
-                V[i][j][d] = INT_MAX/3;
-
-    for(size_t i = 0; i <= n; i++) V[i][0][0] = true;
-    for(size_t i = 0; i <= m; i++) V[0][i][0] = true;
-
-    for(size_t i = 0; i <= n; i++)
-        for(size_t j = 0; j <= m; j++)
+    int result = INT_MAX;
+    for(size_t tt = 0; tt < 2; tt++)
     {
-        if(Z[i][j]) V[i+1][j+1][0] = 0;
-        else for(size_t d = 0; d < 16; d++)
-        {
+        vector<vector<array<int, 2>>> Q(n, vector<array<int, 2>>(m));
 
-        }
+        Q[0][0] = A[0][0];
+        for(size_t i = 1; i < n; i++)
+            Q[i][0] = diplus(A[i][0], Q[i-1][0]);
+        for(size_t i = 1; i < m; i++)
+            Q[0][i] = diplus(A[0][i], Q[0][i-1]);
+        for(size_t i = 1; i < n; i++)
+          for(size_t j = 1; j < m; j++)
+            Q[i][j] = diplus(A[i][j], min(Q[i-1][j], Q[i][j-1]));
+
+        result = min(result, min(Q[n-1][m-1][0], Q[n-1][m-1][1]));
+
+        for(auto& row : A)
+            for(auto& col : row)
+                swap(col[0], col[1]);
     }
+
+    if(zero)
+        result = min(result, 1);
+
+    cout << result;
 }
