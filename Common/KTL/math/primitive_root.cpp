@@ -10,6 +10,8 @@
 //             The number of tries is low on average.
 // Last revision: April 2019
 
+#pragma once
+
 #include <limits>
 #include <random>
 #include <cstddef>

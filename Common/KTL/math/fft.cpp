@@ -43,9 +43,10 @@ namespace fft_base
         return A;
     }
 
-    template<typename T>
-    vector<T> call(vector<T> A, function<T(size_t, size_t)> w, size_t recalc = 0)
+    template<size_t RootRecalc = 0, typename T>
+    vector<T> cooley_tukey(vector<T> A, function<T(size_t, size_t)> w)
     {
+        static_assert((RootRecalc & (RootRecalc - 1)) == 0, "RootRecalc is hardwired to be a power of two.");
         KTL_DEBUG_ASSERT((A.size() & (A.size() - 1)) == 0);
 
         const size_t n = A.size();
@@ -69,7 +70,7 @@ namespace fft_base
                     auto u = A[i+j], v = A[i+j+m] * t;
                     A[i+j]   = u + v;
                     A[i+j+m] = u - v;
-                    if(recalc and j % recalc == 0)
+                    if(RootRecalc and (j & (RootRecalc-1)) == 0)
                         t = w(block, j + 1);
                     else
                         t *= w_b;
@@ -81,7 +82,7 @@ namespace fft_base
     }
 }
 
-template<typename T, size_t Recalc = 16>
+template<typename T, size_t RootRecalc = 16>
 struct fft
 {
     using C = complex<T>;
@@ -92,12 +93,12 @@ struct fft
     template<typename Ti>
     vector<C> operator() (const vector<Ti>& iA, size_t req = 0)
     {
-        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t, size_t)>(root_of_unity), Recalc);
+        return fft_base::cooley_tukey<RootRecalc>(fft_base::convert<C>(iA, req), function<C(size_t, size_t)>(root_of_unity));
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)
     {
-        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t, size_t)>(inverse_root_of_unity), Recalc);
+        auto A = fft_base::cooley_tukey<RootRecalc>(fft_base::convert<C>(iY), function<C(size_t, size_t)>(inverse_root_of_unity));
         for(size_t i = 0; i < A.size(); i++)
             A[i] /= A.size();
         return A;

@@ -22,6 +22,7 @@
 
 #include "math/crt.cpp"
 #include "math/discrete_logarithm.cpp"
+#include "math/discrete_root.cpp"
 #include "math/egcd.cpp"
 #include "math/factorization.cpp"
 #include "math/fft.cpp"
@@ -41,6 +42,7 @@
 #include "structures/heap.cpp"
 #include "structures/li_chao_tree.cpp"
 #include "structures/randomized_heap.cpp"
+#include "structures/reduction_tree.cpp"
 #include "structures/segment_tree.cpp"
 #include "structures/sparse_table.cpp"
 #include "structures/wavelet_tree.cpp"

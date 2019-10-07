@@ -22,13 +22,13 @@ struct ntt
     vector<C> operator() (const vector<Ti>& iA, size_t req = 0)
     {
         KTL_DEBUG_ASSERT(iA.size() <= RootPw);
-        return fft_base::call(fft_base::convert<C>(iA, req), function<C(size_t, size_t)>(root_of_unity));
+        return fft_base::cooley_tukey(fft_base::convert<C>(iA, req), function<C(size_t, size_t)>(root_of_unity));
     }
     template<typename Ti>
     vector<C> operator[] (const vector<Ti>& iY)
     {
         KTL_DEBUG_ASSERT(iY.size() <= RootPw);
-        auto A = fft_base::call(fft_base::convert<C>(iY), function<C(size_t, size_t)>(inverse_root_of_unity));
+        auto A = fft_base::cooley_tukey(fft_base::convert<C>(iY), function<C(size_t, size_t)>(inverse_root_of_unity));
         for(size_t i = 0; i < A.size(); i++)
             A[i] /= A.size();
         return A;

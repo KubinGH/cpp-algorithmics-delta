@@ -61,7 +61,6 @@ struct mint
 
     mint() : value(0) {}
 
-    mint(const mint& o) { value = o.value; }
     template<typename Ti>
     mint(Ti raw_value)
     {

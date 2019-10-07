@@ -9,7 +9,10 @@
 
 // Last revision: April 2019
 
-#include <bits/stdc++.h>
+#pragma once
+
+#include <unordered_map>
+#include <limits>
 #include <ext/numeric>
 #include "mod_multiplies.cpp"
 #include "../ktl_debug_mode.cpp"

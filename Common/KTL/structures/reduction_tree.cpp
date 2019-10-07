@@ -1,3 +1,9 @@
+// Disjoint Sparse Table (Reduction Tree)
+
+// Last Revision: August 2019
+
+#pragma once
+
 #include <algorithm>
 #include <cstddef>
 #include <vector>
