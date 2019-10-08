@@ -29,11 +29,17 @@ namespace fft_base
     template<typename T>
     T bit_reverse(T x, size_t lim)
     {
+        if(x == 0) return 0;
+        static vector<size_t> cache[32];
+        if(cache[lim].empty())
+            cache[lim].resize(1 << lim);
+        if(cache[lim][x])
+            return cache[lim][x];
         T y = 0;
         for(size_t i = 0; i < lim; i++, x >>= 1)
             if(x & 1)
                 y |= (1 << (lim - i - 1));
-        return y;
+        return cache[lim][x] = y;
     }
     template<typename T, typename Ti>
     vector<T> convert(const vector<Ti>& iA, size_t req = 0)
