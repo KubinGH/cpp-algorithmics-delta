@@ -4,8 +4,8 @@
 // fft<T>::operator[] returns the coefficients of a polynomial with given values in the powers of the root of unity.
 // rfft is a simple rounding wrapper.
 // Complexity: O(n log n)
-// Last revision: April 2019
-// To do: use baby-step, giant-step to reduce the count of trigonometric operations.
+
+// Last revision: October 2019
 
 #pragma once
 
