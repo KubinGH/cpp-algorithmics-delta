@@ -1,1 +1,0 @@
-g++ -g3 -fsanitize=undefined,address -DXHOVA -D_KTL_DEBUG -D_GLIBCXX_DEBUG -fdiagnostics-color=always -std=c++17 -Wall -Wextra -pedantic -Wshadow -Winit-self -Wfloat-equal -Wformat=2 -DXHOVA -I ~/Documents/KTL sup.cpp -o 83AaeEA.tmp.exe
