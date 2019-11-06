@@ -110,8 +110,8 @@ struct mint
 
     mint& operator++ () { ++value; if(value == Mod()) value = 0; return *this; }
     mint& operator-- () { if(value == 0) value = Mod; --value; return *this; }
-    mint operator++ (int) { auto c = *this; return ++c; }
-    mint operator-- (int) { auto c = *this; return --c; }
+    mint operator++ (int) { auto c = *this; ++*this; return c; }
+    mint operator-- (int) { auto c = *this; --*this; return c; }
 
     #define COMPARISON(__OP) bool operator __OP (const mint& other) const { return this->value __OP other.value; }
     COMPARISON(<)
