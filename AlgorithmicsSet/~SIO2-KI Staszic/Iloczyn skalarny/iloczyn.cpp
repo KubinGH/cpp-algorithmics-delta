@@ -6,8 +6,6 @@
 
 using namespace std;
 
-const uint64_t MOD = 1e9 + 7;
-
 template<typename A, typename B>
 ostream& operator<< (ostream& out, const pair<A, B>& p)
 {
@@ -75,13 +73,13 @@ typedef pair<uint64_t, uint64_t> pair_u64;
 struct add_3u64 {
     tri_u64 identity {0, 0, 0};
     tri_u64 operator() (tri_u64 a, tri_u64 b)
-        { return {(a.a+b.a)%MOD, (a.b+b.b)%MOD, (a.s+b.s)%MOD}; }
+        { return {(a.a+b.a), (a.b+b.b), (a.s+b.s)}; }
 
 };
 struct merge_sca {
     pair_u64 identity = {0, 0};
     pair_u64 operator() (pair_u64 a, pair_u64 b)
-        { return {(a.first+b.first)%MOD, (a.second+b.second)%MOD}; }
+        { return {(a.first+b.first), (a.second+b.second)}; }
 };
 struct apply_sca {
     pair_u64 identity = {0, 0};
@@ -90,12 +88,11 @@ struct apply_sca {
                      vector<tri_u64>& values, vector<pair_u64>& mutate)
     {
         size_t d = nodeR - nodeL + 1;
-        values[i].s += (values[i].a * mutate[i].second) % MOD;
-        values[i].s += (values[i].b * mutate[i].first) % MOD;
-        values[i].s += (d * ((mutate[i].first * mutate[i].second) % MOD)) % MOD;
-        values[i].s %= MOD;
-        values[i].a += d * mutate[i].first; values[i].a %= MOD;
-        values[i].b += d * mutate[i].second; values[i].b %= MOD;
+        values[i].s += (values[i].a * mutate[i].second);
+        values[i].s += (values[i].b * mutate[i].first);
+        values[i].s += (d * ((mutate[i].first * mutate[i].second)));
+        values[i].a += d * mutate[i].first;
+        values[i].b += d * mutate[i].second; 
         if(nodeL < nodeR)
         {
             mutate[2*i+0] = S(mutate[2*i+0], mutate[i]);
@@ -115,16 +112,20 @@ int main()
     uint32_t n, q;
     cin >> n >> q;
     sca_segment_tree tree(n, {}, {}, {});
+    for(uint32_t i = 0; i < n; i++) { uint64_t x; cin >> x; tree.mut(i, i, {x, 0}); }
+    for(uint32_t i = 0; i < n; i++) { uint64_t x; cin >> x; tree.mut(i, i, {0, x}); }
     while(q --> 0)
     {
         char c; uint32_t l, r; uint64_t x;
-        cin >> c >> l >> r; l--; r--;
-        if(c == '*')
+        cin >> c;
+        if(c == '+') cin >> c;
+        cin >> l >> r; l--; r--;
+        if(c == 'a')
         {
             cin >> x;
             tree.mut(l, r, {x, 0});
         }
-        else if(c == '.')
+        else if(c == 'b')
         {
             cin >> x;
             tree.mut(l, r, {0, x});
