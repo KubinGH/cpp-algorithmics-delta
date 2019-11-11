@@ -9,7 +9,7 @@
 #include <functional>
 #include "../util/debug_macros.cpp"
 
-using std::multiplies;
+using std::multiplies; using std::plus;
 using std::vector;
 using std::max;
 using std::__lg;
@@ -26,11 +26,16 @@ struct poly_multiplies
         if(P.empty() or Q.empty()) return {};
         size_t n = P.size() - 1, m = Q.size() - 1, r = n + m, r2 = 1 << __lg(2*(r + 1) - 1);
         vector<T> R(r + 1);
+        #ifndef FORCE_TRANSFORM_POLYMUL
         if((uint64_t)n*m < POLYMUL_BRUTE_LIMIT)
+        #else
+        if(false)
+        #endif
         {
+            typename Transform::Convolution conv;
             for(size_t i = 0; i <= n; i++)
                 for(size_t j = 0; j <= m; j++)
-                    R[i+j] += P[i] * Q[j];
+                    R[conv(i, j)] += P[i] * Q[j];
         }
         else
         {

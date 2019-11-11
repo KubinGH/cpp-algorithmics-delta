@@ -15,6 +15,7 @@ template<typename T, T Mod, T Root, size_t RootPw>
 struct ntt
 {
     using C = mint<T, Mod>;
+    using Convolution = plus<size_t>;
     static C root_of_unity(size_t k, size_t l) { return power(C(Root), RootPw / k * l); }
     static C inverse_root_of_unity(size_t k, size_t l) { return T(1) / root_of_unity(k, l); }
 

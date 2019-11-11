@@ -20,7 +20,7 @@
 using std::vector; using std::complex;
 using std::size_t;
 using std::acos; using std::cos; using std::sin;
-using std::function;
+using std::function; using std::plus;
 using std::swap;
 using __gnu_cxx::power; using std::__lg;
 
@@ -92,6 +92,7 @@ template<typename T, size_t RootRecalc = 16>
 struct fft
 {
     using C = complex<T>;
+    using Convolution = plus<size_t>;
     static constexpr long double TAU = 2 * acos(-1.0L);
     static C root_of_unity(size_t k, size_t l) { return C(cos(TAU * l / k), sin(TAU * l / k)); }
     static C inverse_root_of_unity(size_t k, size_t l) { return T(1) / root_of_unity(k, l); }
@@ -116,6 +117,7 @@ struct rfft
 {
     fft<Tf, Recalc> transform;
     using C = typename fft<Tf>::C;
+    using Convolution = plus<size_t>;
 
     vector<C> operator() (const vector<T>& A, size_t req = 0)
     {
