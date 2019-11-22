@@ -70,7 +70,7 @@ struct mint
         value = raw_value;
     }
 
-    mint operator- () const { return Mod() - value; }
+    mint operator- () const { return value ? Mod() - value : 0; }
     mint operator+ (const mint& other) const { return (value + other.value) % Mod(); }
     mint operator- (const mint& other) const { return *this + -other; }
 
