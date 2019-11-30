@@ -1,7 +1,7 @@
 // Miller Rabin primality test.
 // Bases in is_prime taken from http://miller-rabin.appspot.com/ - those should be pretty good.
 // Complexity: O(log n) per witness.
-// miller_rabin_witness - returns true if n = 2^r * d is a probable prime with witness a
+// miller_rabin_primality_witness - returns true if n = 2^r * d is a probable prime with witness a
 // miller_rabin_test - returns true if n is a prime with witnesses W
 // is_prime - preferable method for checking primality
 // miller_rabin_witness and miller_rabin_test are internals and probably shouldn't
@@ -25,7 +25,7 @@ constexpr size_t SMALL_PRIMES_LIMIT = 1 << 10;
 const auto __prime_cache_small = linear_sieve(SMALL_PRIMES_LIMIT);
 
 template<typename T>
-bool miller_rabin_compositeness_witness(T n, T d, size_t r, T a)
+bool miller_rabin_primality_witness(T n, T d, size_t r, T a)
 {
     mod_multiplies<T> Zn(n);
     T x = power(a, d, Zn);
@@ -53,7 +53,7 @@ bool miller_rabin_test(T n, const vector<uintmax_t>& W)
         T a = a1 % n;
         if(not a)
             continue;
-        if(not miller_rabin_compositeness_witness(n, d, r, a))
+        if(not miller_rabin_primality_witness(n, d, r, a))
             return false;
     }
     return true;
