@@ -22,7 +22,7 @@ struct fenwick_tree
 {
     size_t n;
     vector<T> F;
-    fenwick_tree(size_t _n) : n(_n), F(n+1, 0) {}
+    fenwick_tree(size_t _n) : n(_n), F(n+1) {}
 
     static constexpr inline size_t lsb(size_t x) { return x & -x; }
     T get_prefix(size_t p) const
