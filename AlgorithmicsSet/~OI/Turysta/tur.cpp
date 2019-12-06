@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <ktl/util/extio.cpp>
 
 using namespace std;
 
@@ -12,7 +11,7 @@ int main()
     size_t n;
     cin >> n;
 
-    srand(time(0));
+    mt19937 gen(time(0));
 
     vector<bitset<MAX>> conn(n);
 
@@ -20,8 +19,7 @@ int main()
       for(size_t j = 0; j < i; j++)
     {
         bool e;
-        e = rand()%32;
-        //cin >> e;
+        cin >> e;
         (e ? conn[j][i] : conn[i][j]) = true;
     }
     cerr << "read done" << endl;
@@ -46,7 +44,7 @@ int main()
     {
         vector<bool> this_scc(n);
         // find scc
-        has_scc[s] = true;
+        this_scc[s] = has_scc[s] = true;
         scc.push_back({s});
         for(size_t v = 0; v < n; v++)
             if(not has_scc[v] and reach[s][v] and reach[v][s])
@@ -81,31 +79,28 @@ int main()
         };
         dfs(s);
 
-        cout << cycle << " " << scc.back() << endl;
         assert(not cycle.empty());
         reverse(cycle.begin(), cycle.end());
 
         // build the rest of the hamiltonian cycle in the SCC
-        for(auto u : scc.back())
+        while(cycle.size() < scc.back().size())
         {
-            if(find(cycle.begin(), cycle.end(), u) != cycle.end()) continue;
-
-            cout << "insert " << u << " to " << cycle << " ";
-            bool ok = false;
-            cycle.push_back(cycle.front());
-            for(size_t i = 0; i+1 < cycle.size(); i++)
+            shuffle(scc.back().begin(), scc.back().end(), gen);
+            for(auto u : scc.back())
             {
-                cout << conn[cycle[i]][u] << "/" << conn[u][cycle[i+1]] << " ";
-                if(conn[cycle[i]][u] and conn[u][cycle[i+1]])
+                if(find(cycle.begin(), cycle.end(), u) != cycle.end()) continue;
+
+                cycle.push_back(cycle.front());
+                for(size_t i = 0; i+1 < cycle.size(); i++)
                 {
-                    cout << " ok" << endl;
-                    ok = true;
-                    cycle.insert(cycle.begin() + (i+1), u);
-                    break;
+                    if(conn[cycle[i]][u] and conn[u][cycle[i+1]])
+                    {
+                        cycle.insert(cycle.begin() + (i+1), u);
+                        break;
+                    }
                 }
+                cycle.pop_back();
             }
-            if(not ok) cout << endl, abort();
-            cycle.pop_back();
         }
 
         // we want to keep this cycle as an ordering
