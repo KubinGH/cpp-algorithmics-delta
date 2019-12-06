@@ -46,10 +46,10 @@ bool gauss_compare_sel<long double>(const long double& a, const long double& b)
     { return abs(a) < abs(b); }
 
 template<typename T>
-vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count)
+vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count, size_t augment)
 {
     const size_t n = a.size();
-    const size_t m = a[0].size() - 1;
+    const size_t m = a[0].size() - augment;
 
     KTL_DEBUG_ASSERT(all_of(a.begin(), a.end(), [&](const vector<T>& v) { return a[0].size() == v.size(); }));
 
@@ -74,7 +74,7 @@ vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count)
             if(i != row)
             {
                 T c = a[i][col] / a[row][col];
-                for(size_t j = col; j <= m; j++)
+                for(size_t j = col; j < m+augment; j++)
                     a[i][j] -= a[row][j] * c;
             }
         }
@@ -84,10 +84,10 @@ vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count)
 }
 
 template<typename T>
-vector<size_t> gaussian_elimination(vector<vector<T>>& a)
+vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t augment = 0)
 {
     size_t _ = 0;
-    return gaussian_elimination(a, _);
+    return gaussian_elimination(a, _, augment);
 }
 
 enum equation_system_status { None, Unique, Infinite };
@@ -98,7 +98,7 @@ pair<equation_system_status, vector<T>> solve_system_of_linear_equations(vector<
     const size_t n = eq.size();
     const size_t m = eq[0].size() - 1;
 
-    auto where = gaussian_elimination(eq);
+    auto where = gaussian_elimination(eq, 0);
 
     vector<T> solution(m, 0);
 
