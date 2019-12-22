@@ -63,15 +63,9 @@ int main()
             graph[u].pop_back();
 
         if(graph[u].empty())
-        {
-            C.push_back(u);
-            S.pop();
-        }
+            C.push_back(u), S.pop();
         else
-        {
-            edges[i].used = true;
-            S.push(nd(edges[i], u));
-        }
+            edges[i].used = true, S.push(nd(edges[i], u));
     }
 
 
