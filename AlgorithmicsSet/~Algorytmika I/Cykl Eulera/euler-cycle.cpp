@@ -32,7 +32,19 @@ int main()
             dfs_check(nd(edges[e], u));
         sum_deg += graph[u].size() / 2;
     };
-    dfs_check(0);
+    size_t start = SIZE_MAX;
+    for(size_t u = 0; u < n; u++)
+    {
+        if(not graph[u].empty())
+        {
+            start = u;
+            break;
+        }
+    }
+    dfs_check(start);
+    for(size_t u = 0; u < n; u++)
+        if(not vis[u] and not graph[u].empty())
+            sum_deg = SIZE_MAX;
 
     if(sum_deg != m)
     {
@@ -40,7 +52,8 @@ int main()
         return 0;
     }
 
-    stack<size_t> S; S.push(0);
+    stack<size_t> S;
+    S.push(start);
     vector<size_t> C;
 
     while(not S.empty())
@@ -60,6 +73,7 @@ int main()
             S.push(nd(edges[i], u));
         }
     }
+
 
     cout << "TAK\n";
     for(auto u : C)

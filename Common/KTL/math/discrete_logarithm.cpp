@@ -12,13 +12,19 @@
 #pragma once
 
 #include <unordered_map>
+#include <algorithm>
 #include <limits>
+#include <cmath>
+#include <ext/pb_ds/assoc_container.hpp>
 #include <ext/numeric>
 #include "mod_multiplies.cpp"
 #include "../ktl_debug_mode.cpp"
 
 using namespace std;
 using __gnu_cxx::power;
+using __gnu_pbds::gp_hash_table;
+using std::ceil; using std::sqrt;
+using std::__gcd;
 
 template<typename T>
 T discrete_logarithm(T a, T b, T m)
@@ -42,7 +48,7 @@ T discrete_logarithm(T a, T b, T m)
 
     T k = ceil(sqrt(m));
 
-    unordered_map<T, T> rhs; rhs.reserve(3 * k);
+    gp_hash_table<T, T> rhs;
     T q = b;
     for(T j = 0; j < k; j++, q = mod_mul(q, a, m))
         rhs[q] = j;
@@ -50,7 +56,7 @@ T discrete_logarithm(T a, T b, T m)
     T w = power(a, k, mod_multiplies<T>(m));
     T p = mod_mul(w, fix, m);
     for(T i = 1; i <= k; i++, p = mod_mul(p, w, m))
-        if(rhs.count(p))
+        if(rhs.find(p) != rhs.end())
             return i * k - rhs[p] + shift;
 
     return numeric_limits<T>::max();
