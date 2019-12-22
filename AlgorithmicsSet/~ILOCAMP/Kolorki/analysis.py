@@ -14,7 +14,7 @@ def chi_x(n, m):
 
 def solve(n, m):
     r1 = 0
-    r0 = 0 
+    r0 = 0
     v = set()
     z1 = collections.defaultdict(int)
     z0 = collections.defaultdict(int)
@@ -42,8 +42,10 @@ def solve(n, m):
                         e00 += 1
     print(e0)
     print(e00)
-    #assert set(e0.values()) == {chi_x(n, m)} 
+    #assert set(e0.values()) == {chi_x(n, m)}
     return (r1, r0), (z0, z1)
+
+print(solve(3, 3))
 
 '''
 N = 11
@@ -51,7 +53,7 @@ N = 11
 for n in range(4, 20):
     for m in range(3, 20):
         print(chi_x(n, m), math.factorial(m))
-        assert chi_x(n, m) % math.factorial(m) == 0 
+        assert chi_x(n, m) % math.factorial(m) == 0
 
 for m in range(3, 7):
     print(); print()
