@@ -44,6 +44,8 @@ struct wavelet_tree
                 left = first == mid ? nullptr : new wavelet_node(first, mid, a, c);
                 right = mid == last ? nullptr : new wavelet_node(mid, last, c+1, b);
             }
+            else
+                left = right = nullptr;
         }
         // Return the count of zeroes in the bitmap B over [0, i)
         size_t rank0(size_t i) const { return Bc[i]; }
@@ -109,4 +111,16 @@ struct wavelet_tree
     T index(size_t i) const { return root->index(i); }
     T quantile(size_t i, size_t L, size_t R) const { return root->quantile(i, L, R); }
     T quantile(size_t i) { return quantile(i, 0, root->n); }
+
+    void dealloc_tree(wavelet_node* nd)
+    {
+        if(not nd) return;
+        dealloc_tree(nd->left);
+        dealloc_tree(nd->right);
+        delete nd;
+    }
+    ~wavelet_tree()
+    {
+        dealloc_tree(root);
+    }
 };
