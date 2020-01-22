@@ -1,5 +1,5 @@
-// Bipartite matching via Hopcroft-Karp algorithm.
-// Worst-case running time: O(|E| sqrt(|V|)), but is faster on average.
+// Bipartite matching via a variation of Turbo Matching.
+// Worst-case running time: O(|V||E|), but is much faster on average.
 // Last revision: April 2019
 
 #pragma once
