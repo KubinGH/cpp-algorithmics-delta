@@ -29,7 +29,7 @@ struct mod_multiplies<uint64_t> : multiplies<uint64_t>
         if(a >= m) a %= m;
         if(b >= m) b %= m;
 #ifndef __x86_64__
-        uint64_t c = (long double)(a) * b / m;
+        int64_t c = (long double)(a) * b / m;
         int64_t r = a * b - c * m;
         return r < 0 ? r%(int64_t)m + m : r%(int64_t)m;
 #else
