@@ -35,7 +35,7 @@ template<typename T, T Base, typename ModuloOperation>
 struct rolling_hash
 {
     struct _identity { T operator() (const T& x) { return x; } };
-    static ModuloOperation M;
+    ModuloOperation M;
     vector<T> H, P;
     size_t n;
     template<typename Iterator, typename Fix>
@@ -46,7 +46,7 @@ struct rolling_hash
         H[0] = 0; P[0] = 1;
         for(size_t i = 0; i < n; i++, first++)
         {
-            H[i+1] = M(H[i]*Base + F(T(*first)));
+            H[i+1] = M(H[i]*Base + T(F(*first)));
             P[i+1] = M(P[i]*Base);
         }
     }
@@ -57,6 +57,7 @@ struct rolling_hash
     template<typename Iterator, typename Fix>
     static T unihash(Iterator first, Iterator last, Fix F = _identity())
     {
+        ModuloOperation M;
         T h = 0;
         do {
             h = M(h * Base + F(T(*first)));
@@ -94,7 +95,7 @@ template<typename First, typename Second>
 struct rolling_hash_pair
 {
     First H; Second G;
-    rolling_hash_pair(First h, Second g) : H(move(h)), G(move(g)) {}
+    rolling_hash_pair(First h, Second g) : H(h), G(g) {}
     using T1 = typename result_of< First(size_t, size_t)>::type;
     using T2 = typename result_of<Second(size_t, size_t)>::type;
     pair<T1, T2> operator() (size_t i, size_t j) const

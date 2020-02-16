@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "kdpb.cpp"
+#include "kdp.cpp"
 
 void sfinansowano(int projekt) {
     std::cout << projekt << "; ";
