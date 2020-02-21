@@ -24,29 +24,37 @@ struct solver_2sat
 
     solver_2sat(size_t _n) : n(_n), imp_graph(2*n) {}
 
-    static constexpr size_t as_index(int32_t p)
+    static constexpr size_t as_index(int p)
     {
         return p < 0 ? 2*(-p-1) + 1 : 2*(p-1);
     }
 
-    void add_implication(int32_t a, int32_t b)
+    void add_implication(int a, int b)
     {
         imp_graph[as_index(a)].push_back(as_index(b));
     }
-    void add_or_clause(int32_t a, int32_t b)
+    void add_or_clause(int a, int b)
     {
         add_implication(-a, b);
         add_implication(-b, a);
     }
-    void add_xnor_clause(int32_t a, int32_t b)
+    void add_xnor_clause(int a, int b)
     {
         add_or_clause(a, -b);
         add_or_clause(-a, b);
     }
-    void add_xor_clause(int32_t a, int32_t b)
+    void add_xor_clause(int a, int b)
     {
         add_or_clause(a, b);
         add_or_clause(-a, -b);
+    }
+    void force_true(int a)
+    {
+        add_or_clause(a, a);
+    }
+    void force_false(int a)
+    {
+        return force_true(-a);
     }
 
     struct solution_2sat { bool exists; vector<bool> value; };
