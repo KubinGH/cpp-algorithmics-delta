@@ -2,8 +2,8 @@
 
 using namespace std;
 
-vector<vector<size_t>> graph, tree;
-vector<int> area_delta;
+vector<vector<size_t>> graph;
+vector<int> point_delta, area_delta;
 vector<uint> preorder, postorder;
 uint watch = 0;
 void dfs_root(size_t u, size_t p = SIZE_MAX)
@@ -11,21 +11,21 @@ void dfs_root(size_t u, size_t p = SIZE_MAX)
     preorder[u] = watch++;
     for(auto v : graph[u])
         if(v != p)
-            dfs_root(v, u), tree[u].push_back(v);
+            dfs_root(v, u);
     postorder[u] = watch;
 }
 vector<int> value;
-void dfs(size_t u, int s = 0)
+void dfs(size_t u, size_t p = SIZE_MAX, int s = 0)
 {
-    value[u] = (s += area_delta[u]);
-    for(auto v : tree[u])
-        dfs(v, s);
+    s += area_delta[u];
+    value[u] = s + point_delta[u];
+    for(auto v : graph[u])
+        if(v != p)
+            dfs(v, u, s);
 }
 
 int main()
 {
-    ios::sync_with_stdio(false); cin.tie(nullptr);
-
     size_t n, m;
     cin >> n >> m;
 
@@ -38,11 +38,10 @@ int main()
         graph[v].push_back(u);
     }
     preorder.resize(n); postorder.resize(n);
-    tree.resize(n);
 
     dfs_root(0);
 
-    area_delta.resize(n);
+    point_delta.resize(n); area_delta.resize(n);
 
     for(size_t i = n-1; i < m; i++)
     {
@@ -52,13 +51,7 @@ int main()
             swap(u, v);
         area_delta[u]++;
         if(preorder[v] <= preorder[u] and preorder[u] < postorder[v])
-        {
-            area_delta[0]++;
-            auto it = lower_bound(tree[v].begin(), tree[v].end(), u, [&](size_t lhs, size_t rhs) {
-                return postorder[lhs] < postorder[rhs];
-            });
-            area_delta[*it]--;
-        }
+            area_delta[0]++, area_delta[v]--, point_delta[v]++, area_delta[u]++;
         else
             area_delta[v]++;
     }
@@ -66,6 +59,10 @@ int main()
     value.resize(n);
 
     dfs(0);
+
+            for(size_t i = 0; i < n; i++)
+                cout << preorder[i] << ".." << postorder[i] << "/" << area_delta[i] << "." << point_delta[i] << "/" << value[i] << ' ';
+            cout << endl;
 
     bool a = false;
     for(size_t u = 0; u < n; u++)
@@ -75,5 +72,4 @@ int main()
         cout << u+1 << ' ';
     }
     if(not a) cout << "NIE";
-
 }
