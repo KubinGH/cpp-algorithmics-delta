@@ -106,23 +106,23 @@ int main()
 
     vector<vector<size_t>> children(k);
     vector<bool> S(k);
-    auto Q = W;
+    auto Q = W, Q1 = W;
 
     for(size_t u = k; u --> 0; )
     {
         if(u) children[low.parent[u]].push_back(u);
         if(C[u] > 1)
             S[u] = true;
-        int64_t w = 0;
+        int64_t q = 0;
         for(auto v : children[u])
         {
             if(S[v])
-                Q[u] += Q[v], S[u] = true;
+                Q[u] += Q[v], q = max(q, Q1[v] - Q[v]), S[u] = true;
             else
-                w = max(w, W[v]);
+                q = max(q, Q1[v]);
         }
-        Q[u] += w;
+        Q1[u] = Q[u] + q;
     }
 
-    cout << Q[0] << endl;
+    cout << Q1[0] << endl;
 }
