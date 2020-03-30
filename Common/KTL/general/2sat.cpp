@@ -48,6 +48,12 @@ struct solver_2sat
         add_or_clause(a, b);
         add_or_clause(-a, -b);
     }
+    void add_and_clause(int a, int b)
+    {
+        add_or_clause(a, b);
+        add_or_clause(-a, b);
+        add_or_clause(a, -b);
+    }
     void force_true(int a)
     {
         add_or_clause(a, a);
