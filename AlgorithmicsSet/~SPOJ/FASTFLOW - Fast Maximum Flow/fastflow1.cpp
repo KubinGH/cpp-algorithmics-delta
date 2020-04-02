@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const int64_t oo = INT64_MAX / 3;
+const uint64_t oo = UINT64_MAX / 3;
 
 struct flow_network
 {
