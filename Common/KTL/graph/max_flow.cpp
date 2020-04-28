@@ -1,13 +1,27 @@
-#include <bits/stdc++.h>
+// Maximum flow using Dinic's algorithm.
+// Complexity: min(O(f E), O(V^2 E))
+//  with scaling: O(VE log C), but higher constant factor
 
-using namespace std;
+// Last revision: April 2020, tested on FFLOW at VN SPOJ
 
-const uint64_t oo = UINT64_MAX / 3;
+#pragma once
 
+#include <algorithm>
+#include <cstddef>
+#include <limits>
+#include <vector>
+#include <queue>
+
+using std::min; using std::max; using std::__lg; using std::fill;
+using std::vector; using std::queue;
+using std::size_t;
+using std::numeric_limits;
+
+template<typename flow_t, bool enable_scaling = false>
 struct flow_network
 {
-    using flow_t = uint64_t;
-    // Skierowana krawędź sieci rezydualnej
+    constexpr static auto oo = numeric_limits<flow_t>::max() - 0xF;
+
     struct edge
     {
         size_t s, t;
@@ -16,11 +30,12 @@ struct flow_network
     };
 
     size_t n, source, sink;
-    // Lista sąsiedztwa
     vector<vector<edge>> graph;
 
-    vector<int> dist; // Odległości od źródła (BFS)
-    vector<size_t> curr_edge; // Liczba wyrzuconych krawędzi (DFS)
+    vector<int> dist;
+    vector<size_t> curr_edge;
+
+    flow_t scale_bound = 0;
 
     flow_network(size_t _n, size_t s, size_t t)
         : n(_n), source(s), sink(t), graph(n), dist(n), curr_edge(n) {}
@@ -28,15 +43,13 @@ struct flow_network
     void push(edge& e, flow_t f) { e.cap -= f; graph[e.t][e.rev_i].cap += f; }
     flow_t flow_at(edge& e) { return graph[e.t][e.rev_i].cap; }
 
-    // Dodaj krawędź s->t o przepustowości cap
-    void add_edge(size_t s, size_t t, flow_t cap)
+    void add_edge(size_t s, size_t t, flow_t cap = +oo)
     {
         graph[s].push_back({s, t, cap, false, graph[t].size()});
-        // Krawędź stowarzyszona
         graph[t].push_back({t, s, 0, true, graph[s].size() - 1});
+        scale_bound = max(scale_bound, flow_t(1) << __lg(cap));
     }
 
-    // BFS liczy graf poziomowy, przez wyznaczenie odległości
     bool bfs()
     {
         fill(dist.begin(), dist.end(), -1);
@@ -46,38 +59,34 @@ struct flow_network
         {
             auto u = Q.front(); Q.pop();
             for(auto& e : graph[u])
-                if(e.cap and dist[e.t] == -1)
+                if(e.cap and dist[e.t] == -1 and not (enable_scaling and e.cap < scale_bound))
                     Q.push(e.t), dist[e.t] = dist[u] + 1;
+        }
+        if(enable_scaling and dist[sink] == -1 and scale_bound)
+        {
+            scale_bound /= 2;
+            return bfs();
         }
         return dist[sink] != -1;
     }
 
-    // DFS szuka wielu ścieżek powiększających jednocześnie w grafie poziomowym
-    // Zwraca przepchnięty przepływ, ograniczony przez obiecany lim
     flow_t augment_dfs(size_t u, flow_t lim)
     {
-        if(u == sink)
+        if(u == sink or not lim)
             return lim;
         flow_t delta = 0;
-        // Pomijamy krawędzie już odrzucone (curr_edge)
-        //  i wierzchołki "za" źródłem
         if(dist[u] < dist[sink])
           for(size_t& j = curr_edge[u]; j < graph[u].size(); j++)
         {
             auto& e = graph[u][j]; const auto v = e.t;
-            // Krawędzie tylko w sieci rezydualnej i grafie poziomowym
             if(e.cap and dist[v] == dist[u] + 1)
             {
                 auto x = augment_dfs(v, min(lim - delta, e.cap));
-                // Modyfikujemy przepływ
                 push(e, x); delta += x;
             }
-            // Jeżeli to nam skończył się lim (obiecany flow), to nie wiadomo,
-            //  czy jest to wina tej krawędzi i należy ją odrzucić. Przerywamy
             if(delta == lim)
                 break;
         }
-        // Jeżeli wierzchołek nic nam nie daje (a lim>0), to się go pozbywamy
         if(not delta)
             dist[u] = -1;
         return delta;
@@ -86,32 +95,11 @@ struct flow_network
     flow_t max_flow()
     {
         flow_t flow = 0;
-        // Dopóki istnieje ścieżka od źródła do ujścia w sieci rezydualnej
         while(bfs())
         {
-            // Liczymy przepływ blokujący
             fill(curr_edge.begin(), curr_edge.end(), 0);
             flow += augment_dfs(source, +oo);
         }
         return flow;
     }
 };
-
-int main()
-{
-    ios::sync_with_stdio(false); cin.tie(nullptr);
-
-    size_t n, m;
-    cin >> n >> m;
-
-    flow_network G(n, 0, n - 1);
-    for(size_t i = 0; i < m; i++)
-    {
-        size_t u, v; int64_t c;
-        cin >> u >> v >> c; u--; v--;
-        G.add_edge(u, v, c);
-        G.add_edge(v, u, c);
-    }
-
-    cout << G.max_flow();
-}
