@@ -1,8 +1,18 @@
 // Maximum flow using Dinic's algorithm.
+// Enable scaling by setting the base to a value greater than 1.
 // Complexity: min(O(f E), O(V^2 E))
 //  with scaling: O(VE log C), but higher constant factor
-
-// Last revision: April 2020, tested on FFLOW at VN SPOJ
+// Notes:
+// - Seems like changing the scale base improves the performance by up to 25-40%
+//   Some tests on VN SPOJ/LOJ imply that 22 is more or less optimal
+// - Performance improves by 10-30% after replacing vectors with arrays
+//   (remember to remove initializers from the constructor)
+// - Switching the edges around (transpose) may improve performance for special tests.
+// - An additional DFS that removes vertices not reachable from the sink in the
+//   network transpose could improve performance.
+// - IMPORTANT (sometimes): do not break from the augment loop, return instead! (20% boost)
+// -
+// Last revision: April 2020, tested on multiple tasks and quite good for a Dinic
 
 #pragma once
 
@@ -17,7 +27,7 @@ using std::vector; using std::queue;
 using std::size_t;
 using std::numeric_limits;
 
-template<typename flow_t, bool enable_scaling = false>
+template<typename flow_t, flow_t ScaleBase = 0>
 struct flow_network
 {
     constexpr static auto oo = numeric_limits<flow_t>::max() - 0xF;
@@ -35,7 +45,7 @@ struct flow_network
     vector<int> dist;
     vector<size_t> curr_edge;
 
-    flow_t scale_bound = 0;
+    flow_t bound = 1;
 
     flow_network(size_t _n, size_t s, size_t t)
         : n(_n), source(s), sink(t), graph(n), dist(n), curr_edge(n) {}
@@ -47,7 +57,7 @@ struct flow_network
     {
         graph[s].push_back({s, t, cap, false, graph[t].size()});
         graph[t].push_back({t, s, 0, true, graph[s].size() - 1});
-        scale_bound = max(scale_bound, flow_t(1) << __lg(cap));
+        if(ScaleBase) bound = max(bound, cap);
     }
 
     bool bfs()
@@ -59,12 +69,13 @@ struct flow_network
         {
             auto u = Q.front(); Q.pop();
             for(auto& e : graph[u])
-                if(e.cap and dist[e.t] == -1 and not (enable_scaling and e.cap < scale_bound))
+                if(e.cap >= bound and dist[e.t] == -1)
                     Q.push(e.t), dist[e.t] = dist[u] + 1;
         }
-        if(enable_scaling and dist[sink] == -1 and scale_bound)
+        if(ScaleBase and dist[sink] == -1 and bound > 1)
         {
-            scale_bound /= 2;
+            bound /= ScaleBase;
+            if(not bound) bound = 1;
             return bfs();
         }
         return dist[sink] != -1;
@@ -85,7 +96,7 @@ struct flow_network
                 push(e, x); delta += x;
             }
             if(delta == lim)
-                break;
+                return lim;
         }
         if(not delta)
             dist[u] = -1;

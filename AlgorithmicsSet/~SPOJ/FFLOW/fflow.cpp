@@ -9,7 +9,7 @@ int main()
     size_t n, m;
     ucin >> n >> m;
 
-    flow_network<uint64_t, true> G(n, 0, n - 1);
+    flow_network<uint64_t, 22> G(n, 0, n - 1);
 
     for(size_t i = 0; i < m; i++)
     {
