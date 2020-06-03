@@ -109,7 +109,7 @@ struct mint
     #undef INPLACE_ARITHMETIC
 
     mint& operator++ () { ++value; if(value == Mod()) value = 0; return *this; }
-    mint& operator-- () { if(value == 0) value = Mod; --value; return *this; }
+    mint& operator-- () { if(value == 0) value = Mod(); --value; return *this; }
     mint operator++ (int) { auto c = *this; ++*this; return c; }
     mint operator-- (int) { auto c = *this; --*this; return c; }
 

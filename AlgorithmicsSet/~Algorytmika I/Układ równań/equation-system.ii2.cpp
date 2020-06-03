@@ -1,21 +1,23 @@
-// Gaussian elimination.
-// Should adapt easily with mints.
-// - `gaussian_elimination(a)` performs the elimination on the matrix a in-place and
-//   returns the vector `where` of indices of non-zero element row in given column.
-// - `solve_system_of_linear_equations(eq)` returns solutions to the system of
-//   equations specified by the matrix `eq`.
-// - `determinant(a)` returns the determinant of the matrix a.
-// Complexity: O(n^2 m), where n x m is the dimensions of the provided matrix (n rows, m columns).
-// Last revision: April 2019
+#include <bits/stdc++.h>
 
-#pragma once
+// -*- ktl/ktl_debug_mode.cpp -*-
+
+#ifdef _KTL_DEBUG
+#include <cassert>
+#define KTL_DEBUG_ASSERT(__EXPR) assert(__EXPR)
+#else
+#define KTL_DEBUG_ASSERT(_)
+#endif
+
+// -$- ktl/ktl_debug_mode.cpp -$-
+
+// -*- ktl/math/gaussian_elimination.cpp -*-
 
 #include <cmath>
 #include <vector>
 #include <cstddef>
 #include <cstdint>
 #include <utility>
-#include "../ktl_debug_mode.cpp"
 #ifdef _KTL_DEBUG
 #include <algorithm>
 using std::all_of;
@@ -33,7 +35,7 @@ bool gauss_is_zero<double>(const double& v)
     { return abs(v) < 1e-5; }
 template<>
 bool gauss_is_zero<long double>(const long double& v)
-    { return abs(v) < 1e-10; }
+    { return abs(v) < 1e-5; }
 
 template<typename T>
 bool gauss_compare_sel(const T& a, const T& b)
@@ -53,7 +55,7 @@ vector<size_t> gaussian_elimination(vector<vector<T>>& a, size_t& swap_count, si
 
     KTL_DEBUG_ASSERT(all_of(a.begin(), a.end(), [&](const vector<T>& v) { return a[0].size() == v.size(); }));
 
-    vector<size_t> where(m, SIZE_MAX);
+    vector<size_t> where (m, SIZE_MAX);
     for(size_t col = 0, row = 0; col < m and row < n; col++)
     {
         size_t select = row;
@@ -135,4 +137,30 @@ T determinant(vector<vector<T>> a)
         result *= a[i][i];
 
     return swap_count % 2 ? -result : result;
+}
+
+// -$- ktl/math/gaussian_elimination.cpp -$-
+
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+
+    size_t n, m;
+    cin >> n >> m;
+
+    vector<vector<long double>> eq(n, vector<long double>(m+1));
+    for(auto& row : eq)
+        for(auto& val : row)
+            cin >> val;
+
+    auto result = solve_system_of_linear_equations(eq);
+
+    assert(result.first != None);
+
+    cout << fixed << setprecision(6);
+    for(auto& sol : result.second)
+        cout << sol << '\n';
 }
