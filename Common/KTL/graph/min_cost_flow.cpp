@@ -15,11 +15,11 @@
 #include <cstddef>
 #include <limits>
 #include <vector>
-#include <queue>
+#include <deque>
 
 using std::min; using std::max; using std::fill;
 using std::pair;
-using std::vector; using std::queue;
+using std::vector; using std::deque;
 using std::size_t;
 using std::numeric_limits;
 
@@ -27,19 +27,19 @@ template<typename flow_t, typename cost_t>
 struct min_cost_flow_network
 {
     template<typename T>
-    constexpr static auto oo = numeric_limits<T>::max() - 0xF;
+    constexpr static T oo = numeric_limits<T>::max() - 0xF;
 
     struct edge
     {
         size_t s, t;
-        int cap, cost;
+        flow_t cap; cost_t cost;
         bool rev; size_t rev_i;
     };
 
     size_t n, source, sink;
     vector<vector<edge>> graph;
 
-    vector<int> dist;
+    vector<cost_t> dist;
     vector<edge*> back;
 
     min_cost_flow_network(size_t _n, size_t s, size_t t)
@@ -58,14 +58,23 @@ struct min_cost_flow_network
     {
         fill(dist.begin(), dist.end(), +oo<cost_t>);
         fill(back.begin(), back.end(), nullptr);
-        queue<size_t> Q;
-        Q.push(source); dist[source] = 0;
+        deque<size_t> Q;
+        Q.push_back(source); dist[source] = 0;
         while(not Q.empty())
         {
-            auto u = Q.front(); Q.pop();
+            auto u = Q.front(); Q.pop_front();
             for(auto& e : graph[u])
+            {
                 if(e.cap and dist[u] + e.cost < dist[e.t])
-                    Q.push(e.t), dist[e.t] = dist[u] + e.cost, back[e.t] = &e;
+                {
+                    if(not Q.empty() and dist[e.t] <= dist[Q.front()])
+                        Q.push_front(e.t);
+                    else
+                        Q.push_back(e.t);
+                    dist[e.t] = dist[u] + e.cost;
+                    back[e.t] = &e;
+                }
+            }
         }
         return dist[sink] != +oo<cost_t>;
     }
@@ -75,14 +84,17 @@ struct min_cost_flow_network
         flow_t flow = 0; cost_t total_cost = 0;
         while(spfa())
         {
-            auto delta = +oo<flow_t>; auto cost = dist[sink];
+            flow_t delta = +oo<flow_t>; cost_t cost = dist[sink];
             size_t u = sink;
             while(back[u])
                 delta = min(delta, back[u]->cap), u = back[u]->s;
 
             delta = min(delta, lim - flow);
             if(cost > 0)
-                delta = min(delta, (budget - total_cost) / cost);
+            {
+                flow_t c = min((budget - total_cost) / cost, (cost_t)+oo<flow_t>);
+                delta = min(delta, c);
+            }
 
             if(not delta)
                 break;
