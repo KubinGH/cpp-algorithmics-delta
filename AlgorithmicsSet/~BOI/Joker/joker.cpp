@@ -5,34 +5,36 @@ using namespace std;
 struct dsu_bipartite
 {
     vector<size_t> repr;
-    vector<vector<size_t>> members;
-    vector<bool> color;
-    bool ok = true;
+    vector<char> rank;
+    bool ok;
 
-    dsu_bipartite(size_t n) : repr(n), members(n), color(n)
+    void reset()
     {
-        for(size_t i = 0; i < n; i++)
-            repr[i] = i, members[i].push_back(i);
+        fill(rank.begin(), rank.end(), 0);
+        for(size_t i = 0; i < repr.size(); i++)
+            repr[i] = i;
+        ok = true;
+    }
+
+    dsu_bipartite(size_t n) : repr(2*n+2), rank(2*n+2) { reset(); }
+
+    size_t find(size_t u)
+    {
+        return u == repr[u] ? u : repr[u] = find(repr[u]);
     }
 
     bool unite(size_t u, size_t v)
     {
-        if(repr[u] == repr[v])
+        u++; v++;
+
+        u = find(2*u); v = find(2*v);
+        if(u/2 == v/2)
         {
-            if(color[u] == color[v])
-                ok = false;
+            ok &= u ^ v;
             return false;
         }
-        bool x = (color[u] == color[v]);
-        u = repr[u]; v = repr[v];
-
-        if(members[u].size() > members[v].size())
-            swap(u, v);
-        for(auto w : members[u])
-            repr[w] = v, members[v].push_back(w), color[w] = color[w] ^ x;
-        members[u].clear();
-        members[u].shrink_to_fit();
-
+        repr[u^0] = v^1;
+        repr[u^1] = v^0;
         return true;
     }
 };
@@ -49,6 +51,7 @@ int main()
     vector<pair<size_t, size_t>> edges(m);
     for(auto& [u, v] : edges)
         cin >> u >> v, u--, v--;
+
     edges.resize(2*m);
     copy(edges.begin(), edges.begin() + m, edges.begin() + m);
 
@@ -56,6 +59,7 @@ int main()
     vector<query> queries(q);
     for(auto& [l, r, i] : queries)
         cin >> l >> r, tie(l, r) = make_pair(r, m+l-1);
+
     for(size_t i = 0; i < q; i++)
         queries[i].i = i;
 
@@ -64,17 +68,17 @@ int main()
     });
 
     size_t curr_l = SIZE_MAX, curr_r = SIZE_MAX;
-    dsu_bipartite sets(0);
+    dsu_bipartite sets(n);
     for(auto [l, r, j] : queries)
     {
-        cout << l << ".." << r << endl;
         if(r != curr_r)
         {
-            sets = dsu_bipartite(n);
+            sets.reset();
             curr_l = curr_r = r;
+
         }
 
-        while(curr_l > l)
+        while(sets.ok and curr_l > l)
             curr_l--, sets.unite(edges[curr_l].first, edges[curr_l].second);
 
         answer[j] = not sets.ok;
