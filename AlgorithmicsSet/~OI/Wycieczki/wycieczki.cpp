@@ -32,14 +32,17 @@ matrix operator* (const matrix& A, const matrix& B)
     matrix C(n);
     for(size_t i = 0; i < n; i++)
      for(size_t j = 0; j < n; j++)
-      for(size_t k = 0; k < n; k++)
     {
-        uint64_t x = A(i, k) * B(k, j);
-        if(C(i, j) == MAX_NUMBER or (A(i, k) != 0 and x / A(i, k) != B(k, j)) or
-           C(i, j) + x > MAX_NUMBER)
-            C(i, j) = MAX_NUMBER;
-        else
-            C(i, j) += x;
+        uint64_t c = 0;
+        for(size_t k = 0; k < n; k++)
+        {
+            long long unsigned x;
+            if(__builtin_umulll_overflow(A(i, k), B(k, j), &x) or x > MAX_NUMBER or c + x > MAX_NUMBER)
+                { c = MAX_NUMBER; break; }
+            else
+                c += x;
+        }
+        C(i, j) = c;
     }
     return C;
 }
@@ -66,7 +69,9 @@ int main()
 
     vector<matrix> Q;
     Q.push_back(G);
-    for(uint32_t i = 1; i < 63; i++)
+
+    uint64_t kl = __lg(k) + 2;
+    for(uint32_t i = 1; i < kl; i++)
         Q.push_back(Q.back() * Q.back());
 
     matrix P = G;
@@ -79,14 +84,17 @@ int main()
     };
 
     uint64_t e = 0;
-    for(uint32_t p = 63; p --> 0; )
+    bool any = false;
+    for(uint32_t p = kl; p --> 0; )
     {
         auto P1 = P * Q[p];
         if(count_valid(P1) < k)
             P = P1, e += (1llu << p);
+        else
+            any = true;
     }
 
-    if(e == -1llu/2)
+    if(not any)
         cout << "-1";
     else
         cout << e+1;
