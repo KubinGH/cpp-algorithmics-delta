@@ -21,17 +21,17 @@ int main()
     size_t n, q;
     cin >> n >> q;
 
-    vector<bitset<N>> B(n), Bs(n);
-    bitset<N> all_n = {};
+    vector<bitset<N>> A(n), B(n), Bs(n), Bz(n);
     for(size_t i = 0; i < n; i++)
     {
-        all_n[i] = 1;
         for(size_t j = 0; j < n; j++)
         {
             char c;
             cin >> c;
             B[i][j] = (c == 'B');
+            A[i][j] = not B[i][j];
             Bs[i][j] = (j ? Bs[i][j-1] : 0) ^ B[i][j];
+            Bz[i][j] = not Bs[i][j];
         }
     }
 
@@ -42,12 +42,9 @@ int main()
         bool ok = true;
         for(size_t i = 0; ok and i < n; i++)
         {
-            auto L = Bs[i];
-            if(left[i])
-                L ^= all_n;
+            auto L = left[i] ? Bz[i] : Bs[i];
             ok &= (L[n-1] == right[i]);
-            auto bnot = B[i] ^ all_n;
-            ok &= ((bnot & (L ^ curr)) == bnot);
+            ok &= ((A[i] & (L ^ curr)) == A[i]);
             curr ^= B[i];
         }
         cout << (ok and curr == last ? "YES" : "NO") << endl;
