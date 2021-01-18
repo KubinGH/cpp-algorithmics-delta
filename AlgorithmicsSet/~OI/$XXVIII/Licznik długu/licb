@@ -1,0 +1,26 @@
+#!/usr/bin/python
+# Jakub Bachurski
+# Licznik długu - ~O(q n^1.5)
+
+n, z = [int(x) for x in input().split()]
+
+A = int(input().lstrip('0') or '0')
+B = int(input().lstrip('0') or '0')
+
+pows = [10**i for i in range(n+2)]
+def digit_at(number, i):
+    return (number // pows[i]) % 10
+
+for _ in range(z):
+    q = input().split()
+    if q[0] == 'S':
+        i = int(q[1]) - 1
+        print(digit_at(A + B, i))
+    elif q[0] == 'W':
+        i, c = int(q[1]) - 1, int(q[2])
+        A += pows[i] * (c - digit_at(A, i))
+    elif q[0] == 'Z':
+        i, c = int(q[1]) - 1, int(q[2])
+        B += pows[i] * (c - digit_at(B, i))
+    elif q[0] == 's':
+        print(str(A + B).zfill(n))
