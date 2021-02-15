@@ -1,6 +1,6 @@
 // Bipartite matching via a variation of Turbo Matching.
 // Worst-case running time: O(|V||E|), but is much faster on average.
-// Last revision: April 2019
+// Last revision: April 2019 (minor: February 2021)
 
 #pragma once
 
@@ -24,6 +24,8 @@ struct bipartite_matching
 
     bool dfs_match(size_t u)
     {
+        if(vis[u])
+            return false;
         vis[u] = true;
         for(auto v : graph[u])
         {
@@ -35,7 +37,7 @@ struct bipartite_matching
         }
         for(auto v : graph[u])
         {
-            if(not vis[match[v]] and dfs_match(match[v]))
+            if(dfs_match(match[v]))
             {
                 match[u] = v; match[v] = u;
                 return true;
