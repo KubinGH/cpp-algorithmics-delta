@@ -10,6 +10,7 @@ using std::cout; using std::cin;
 using std::string;
 using std::is_same;
 using std::enable_if;
+using std::get;
 
 template<typename T>
 T sread(istream& in)
@@ -27,6 +28,22 @@ ostream& operator<< (ostream& out, const std::pair<_1, _2>& p)
 {
     return out << "[" << p.first << ", " << p.second << "]";
 }
+
+#if __cplusplus >= 201402L 
+template<typename... Args, size_t... I>
+void tupprint(ostream& out, const std::tuple<Args...>& t, std::index_sequence<I...>)
+{
+    (..., (out << (I ? ", " : "") << get<I>(t)));
+}
+
+template<typename... Args>
+ostream& operator<< (ostream& out, const std::tuple<Args...>& t)
+{
+    out << '[';
+    tupprint(out, t, std::make_index_sequence<sizeof...(Args)>());
+    return out << ']';
+}
+#endif
 
 template<typename Container>
 ostream& _print_container_imp (ostream& out, const Container& c)

@@ -3,6 +3,7 @@
 // Clauses are provided in a 1-indexed form, and the negation is the
 // arithmetical negation.
 // add_or_clause(-1, 2) adds (!a_1 v a_2).
+// At most one based on kactl notebook implementation (February 2021).
 // Complexity: O(n)
 // Last revision: April 2019
 
@@ -29,6 +30,12 @@ struct solver_2sat
         return p < 0 ? 2*(-p-1) + 1 : 2*(p-1);
     }
 
+    int new_variable()
+    {
+        imp_graph.emplace_back();
+        imp_graph.emplace_back();
+        return imp_graph.size() / 2;
+    }
     void add_implication(int a, int b)
     {
         imp_graph[as_index(a)].push_back(as_index(b));
@@ -61,6 +68,20 @@ struct solver_2sat
     void force_false(int a)
     {
         return force_true(-a);
+    }
+    void at_most_one(const vector<int>& ind)
+    {
+        if(ind.size() <= 1) return;
+        int curr = -ind[0];
+        for(size_t i = 2; i < ind.size(); i++)
+        {
+            auto next = new_variable();
+            add_or_clause(curr, -ind[i]);
+            add_or_clause(curr, next);
+            add_or_clause(-ind[i], next);
+            curr = -next;
+        }
+        add_or_clause(curr, -ind[1]);
     }
 
     struct solution_2sat { bool exists; vector<bool> value; };
