@@ -20,17 +20,21 @@ int main()
 
     size_t n; int64_t k;
     cin >> n >> k;
+    // n = 4; k = 256;
+    srand(time(0));
 
     vector<int> A; A.reserve(n);
     for(size_t i = 0; i < n; i++)
     {
         int x;
         cin >> x;
+        // x = 1 + rand() % (k - 1);
         if(x < k)
             A.push_back(x);
     }
     n = A.size();
 
+    sort(A.begin(), A.end());
     vector<bitset<MAX>> pref(n+1), suff(n+1);
     pref[0][0] = true;
     for(size_t i = 0; i < n; i++)
@@ -44,8 +48,10 @@ int main()
     {
         auto curr = suff[p+1] >> (MAX-1 - k + 1);
         leakyshift(curr, A[p] - 1);
+        cout << (not (pref[p] & curr).any());
         result += not (pref[p] & curr).any();
     }
+    cout << endl;
 
     cout << result << endl;
 }
