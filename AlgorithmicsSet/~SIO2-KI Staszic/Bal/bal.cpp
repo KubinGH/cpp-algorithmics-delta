@@ -6,6 +6,7 @@ int main()
 {
     ios::sync_with_stdio(false); cin.tie(nullptr);
 
+    size_t k, m;
     cin >> k >> m;
 
     vector<uint> cnt(k);
