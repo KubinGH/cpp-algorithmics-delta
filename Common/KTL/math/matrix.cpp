@@ -1,5 +1,6 @@
 // Mathematical matrices. Multiplication
 // and optimized modulo multiplication is implemented.
+// Minsum multiplication is somewhat unsafe (- April 2021).
 
 // Last revision: May 2019
 

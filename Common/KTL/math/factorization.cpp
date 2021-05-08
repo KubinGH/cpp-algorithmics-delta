@@ -157,6 +157,8 @@ vector<T> factorize_int(T n)
 template<typename T>
 vector<pair<T, size_t>> _pair_compress(const vector<T>& v)
 {
+    if(v.empty())
+        return {};
     vector<pair<T, size_t>> out;
     out.emplace_back(v[0], 0);
     for(auto x : v)

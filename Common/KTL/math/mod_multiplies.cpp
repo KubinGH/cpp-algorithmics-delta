@@ -22,7 +22,7 @@ struct mod_multiplies;
 template<>
 struct mod_multiplies<uint64_t> : multiplies<uint64_t>
 {
-    uint64_t m;
+    const uint64_t m;
     mod_multiplies(uint64_t _m) : m(_m) { KTL_DEBUG_ASSERT(m > 0); }
     uint64_t operator() (uint64_t a, uint64_t b) const
     {

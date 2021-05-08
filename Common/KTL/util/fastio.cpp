@@ -33,7 +33,7 @@ struct unlocked_cin
     operator>> (T& x)
     {
         x = 0;
-        char lchar = _whitespace_skip(); 
+        char lchar = _whitespace_skip();
         do {
             x *= 10, x += lchar - '0';
         } while(isdigit(lchar = getchar_unlocked()));
@@ -43,7 +43,7 @@ struct unlocked_cin
     typename enable_if<is_integral<T>::value && is_signed<T>::value, unlocked_cin&>::type
     operator>> (T& x)
     {
-        bool s = false; 
+        bool s = false;
         x = 0;
         char lchar = _whitespace_skip();
         if(lchar == '-')
@@ -55,6 +55,8 @@ struct unlocked_cin
         if(s) x = -x;
         return *this;
     }
+    template<typename... Args>
+    void tie(Args...) {}
 } ucin;
 
 struct unlocked_cout
@@ -91,4 +93,6 @@ struct unlocked_cout
             putchar_unlocked('-'), x = -x;
         return *this << static_cast<typename make_unsigned<T>::type>(x);
     }
+    template<typename... Args>
+    void tie(Args...) {}
 } ucout;
